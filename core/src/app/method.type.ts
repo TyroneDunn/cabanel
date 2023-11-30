@@ -1,11 +1,9 @@
 import {SideEffect} from "./side-effect.type";
-import {ParamMap} from "./param-map.type";
 import {ResponseDTO} from "./response-dto.type";
+import {FeatureDTO} from "./feature-dto.type";
 
-export type Method<T> = {
+export type Method = {
     type: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
-    paramsDefinition: string[],
-    parser: (paramMap: ParamMap, queryParamMap: ParamMap, payload: Object) => T,
-    sideEffects?: SideEffect<T>[],
-    callback?: (dto: T) => ResponseDTO,
+    sideEffects?: SideEffect[],
+    callback?: (dto: FeatureDTO) => ResponseDTO,
 };
