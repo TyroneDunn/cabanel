@@ -1,7 +1,7 @@
 import {Method} from "./method.type";
 
-export type Controller = {
+export type Controller<T> = {
     path: string,
     guarded?: boolean,
-    methods: Method[],
+    methods: Method<T>[],
 };
