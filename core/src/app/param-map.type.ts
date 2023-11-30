@@ -1,1 +1,1 @@
-export type ParamMap = Record< string, string >;
+export type ParamMap = Record<string, string>;
