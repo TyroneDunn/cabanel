@@ -1,5 +1,5 @@
 import {SideEffect} from "./side-effect.type";
-import {ResponseDTO} from "./response-dto.type";
+import {ResponseDTO} from "../shared/response-dto.type";
 import {FeatureDTO} from "./feature-dto.type";
 
 export type Method = {

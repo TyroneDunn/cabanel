@@ -1,6 +1,6 @@
 import {AppWrapper} from "./app-wrapper.interface";
 import {Config} from "./config.type";
-import {Controller} from "./controller.type";
+import {Controller} from "../controller/controller.type";
 
 let apps: AppWrapper[] = [];
 

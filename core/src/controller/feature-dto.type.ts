@@ -1,4 +1,4 @@
-import {ParamMap} from "./param-map.type";
+import {ParamMap} from "../shared/param-map.type";
 
 export type FeatureDTO = {
     paramMap?: ParamMap,
