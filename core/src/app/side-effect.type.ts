@@ -1,0 +1,1 @@
+export type SideEffect<T> = (dto: T) => void;
