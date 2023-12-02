@@ -3,15 +3,13 @@ import {OrderOption} from "../shared/order-option.type";
 
 export type GetUserDTO = {username: string};
 
-export type GetUsersDTO = {
+export type UsersDTO = {
     username?: string,
     usernameRegex?: string,
-    sort?: UserSortOption,
-    order?: OrderOption,
-    startDate?: string,
-    endDate?: string,
-    page?: number,
-    limit?: number,
+    sort: UserSortOption,
+    order: OrderOption,
+    index: number,
+    limit: number,
 };
 
 export type RegisterUserDTO = {
