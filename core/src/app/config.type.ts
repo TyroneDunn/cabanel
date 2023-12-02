@@ -1,26 +1,25 @@
 import {CorsOptions} from "cors";
+import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
 
 type WebFrameworkOption = "Express" | "Nest" | "Fastify";
-type AuthStrategyOption = "Local" | "JWT";
 type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
-type HashingAlgorithmOption = "sha512" | "lorem";
+type AuthStrategyOption = "None" | "Local" | "JWT";
 
 export type Config = {
-    api?: WebFrameworkOption,
+    nodeEnv: "production" | "development";
+    api: WebFrameworkOption,
     title?: string,
+    version?: string;
     port?: number,
     corsOptions?: CorsOptions,
-    authOptions?: {
+    authOptions: {
         strategy: AuthStrategyOption,
-        sessionSecret?: string,
         db?: DatabaseOption
-        dbUrl?: string,
-        hashingAlgorithm?: HashingAlgorithmOption,
-        hashingIterations?: number,
-        passwordLength?: number
-        passwordSalt?: string
+        dbUrl: string,
+        sessionSecret: string,
+        hashingAlgorithm: HashingAlgorithm,
+        hashingIterations: number,
+        passwordLength: number
+        passwordSalt: string
     }
 }
-
-const DEFAULT_CONFIG: Config = {
-};
