@@ -3,14 +3,10 @@ import {Config} from "../app/config.type";
 import {Controller} from "../controller/controller.type";
 import {AppWrapper} from "../app/app-wrapper.interface";
 import {Application, Response} from "express";
-import {session} from "./session-config";
-import {configurePassportLocalStrategy} from "./passport-local-config";
-import {UsersRepository} from "../user/users-repository";
-import {configureUserRepository} from "./user-repository-config.service";
+import {configureAppAuthentication} from "./app-authentication-config.service";
 
 const express = require("express");
 const cors = require('cors');
-import passport = require("passport");
 
 export const expressAppBuilder: AppBuilder = {
     buildApp(config: Config, controllers: Controller[]): AppWrapper {
@@ -18,32 +14,7 @@ export const expressAppBuilder: AppBuilder = {
         app.get('/', home(config.title, config.port, config.version));
         app.use(express.json());
         app.use(cors(config.corsOptions));
-
-        switch (config.authOptions.strategy) {
-            case "None": {
-                break;
-            }
-            case "Local": {
-                const usersRepository: UsersRepository = configureUserRepository(config);
-
-                // todo: simplify argument list
-                configurePassportLocalStrategy(
-                    config.authOptions.passwordSalt,
-                    config.authOptions.hashingIterations,
-                    config.authOptions.passwordLength,
-                    config.authOptions.hashingAlgorithm,
-                    usersRepository
-                );
-                app.use(session(config));
-                app.use(passport.initialize());
-                app.use(passport.session());
-                break;
-            }
-            case "JWT": {
-                // implement JWT strategy
-                break;
-            }
-        }
+        configureAppAuthentication(app, config);
 
         return {
             run(): void {
