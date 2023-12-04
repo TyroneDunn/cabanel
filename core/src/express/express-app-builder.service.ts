@@ -24,7 +24,7 @@ export const expressAppBuilder: AppBuilder = {
     }
 };
 
-const home = (title: string = 'Untitled', port: number = 2400, version?: string) => (response: Response): void => {
+const home = (title: string = 'Untitled', port: number = 2400, version?: string) => (req: Request, response: Response): void => {
     response.send({
         "message": `${title} @ port: ${port}`,
         ...version && {"version": `${version}`},
