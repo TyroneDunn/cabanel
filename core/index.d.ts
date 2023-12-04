@@ -123,3 +123,13 @@ export type Response = {
     limit?: number,
 };
 
+export const HttpStatusCodes = {
+    OK: number = 200,
+    CREATED: number = 201,
+    BAD_REQUEST: number = 400,
+    UNAUTHORIZED: number = 401,
+    FORBIDDEN: number = 403,
+    NOT_FOUND: number = 404,
+    CONFLICT: number = 409,
+    INTERNAL_SERVER_ERROR: number = 500,
+};
