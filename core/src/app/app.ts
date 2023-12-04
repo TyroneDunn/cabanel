@@ -1,11 +1,23 @@
 import {AppWrapper} from "./app-wrapper.interface";
 import {Config} from "./config.type";
 import {Controller} from "../controller/controller.type";
+import {validateAppConfig} from "./validator.service";
+import {ValidationOutcome} from "../shared/validation-outcome.type";
+import {throwErrors} from "../shared/error-handler.service";
+import {AppBuilderFacade} from "./app-builder-facade";
 
-let apps: AppWrapper[] = [];
+const apps: AppWrapper[] = [];
 
-const DEFAULT_CONFIG: Config = {};
-export const init = (config: Config = DEFAULT_CONFIG, controllers: Controller[]): void => {};
+// export const buildConfig = (): Config => {};
+
+export const init = (
+    config: Config,
+    controllers: Controller[] = []
+): void => {
+    const validationOutcome: ValidationOutcome = validateAppConfig(config);
+    if (validationOutcome.errors.length > 0) throwErrors(validationOutcome.errors);
+    apps.push(AppBuilderFacade.buildApp(config, controllers));
+};
 
 export const run = (): void => {
     for (const app of apps) app.run();
