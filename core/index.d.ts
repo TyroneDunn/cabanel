@@ -112,6 +112,8 @@ export type Controller = {
     methods: Method[],
 };
 
+export type Callback = (response: ResponseDTO) => void;
+
 export type Method = {
     type: MethodType,
     path?: string,
@@ -135,8 +137,8 @@ type ParamMap = Record<string, string>;
 
 export type Response = {
     status: number
-    error?: Error,
-    collection?: [],
+    error?: string,
+    collection?: any[],
     count?: number,
     index?: number,
     limit?: number,

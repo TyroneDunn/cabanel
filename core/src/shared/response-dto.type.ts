@@ -1,7 +1,7 @@
 export type ResponseDTO = {
     status: number
-    error?: Error,
-    collection?: [],
+    error?: string,
+    collection?: any[],
     count?: number,
     index?: number,
     limit?: number,
