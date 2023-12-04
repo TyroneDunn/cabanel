@@ -1,8 +1,8 @@
 {
-  "name": "core",
+  "name": "@hals/core",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/core/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start:dev": "ts-node ./src/index.ts",
     "build": "tsc"
