@@ -4,11 +4,12 @@ import {Controller} from "../controller/controller.type";
 import {AppWrapper} from "../app/app-wrapper.interface";
 import {Application, Request, RequestHandler, Response, Router} from "express";
 import {configureAppAuthentication} from "./app-authentication-config.service";
-import {Method} from "../controller/method.type";
+import {Callback, Method} from "../controller/method.type";
 import {ParamMap} from "../shared/param-map.type";
 import {Request as HalsRequest} from "../shared/request-dto.type";
 import {SideEffect} from "../controller/side-effect.type";
 import {authGuard} from "./auth-guard";
+import {ResponseDTO} from "../shared/response-dto.type";
 
 const express = require("express");
 const cors = require('cors');
@@ -64,12 +65,15 @@ const executeSideEffects = (dto: HalsRequest, sideEffects: SideEffect[]): void =
     }
 };
 
+const callback = (res: Response): Callback => (response: ResponseDTO): void => {
+    res.status(response.status).json(response);
+};
+
 const mapToRequestHandler = (method: Method): RequestHandler => {
     return (req: Request, res: Response) => {
         const dto: HalsRequest = mapToHalsRequestDTO(method, req);
         executeSideEffects(dto, method.sideEffects);
-        const response = method.callback(dto);
-        res.status(response.status).json(response);
+        method.done(dto, callback(res));
     };
 };
 

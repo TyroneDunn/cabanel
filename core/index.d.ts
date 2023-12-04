@@ -120,7 +120,7 @@ export type Method = {
     paramKeys: string[],
     queryParamKeys: string[]
     sideEffects: SideEffect[],
-    callback: (dto: Request) => Response,
+    done: (dto: Request, callback: Callback) => void,
 };
 
 type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
