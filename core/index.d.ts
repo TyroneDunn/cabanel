@@ -106,6 +106,15 @@ export type BuildConfig = (
 
 export const buildAppConfig: BuildConfig = buildConfig;
 
+export type Method = {
+    type: MethodType,
+    path?: string,
+    paramKeys: string[],
+    queryParamKeys: string[]
+    sideEffects: SideEffect[],
+    callback: (dto: Request) => ResponseDTO,
+};
+
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type SideEffect = (dto: Request) => void;
