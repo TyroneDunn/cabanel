@@ -105,3 +105,6 @@ export type BuildConfig = (
 ) => Config;
 
 export const buildAppConfig: BuildConfig = buildConfig;
+
+export type ParamMap = Record<string, string>;
+
