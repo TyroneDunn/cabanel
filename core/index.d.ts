@@ -106,6 +106,12 @@ export type BuildConfig = (
 
 export const buildAppConfig: BuildConfig = buildConfig;
 
+export type Controller = {
+    path: string,
+    guard: boolean,
+    methods: Method[],
+};
+
 export type Method = {
     type: MethodType,
     path?: string,
