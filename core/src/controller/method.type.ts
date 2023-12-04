@@ -6,8 +6,9 @@ export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type Method = {
     type: MethodType,
-    paramKeys?: string[],
-    queryParamKeys?: string[]
-    sideEffects?: SideEffect[],
-    callback?: (dto: FeatureDTO) => ResponseDTO,
+    path?: string,
+    paramKeys: string[],
+    queryParamKeys: string[]
+    sideEffects: SideEffect[],
+    callback: (dto: FeatureDTO) => ResponseDTO,
 };
