@@ -121,7 +121,7 @@ export type Method = {
     callback: (dto: Request) => Response,
 };
 
-export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type SideEffect = (dto: Request) => void;
 
@@ -131,7 +131,7 @@ export type Request = {
     payload?: Object,
 };
 
-export type ParamMap = Record<string, string>;
+type ParamMap = Record<string, string>;
 
 export type Response = {
     status: number
