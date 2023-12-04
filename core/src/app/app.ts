@@ -8,9 +8,12 @@ import {AppBuilderFacade} from "./app-builder-facade";
 
 const apps: AppWrapper[] = [];
 
-// export const buildConfig = (): Config => {};
+export type Init = (
+    config: Config,
+    controllers: Controller[]
+) => void;
 
-export const init = (
+export const init: Init = (
     config: Config,
     controllers: Controller[] = []
 ): void => {
@@ -19,6 +22,8 @@ export const init = (
     apps.push(AppBuilderFacade.buildApp(config, controllers));
 };
 
-export const run = (): void => {
+
+export type Run = () => void;
+export const run: Run = (): void => {
     for (const app of apps) app.run();
 };
