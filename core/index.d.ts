@@ -108,6 +108,8 @@ export const buildAppConfig: BuildConfig = buildConfig;
 
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
+export type ParamMap = Record<string, string>;
+
 export type Request = {
     paramMap?: ParamMap,
     queryParamMap?: ParamMap,
