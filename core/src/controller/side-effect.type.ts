@@ -1,3 +1,3 @@
-import {FeatureDTO} from "./feature-dto.type";
+import {Request} from "../shared/request-dto.type";
 
-export type SideEffect = (dto: FeatureDTO) => void;
+export type SideEffect = (dto: Request) => void;

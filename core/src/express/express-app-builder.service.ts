@@ -6,7 +6,7 @@ import {Application, Request, RequestHandler, Response, Router} from "express";
 import {configureAppAuthentication} from "./app-authentication-config.service";
 import {Method} from "../controller/method.type";
 import {ParamMap} from "../shared/param-map.type";
-import {FeatureDTO} from "../controller/feature-dto.type";
+import {Request as HalsRequest} from "../shared/request-dto.type";
 import {SideEffect} from "../controller/side-effect.type";
 import {authGuard} from "./auth-guard";
 
@@ -35,7 +35,7 @@ const mapToQueryParamMap = (queryParamKeys: string[], req: Request): ParamMap =>
     return queryParamMap;
 };
 
-const mapToFeatureDTO = (method: Method, req: Request): FeatureDTO => {
+const mapToHalsRequestDTO = (method: Method, req: Request): HalsRequest => {
     const paramMap: ParamMap = mapToParamMap(method.paramKeys, req);
     const queryParamMap: ParamMap = mapToQueryParamMap(method.queryParamKeys, req);
     return {
@@ -58,7 +58,7 @@ const mapToPath = (method: Method) => {
     return endpoint;
 };
 
-const executeSideEffects = (dto: FeatureDTO, sideEffects: SideEffect[]): void => {
+const executeSideEffects = (dto: HalsRequest, sideEffects: SideEffect[]): void => {
     for (const sideEffect of sideEffects) {
         sideEffect(dto);
     }
@@ -66,7 +66,7 @@ const executeSideEffects = (dto: FeatureDTO, sideEffects: SideEffect[]): void =>
 
 const mapToRequestHandler = (method: Method): RequestHandler => {
     return (req: Request, res: Response) => {
-        const dto: FeatureDTO = mapToFeatureDTO(method, req);
+        const dto: HalsRequest = mapToHalsRequestDTO(method, req);
         executeSideEffects(dto, method.sideEffects);
         const response = method.callback(dto);
         res.status(response.status).json(response);
