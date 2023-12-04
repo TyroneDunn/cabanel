@@ -18,7 +18,9 @@ export const expressAppBuilder: AppBuilder = {
 
         return {
             run(): void {
-                app.listen();
+                app.listen(config.port,() => {
+                    console.log(`${config.title} @ port: ${config.port}`);
+                });
             }
         };
     }
