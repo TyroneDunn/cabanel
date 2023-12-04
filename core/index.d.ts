@@ -114,3 +114,12 @@ export type Request = {
     payload?: Object,
 };
 
+export type Response = {
+    status: number
+    error?: Error,
+    collection?: [],
+    count?: number,
+    index?: number,
+    limit?: number,
+};
+
