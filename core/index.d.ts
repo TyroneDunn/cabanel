@@ -108,3 +108,9 @@ export const buildAppConfig: BuildConfig = buildConfig;
 
 export type ParamMap = Record<string, string>;
 
+export type Request = {
+    paramMap?: ParamMap,
+    queryParamMap?: ParamMap,
+    payload?: Object,
+};
+
