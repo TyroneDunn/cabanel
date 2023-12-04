@@ -112,20 +112,20 @@ export type Method = {
     paramKeys: string[],
     queryParamKeys: string[]
     sideEffects: SideEffect[],
-    callback: (dto: Request) => ResponseDTO,
+    callback: (dto: Request) => Response,
 };
 
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type SideEffect = (dto: Request) => void;
 
-export type ParamMap = Record<string, string>;
-
 export type Request = {
     paramMap?: ParamMap,
     queryParamMap?: ParamMap,
     payload?: Object,
 };
+
+export type ParamMap = Record<string, string>;
 
 export type Response = {
     status: number
