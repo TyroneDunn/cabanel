@@ -46,7 +46,6 @@ const mapToHalsRequestDTO = (method: Method, req: Request): HalsRequest => {
     };
 };
 
-
 const mapToPath = (method: Method) => {
     // todo: implement w recursion and pure function
     let endpoint: string = method.path? '/' + method.path + '/': '';
@@ -59,9 +58,8 @@ const mapToPath = (method: Method) => {
     return endpoint;
 };
 
-const executeSideEffects = (dto: HalsRequest, sideEffects: SideEffect[]): void => {
-    for (const sideEffect of sideEffects) sideEffect(dto);
-};
+const executeSideEffects = (dto: HalsRequest, sideEffects: SideEffect[]): void =>
+    sideEffects.forEach(sideEffect => sideEffect(dto));
 
 const mapToRequestHandler = (method: Method): RequestHandler =>
     async (req: Request, res: Response) => {
