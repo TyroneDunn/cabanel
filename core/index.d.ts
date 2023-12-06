@@ -127,7 +127,7 @@ export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type MethodCallback = (dto: Request) => Promise<ResponseDTO>;
 
-export type SideEffect = (dto: Request) => void;
+export type SideEffect = (dto: Request) => Promise<void>;
 
 export type Request = {
     paramMap?: ParamMap,
