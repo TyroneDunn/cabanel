@@ -100,6 +100,7 @@ const configureAppControllers =
 export const expressAppBuilder: AppBuilder = {
     buildApp(config: Config, controllers: Controller[]): AppWrapper {
         const app: Application = express();
+
         app.get('/', home(config.title, config.port, config.version));
         app.use(express.json());
         app.use(cors(config.corsOptions));
@@ -107,7 +108,7 @@ export const expressAppBuilder: AppBuilder = {
         configureAppControllers(app, controllers);
 
         return {
-            run(): void {
+            run: (): void => {
                 app.listen(config.port,() => {
                     console.log(`${config.title} @ port: ${config.port}`);
                 });
@@ -116,9 +117,11 @@ export const expressAppBuilder: AppBuilder = {
     }
 };
 
-const home = (title: string = 'Untitled', port: number = 2400, version?: string) => (req: Request, response: Response): void => {
-    response.send({
-        "message": `${title} @ port: ${port}`,
-        ...version && {"version": `${version}`},
-    });
-};
+const home =
+    (title: string = 'Untitled', port: number = 2400, version?: string): RequestHandler =>
+        (req: Request, response: Response): void => {
+            response.send({
+                "message": `${title} @ port: ${port}`,
+                ...version && {"version": `${version}`},
+            });
+        };
