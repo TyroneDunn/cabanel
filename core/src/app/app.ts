@@ -24,6 +24,5 @@ export const init: Init = (
 
 
 export type Run = () => void;
-export const run: Run = (): void => {
-    for (const app of apps) app.run();
-};
+export const run: Run = (): void =>
+    apps.forEach(app => app.run());
