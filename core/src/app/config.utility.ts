@@ -23,7 +23,7 @@ export const buildConfig: BuildConfig = (
     title: string,
     version: string,
     port: number,
-    corsOptions: CorsOptions = DEFAULT_CORS_OPTIONS,
+    corsOptions: CorsOptions,
     authStrategy: AuthStrategy = "None",
 ): Config =>
     ({
@@ -35,6 +35,7 @@ export const buildConfig: BuildConfig = (
         corsOptions: corsOptions,
         authStrategy: authStrategy
     });
+
 export const DEFAULT_CORS_OPTIONS: CorsOptions = {
     origin: [
         '*',
