@@ -1,4 +1,4 @@
-import {Config} from "../app/config.type";
+import {Config, LocalStrategy} from "../app/config.type";
 import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
 import {RequestHandler} from "express";
@@ -10,10 +10,10 @@ const sessionMiddleware =
 
 const configureSessionOptions = (config: Config): SessionOptions =>
     ({
-        secret: config.authOptions.sessionSecret,
+        secret: (config.authStrategy as LocalStrategy).sessionSecret,
         resave: false,
         saveUninitialized: true,
-        store: configureSessionStore(config),
+        store: configureSessionStore(config.authStrategy as LocalStrategy),
         cookie: {
             // Session Lifespan: 21 Days.
             maxAge: 21 * (24 * (60 * (1000 * 60))),
@@ -21,15 +21,15 @@ const configureSessionOptions = (config: Config): SessionOptions =>
         },
     });
 
-const configureSessionStore = (config: Config) => {
+const configureSessionStore = (authStrategy: LocalStrategy) => {
     let sessionStore;
-    switch (config.authOptions.db) {
+    switch (authStrategy.db) {
         case "MongoDB": {
-            sessionStore = configureMongoSessionStore(config.authOptions.dbUrl);
+            sessionStore = configureMongoSessionStore(authStrategy.dbUrl);
             break;
         }
         default: {
-            throw new Error(`"${config.authOptions.db} session store not implemented. Please choose another session store option.`);
+            throw new Error(`"${authStrategy.db} session store not implemented. Please choose another session store option.`);
         }
     }
     return sessionStore;
