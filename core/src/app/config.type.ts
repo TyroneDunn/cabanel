@@ -15,4 +15,3 @@ export type Config = {
 export type WebFrameworkOption = "Express" | "Nest" | "Fastify";
 export type NodeEnvironmentOption = "production" | "development";
 export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
-
