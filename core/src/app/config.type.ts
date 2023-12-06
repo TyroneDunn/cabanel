@@ -1,6 +1,7 @@
 import {CorsOptions} from "cors";
 import {OK} from "../shared/http-status-codes.constant";
 import {LocalStrategy} from "./local-strategy.type";
+import {JWTStrategy} from "./jwt-strategy.type";
 
 export type Config = {
     nodeEnv: NodeEnvironmentOption;
@@ -15,8 +16,6 @@ export type Config = {
 export type WebFrameworkOption = "Express" | "Nest" | "Fastify";
 export type NodeEnvironmentOption = "production" | "development";
 export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
-
-export type JWTStrategy = {};
 
 export type BuildConfig = (
     nodeEnv: NodeEnvironmentOption,
