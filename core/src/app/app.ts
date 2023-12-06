@@ -1,4 +1,4 @@
-import {AppWrapper} from "./app-wrapper.interface";
+import {AppWrapper} from "./app-wrapper.type";
 import {Config} from "./config.type";
 import {Controller} from "../controller/controller.type";
 import {validateAppConfig} from "./validator.service";

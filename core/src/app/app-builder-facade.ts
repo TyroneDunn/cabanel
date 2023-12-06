@@ -1,7 +1,7 @@
 import {AppBuilder} from "./app-builder.type";
 import {Config} from "./config.type";
 import {Controller} from "../controller/controller.type";
-import {AppWrapper} from "./app-wrapper.interface";
+import {AppWrapper} from "./app-wrapper.type";
 import {expressAppBuilder} from "../express/express-app-builder.service";
 
 export const AppBuilderFacade: AppBuilder = {
