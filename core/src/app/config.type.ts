@@ -2,20 +2,6 @@ import {CorsOptions} from "cors";
 import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
 import {OK} from "../shared/http-status-codes.constant";
 
-type WebFrameworkOption = "Express" | "Nest" | "Fastify";
-type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
-type AuthStrategyOption = "None" | "Local" | "JWT";
-
-type NodeEnvironmentOption = "production" | "development";
-
-const DEFAULT_CORS_OPTIONS: CorsOptions = {
-    origin: [
-        '*',
-    ],
-    optionsSuccessStatus: OK,
-    methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
-};
-
 export type Config = {
     nodeEnv: NodeEnvironmentOption;
     api: WebFrameworkOption,
@@ -23,17 +9,26 @@ export type Config = {
     version: string;
     port: number,
     corsOptions?: CorsOptions,
-    authOptions: {
-        strategy: AuthStrategyOption,
-        db?: DatabaseOption
-        dbUrl: string,
-        sessionSecret: string,
-        hashingAlgorithm: HashingAlgorithm,
-        hashingIterations: number,
-        passwordLength: number
-        passwordSalt: string
-    }
+    authStrategy: AuthStrategy,
 }
+
+export type WebFrameworkOption = "Express" | "Nest" | "Fastify";
+export type NodeEnvironmentOption = "production" | "development";
+export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
+
+export type LocalStrategy = {
+    db: DatabaseOption
+    dbUrl: string,
+    sessionSecret: string,
+    hashingAlgorithm: HashingAlgorithm,
+    hashingIterations: number,
+    passwordLength: number
+    passwordSalt: string
+};
+
+export type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
+
+export type JWTStrategy = {};
 
 export type BuildConfig = (
     nodeEnv: NodeEnvironmentOption,
@@ -42,14 +37,7 @@ export type BuildConfig = (
     version: string,
     port: number,
     corsOptions: CorsOptions,
-    authStrategy: AuthStrategyOption,
-    authDb: DatabaseOption,
-    dbUrl: string,
-    sessionSecret: string,
-    hashingAlgorithm: HashingAlgorithm,
-    hashingIterations: number,
-    passwordLength: number,
-    passwordSalt: string,
+    authStrategy: AuthStrategy,
 ) => Config;
 
 export const buildConfig: BuildConfig = (
@@ -59,14 +47,7 @@ export const buildConfig: BuildConfig = (
     version: string,
     port: number,
     corsOptions: CorsOptions = DEFAULT_CORS_OPTIONS,
-    authStrategy: AuthStrategyOption = "None",
-    authDb: DatabaseOption = "MongoDB",
-    dbUrl: string = "",
-    sessionSecret: string = "",
-    hashingAlgorithm: HashingAlgorithm = "sha512",
-    hashingIterations: number = 32,
-    passwordLength: number = 16,
-    passwordSalt: string = '',
+    authStrategy: AuthStrategy = "None",
 ): Config =>
     ({
         nodeEnv: nodeEnv,
@@ -75,14 +56,13 @@ export const buildConfig: BuildConfig = (
         version: version,
         port: port,
         corsOptions: corsOptions,
-        authOptions: {
-            strategy: authStrategy,
-            db: authDb,
-            dbUrl: dbUrl,
-            sessionSecret: sessionSecret,
-            hashingAlgorithm: hashingAlgorithm,
-            hashingIterations: hashingIterations,
-            passwordLength: passwordLength,
-            passwordSalt: passwordSalt,
-        },
+        authStrategy: authStrategy
     });
+
+export const DEFAULT_CORS_OPTIONS: CorsOptions = {
+    origin: [
+        '*',
+    ],
+    optionsSuccessStatus: OK,
+    methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
+};
