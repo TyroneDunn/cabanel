@@ -29,4 +29,5 @@ export const configureAppAuthentication = (app: Application, config: Config) => 
         app.use(passport.session());
         return;
     }
+    // todo: implement JWT strategy
 };

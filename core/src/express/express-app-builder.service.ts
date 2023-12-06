@@ -1,7 +1,7 @@
 import {AppBuilder} from "../app/app-builder.type";
 import {Config} from "../app/config.type";
 import {Controller} from "../controller/controller.type";
-import {AppWrapper} from "../app/app-wrapper.interface";
+import {AppWrapper} from "../app/app-wrapper.type";
 import {Application, Request, RequestHandler, Response, Router} from "express";
 import {configureAppAuthentication} from "./app-authentication-config.service";
 import {Method} from "../controller/method.type";
