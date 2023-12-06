@@ -1,4 +1,3 @@
-import {AppBuilder} from "../app/app-builder.type";
 import {Config} from "../app/config.type";
 import {Controller} from "../controller/controller.type";
 import {AppWrapper} from "../app/app-wrapper.type";
@@ -10,6 +9,7 @@ import {Request as HalsRequest} from "../shared/request-dto.type";
 import {SideEffect} from "../controller/side-effect.type";
 import {authGuard} from "./auth-guard";
 import {ResponseDTO} from "../shared/response-dto.type";
+import {AppBuilder} from "../app/app-builder.utility";
 
 const express = require("express");
 const cors = require('cors');

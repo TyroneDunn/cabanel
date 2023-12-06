@@ -4,7 +4,7 @@ import {Controller} from "../controller/controller.type";
 import {validateAppConfig} from "./validator.service";
 import {ValidationOutcome} from "../shared/validation-outcome.type";
 import {throwErrors} from "../shared/error-handler.service";
-import {AppBuilderFacade} from "./app-builder-facade";
+import {appBuilder} from "./app-builder.utility";
 
 const apps: AppWrapper[] = [];
 
@@ -19,7 +19,7 @@ export const init: Init = (
 ): void => {
     const validationOutcome: ValidationOutcome = validateAppConfig(config);
     if (validationOutcome.errors.length > 0) throwErrors(validationOutcome.errors);
-    apps.push(AppBuilderFacade.buildApp(config, controllers));
+    apps.push(appBuilder.buildApp(config, controllers));
 };
 
 
