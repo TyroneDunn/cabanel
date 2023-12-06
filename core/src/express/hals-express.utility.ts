@@ -6,11 +6,11 @@ import {
     Router as ExpressRouter
 } from "express";
 import {ParamMap as HalsParamMap} from "../app/param-map.type";
-import {Method as HalsMethod} from "../controller/method.type";
+import {Method as HalsMethod} from "../app/method.type";
 import {Request as HalsRequest} from "../app/request.type";
-import {executeSideEffects} from "../controller/side-effect.utility";
+import {executeSideEffects} from "../app/side-effect.utility";
 import {Response as HalsResponse} from "../app/response.type";
-import {Controller as HalsController} from "../controller/controller.type";
+import {Controller as HalsController} from "../app/controller.type";
 import {authGuard} from "./express-authentication.utility";
 
 export const mapToRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler =>

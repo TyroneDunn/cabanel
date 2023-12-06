@@ -1,5 +1,5 @@
 import {Config as HalsConfig} from "../app/config.type";
-import {Controller as HalsController} from "../controller/controller.type";
+import {Controller as HalsController} from "../app/controller.type";
 import {AppWrapper as HalsAppWrapper} from "../app/app-wrapper.type";
 const express = require("express");
 import {

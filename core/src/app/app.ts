@@ -1,6 +1,6 @@
 import {AppWrapper} from "./app-wrapper.type";
 import {Config} from "./config.type";
-import {Controller} from "../controller/controller.type";
+import {Controller} from "./controller.type";
 import {validateAppConfig} from "./validator.service";
 import {ValidationOutcome} from "../shared/validation-outcome.type";
 import {throwErrors} from "../shared/error-handler.service";
