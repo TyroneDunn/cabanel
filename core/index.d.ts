@@ -1,6 +1,7 @@
 import {CorsOptions} from "cors";
 import {buildConfig} from "./src/app/config.type";
 import {Init, init as initApp, Run, run as runApp} from "./src/app/app";
+import {ResponseDTO} from "./src/shared/response-dto.type";
 
 type HashingAlgorithm =
     'RSA-MD5' |
@@ -112,7 +113,6 @@ export type Controller = {
     methods: Method[],
 };
 
-export type Callback = (response: ResponseDTO) => void;
 
 export type Method = {
     type: MethodType,
@@ -120,10 +120,12 @@ export type Method = {
     paramKeys: string[],
     queryParamKeys: string[]
     sideEffects: SideEffect[],
-    done: (dto: Request, callback: Callback) => void,
+    done: MethodCallback,
 };
 
-type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+export type MethodCallback = (dto: Request) => Promise<ResponseDTO>;
 
 export type SideEffect = (dto: Request) => void;
 
@@ -133,7 +135,7 @@ export type Request = {
     payload?: Object,
 };
 
-type ParamMap = Record<string, string>;
+export type ParamMap = Record<string, string>;
 
 export type Response = {
     status: number
