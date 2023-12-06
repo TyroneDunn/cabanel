@@ -5,11 +5,11 @@ import {
     Response as ExpressResponse,
     Router as ExpressRouter
 } from "express";
-import {ParamMap as HalsParamMap} from "../shared/param-map.type";
+import {ParamMap as HalsParamMap} from "../app/param-map.type";
 import {Method as HalsMethod} from "../controller/method.type";
-import {Request as HalsRequest} from "../shared/request.type";
+import {Request as HalsRequest} from "../app/request.type";
 import {executeSideEffects} from "../controller/side-effect.utility";
-import {Response as HalsResponse} from "../shared/response.type";
+import {Response as HalsResponse} from "../app/response.type";
 import {Controller as HalsController} from "../controller/controller.type";
 import {authGuard} from "./express-authentication.utility";
 

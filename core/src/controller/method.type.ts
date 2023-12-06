@@ -1,6 +1,6 @@
 import {SideEffect} from "./side-effect.type";
-import {Response} from "../shared/response.type";
-import {Request} from "../shared/request.type";
+import {Response} from "../app/response.type";
+import {Request} from "../app/request.type";
 
 export type Method = {
     type: MethodType,
