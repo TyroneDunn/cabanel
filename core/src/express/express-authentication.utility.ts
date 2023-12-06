@@ -11,7 +11,7 @@ import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
 import {Config} from "../app/config.type";
 import {LocalStrategy as HalsLocalStrategy} from "../app/local-strategy.type";
-import {isLocalStrategy} from "../utils/is-local-strategy.utility";
+import {isLocalStrategy} from "../app/local-strategy.utility";
 import {UsersRepository} from "../users/users-repository";
 import {configureUsersRepository} from "../users/users-repository.utility";
 import {GetUserDTO} from "../users/users-dtos";
