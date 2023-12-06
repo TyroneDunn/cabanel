@@ -1,3 +1,3 @@
-import {Request} from "../shared/request-dto.type";
+import {Request} from "../shared/request.type";
 
 export type SideEffect = (dto: Request) => Promise<void>;

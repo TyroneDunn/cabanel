@@ -1,4 +1,4 @@
-export type ResponseDTO = {
+export type Response = {
     status: number
     error?: string,
     collection?: any[],
