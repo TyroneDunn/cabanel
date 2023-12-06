@@ -10,22 +10,23 @@ import {isLocalStrategy} from "../utils/is-local-strategy.utility";
 export const configureAppAuthentication = (app: Application, config: Config) => {
     if (config.authStrategy === "None") return;
 
-            // todo: simplify argument list
-            configurePassportLocalStrategy(
-                config.authOptions.passwordSalt,
-                config.authOptions.hashingIterations,
-                config.authOptions.passwordLength,
-                config.authOptions.hashingAlgorithm,
-                usersRepository
-            );
-            app.use(session(config));
-            app.use(passport.initialize());
-            app.use(passport.session());
-            break;
-        }
-        case "JWT": {
-            // implement JWT strategy
-            break;
-        }
+    if (isLocalStrategy(config.authStrategy)) {
+        const localStrategyConfig: LocalStrategy = config.authStrategy as LocalStrategy;
+        const usersRepository: UsersRepository = configureUserRepository(
+            localStrategyConfig.db,
+            localStrategyConfig.dbUrl,
+            localStrategyConfig.passwordSalt,
+            localStrategyConfig.passwordLength,
+            localStrategyConfig.hashingAlgorithm,
+            localStrategyConfig.hashingIterations
+        );
+        configurePassportLocalStrategy(
+            localStrategyConfig,
+            usersRepository
+        );
+        app.use(session(config));
+        app.use(passport.initialize());
+        app.use(passport.session());
+        return;
     }
 };
