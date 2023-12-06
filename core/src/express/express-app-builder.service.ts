@@ -60,9 +60,7 @@ const mapToPath = (method: Method) => {
 };
 
 const executeSideEffects = (dto: HalsRequest, sideEffects: SideEffect[]): void => {
-    for (const sideEffect of sideEffects) {
-        sideEffect(dto);
-    }
+    for (const sideEffect of sideEffects) sideEffect(dto);
 };
 
 const mapToRequestHandler = (method: Method): RequestHandler =>
