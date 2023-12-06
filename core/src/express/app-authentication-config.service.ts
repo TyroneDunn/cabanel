@@ -1,18 +1,14 @@
 import {Application} from "express";
-import passport = require("passport");
-import {Config} from "../app/config.type";
-import {UsersRepository} from "../user/users-repository";
+import {Config, LocalStrategy} from "../app/config.type";
 import {configureUserRepository} from "./user-repository-config.service";
 import {configurePassportLocalStrategy} from "./passport-local-config";
 import {session} from "./session-config";
+import {UsersRepository} from "../user/users-repository";
+import passport = require("passport");
+import {isLocalStrategy} from "../utils/is-local-strategy.utility";
 
 export const configureAppAuthentication = (app: Application, config: Config) => {
-    switch (config.authOptions.strategy) {
-        case "None": {
-            break;
-        }
-        case "Local": {
-            const usersRepository: UsersRepository = configureUserRepository(config);
+    if (config.authStrategy === "None") return;
 
             // todo: simplify argument list
             configurePassportLocalStrategy(
