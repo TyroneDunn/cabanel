@@ -1,7 +1,7 @@
 import {CorsOptions} from "cors";
-import {buildConfig} from "./src/app/config.type";
 import {Init, init as initApp, Run, run as runApp} from "./src/app/app";
 import {ResponseDTO} from "./src/shared/response-dto.type";
+import {buildConfig} from "./src/app/config.utility";
 
 type HashingAlgorithm =
     'RSA-MD5' |
