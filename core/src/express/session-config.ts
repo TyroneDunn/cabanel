@@ -1,7 +1,8 @@
-import {Config, LocalStrategy} from "../app/config.type";
+import {Config} from "../app/config.type";
 import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
 import {RequestHandler} from "express";
+import {LocalStrategy} from "../app/local-strategy.type";
 
 export {sessionMiddleware as session};
 

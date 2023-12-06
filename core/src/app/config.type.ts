@@ -1,6 +1,6 @@
 import {CorsOptions} from "cors";
-import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
 import {OK} from "../shared/http-status-codes.constant";
+import {LocalStrategy} from "./local-strategy.type";
 
 export type Config = {
     nodeEnv: NodeEnvironmentOption;
@@ -15,18 +15,6 @@ export type Config = {
 export type WebFrameworkOption = "Express" | "Nest" | "Fastify";
 export type NodeEnvironmentOption = "production" | "development";
 export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
-
-export type LocalStrategy = {
-    db: DatabaseOption
-    dbUrl: string,
-    sessionSecret: string,
-    hashingAlgorithm: HashingAlgorithm,
-    hashingIterations: number,
-    passwordLength: number
-    passwordSalt: string
-};
-
-export type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
 
 export type JWTStrategy = {};
 
