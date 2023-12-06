@@ -3,17 +3,14 @@ import {User} from "../user/user";
 const passportConfig = require('passport');
 import LocalStrategy = require('passport-local');
 import {validateHash} from "../utils/password.utility";
-import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
 import {UsersRepository} from "../user/users-repository";
+import {LocalStrategy as LocalStrategyConfig} from "../app/config.type";
 
 // todo: confirm configuration with any data types functions correctly. This was a hack as I
 //  could not find the function definitions with clear types for the relevant passport functions.
 
 export const configurePassportLocalStrategy = (
-    salt: string,
-    iterations: number,
-    length: number,
-    hashingAlgorithm: HashingAlgorithm,
+    config: LocalStrategyConfig,
     usersRepository: UsersRepository
 ): void => {
     const userField = {
@@ -32,10 +29,10 @@ export const configurePassportLocalStrategy = (
         if (!validateHash(
                 password,
                 user.hash,
-                salt,
-                iterations,
-                length,
-                hashingAlgorithm
+                config.passwordSalt,
+                config.hashingIterations,
+                config.passwordLength,
+                config.hashingAlgorithm
             )) {
             done(null, false);
             return;
