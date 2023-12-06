@@ -1,9 +1,9 @@
 import {CorsOptions} from "cors";
 import {Init, init as initApp, Run, run as runApp} from "./src/app/app";
-import {ResponseDTO} from "./src/shared/response-dto.type";
-import {buildConfig} from "./src/app/config.utility";
+import {buildConfig as buildAppImpl} from "./src/app/config.utility";
+import {appBuilder as appBuilderImpl} from "./src/app/app-builder.utility";
 
-type HashingAlgorithm =
+export type HashingAlgorithm =
     'RSA-MD5' |
     'RSA-RIPEMD160' |
     'RSA-SHA1' |
@@ -57,17 +57,18 @@ type HashingAlgorithm =
     'ssl3-md5' |
     'ssl3-sha1';
 
-type WebFrameworkOption = "Express" | "Nest" | "Fastify";
-type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
-type AuthStrategyOption = "None" | "Local" | "JWT";
-type NodeEnvironmentOption = "production" | "development";
-
 const init: Init = initApp;
 const run: Run = runApp;
 export const App = {
     init: init,
     run: run
 };
+
+
+export type AppBuilder = {
+    buildApp: (config: Config, controllers: Controller[]) => AppWrapper,
+};
+
 
 export type Config = {
     nodeEnv: NodeEnvironmentOption;
@@ -76,17 +77,24 @@ export type Config = {
     version: string;
     port: number,
     corsOptions?: CorsOptions,
-    authOptions: {
-        strategy: AuthStrategyOption,
-        db?: DatabaseOption
-        dbUrl: string,
-        sessionSecret: string,
-        hashingAlgorithm: HashingAlgorithm,
-        hashingIterations: number,
-        passwordLength: number
-        passwordSalt: string
-    }
+    authStrategy: AuthStrategy,
+}
+
+export type WebFrameworkOption = "Express" | "Nest" | "Fastify";
+export type NodeEnvironmentOption = "production" | "development";
+export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
+
+export type LocalStrategy = {
+    db: DatabaseOption
+    dbUrl: string,
+    sessionSecret: string,
+    hashingAlgorithm: HashingAlgorithm,
+    hashingIterations: number,
+    passwordLength: number
+    passwordSalt: string
 };
+
+export type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
 
 export type BuildConfig = (
     nodeEnv: NodeEnvironmentOption,
@@ -95,17 +103,17 @@ export type BuildConfig = (
     version: string,
     port: number,
     corsOptions: CorsOptions,
-    authStrategy: AuthStrategyOption = "None",
-    authDb: DatabaseOption = "MongoDB",
-    dbUrl: string = "",
-    sessionSecret: string = "",
-    hashingAlgorithm: HashingAlgorithm = "sha512",
-    hashingIterations: number = 32,
-    passwordLength: number = 16,
-    passwordSalt: string = '',
+    authStrategy: AuthStrategy,
 ) => Config;
 
-export const buildAppConfig: BuildConfig = buildConfig;
+
+export const buildConfig: BuildConfig = buildAppImpl;
+
+export const appBuilder: AppBuilder = appBuilderImpl;
+
+export type AppWrapper = {
+    run: () => void,
+};
 
 export type Controller = {
     path: string,
@@ -124,10 +132,9 @@ export type Method = {
 };
 
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+export type MethodCallback = (request: Request) => Promise<Response>;
 
-export type MethodCallback = (dto: Request) => Promise<ResponseDTO>;
-
-export type SideEffect = (dto: Request) => Promise<void>;
+export type SideEffect = (request: Request) => Promise<void>;
 
 export type Request = {
     paramMap?: ParamMap,
