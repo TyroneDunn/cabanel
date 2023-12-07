@@ -1,4 +1,4 @@
-import {User} from "./user";
+import {User} from "./user.type";
 import {
     DeleteUserDTO,
     GetUserDTO,
@@ -8,11 +8,11 @@ import {
 } from "./users-dtos";
 
 export type UsersRepository = {
-    getUser: (dto: GetUserDTO) => Promise<User | null>,
-    getUsers: (dto: UsersDTO) => Promise<User[] | null>,
+    getUser: (dto: GetUserDTO) => Promise<User>,
+    getUsers: (dto: UsersDTO) => Promise<User[]>,
     registerUser: (dto: RegisterUserDTO) => Promise<User>,
-    deleteUser: (dto: DeleteUserDTO) => Promise<User | null>,
+    deleteUser: (dto: DeleteUserDTO) => Promise<User>,
     deleteUsers: (dto: UsersDTO) => Promise<string>,
-    updateUser: (dto: UpdateUserDTO) => Promise<User | null>,
+    updateUser: (dto: UpdateUserDTO) => Promise<User>,
     exists: (username: string) => Promise<boolean>,
 };

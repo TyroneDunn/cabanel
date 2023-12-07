@@ -1,4 +1,4 @@
-import {UserSortOption} from "./user";
+import {UserSortOption} from "./user.type";
 import {OrderOption} from "../shared/order-option.type";
 
 export type GetUserDTO = {username: string};

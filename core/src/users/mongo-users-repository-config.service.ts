@@ -1,5 +1,5 @@
 import {UsersRepository} from "./users-repository";
-import {User} from "./user";
+import {User} from "./user.type";
 import {Model, now} from "mongoose";
 import {
     DeleteUserDTO,
