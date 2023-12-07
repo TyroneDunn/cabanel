@@ -6,9 +6,11 @@ import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
 import {DatabaseOption} from "../app/local-strategy.type";
 
 // JWT may need to configure users repo too, doesn't make sense to pass a local strategy parameter
+
 export const configureUsersRepository = (
-    db: DatabaseOption,
-    dbUrl: string,
+    usersDbName: string,
+    usersDbOption: DatabaseOption,
+    usersDbUrl: string,
     passwordSalt: string,
     passwordLength: number,
     hashingAlgorithm: HashingAlgorithm,
@@ -22,15 +24,15 @@ export const configureUsersRepository = (
         hashingAlgorithm
     );
     let usersRepository: UsersRepository;
-    switch (db) {
+    switch (usersDbOption) {
         case "MongoDB": {
             return usersRepository = configureMongoUsersRepository(
-                generateUserModel(dbUrl),
+                generateUserModel(usersDbUrl, usersDbName),
                 generateHashWrapper,
             );
         }
         default: {
-            throw new Error(`"${db}" DB option not implemented. Please select another option.`);
+            throw new Error(`"${usersDbOption}" DB option not implemented. Please select another option.`);
         }
     }
 };
