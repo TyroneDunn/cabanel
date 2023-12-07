@@ -8,9 +8,10 @@ export type Method = {
     paramKeys: string[],
     queryParamKeys: string[]
     sideEffects: SideEffect[],
-    done: MethodCallback,
+    middleware: RequestHandler[],
+    requestHandler: RequestHandler,
 };
 
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-export type MethodCallback = (dto: Request) => Promise<Response>;
+export type RequestHandler = (dto: Request) => Promise<Response>;
 
