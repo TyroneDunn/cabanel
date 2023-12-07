@@ -1,8 +1,9 @@
 import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
 
 export type LocalStrategy = {
-    db: DatabaseOption
-    dbUrl: string,
+    usersDbName: string,
+    usersDbOption: DatabaseOption
+    usersDbUrl: string,
     sessionSecret: string,
     hashingAlgorithm: HashingAlgorithm,
     hashingIterations: number,

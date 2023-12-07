@@ -19,5 +19,5 @@ const userSchema = new Schema<UserDocument>({
     },
 });
 
-export const generateUserModel = (dbUrl: string): Model<UserDocument> =>
-    mongoose.createConnection(dbUrl).model<UserDocument>('User', userSchema);
+export const generateUserModel = (dbUrl: string, name: string): Model<UserDocument> =>
+    mongoose.createConnection(dbUrl).model<UserDocument>(name, userSchema);
