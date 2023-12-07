@@ -85,8 +85,9 @@ export type NodeEnvironmentOption = "production" | "development";
 export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
 
 export type LocalStrategy = {
-    db: DatabaseOption
-    dbUrl: string,
+    usersDbName: string,
+    usersDbOption: DatabaseOption
+    usersDbUrl: string,
     sessionSecret: string,
     hashingAlgorithm: HashingAlgorithm,
     hashingIterations: number,
@@ -121,18 +122,18 @@ export type Controller = {
     methods: Method[],
 };
 
-
 export type Method = {
     type: MethodType,
     path?: string,
     paramKeys: string[],
     queryParamKeys: string[]
     sideEffects: SideEffect[],
-    done: MethodCallback,
+    middleware: RequestHandler[],
+    requestHandler: RequestHandler,
 };
 
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-export type MethodCallback = (request: Request) => Promise<Response>;
+export type RequestHandler = (dto: Request) => Promise<Response>;
 
 export type SideEffect = (request: Request) => Promise<void>;
 
