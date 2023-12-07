@@ -1,5 +1,11 @@
 import {AuthService} from "../auth/auth.service";
-import {NextFunction, Request as ExpressRequest, RequestHandler, Response as ExpressResponse, Router,} from "express";
+import {
+    NextFunction,
+    Request as ExpressRequest,
+    RequestHandler,
+    Response as ExpressResponse,
+    Router,
+} from "express";
 import passport from "passport";
 import {RegisterUserDTO} from "../users/users-dtos";
 import {Response as HalsResponse} from "../app/response.type"
