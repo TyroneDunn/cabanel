@@ -4,8 +4,9 @@ export const isLocalStrategy = (authStrategy: AuthStrategy) =>
     (
         typeof authStrategy === 'object'
         && authStrategy !== null
-        && 'db' in authStrategy
-        && 'dbUrl' in authStrategy
+        && 'usersDbName' in authStrategy
+        && 'usersDbOption' in authStrategy
+        && 'usersDbUrl' in authStrategy
         && 'sessionSecret' in authStrategy
         && 'hashingAlgorithm' in authStrategy
         && 'hashingIterations' in authStrategy
