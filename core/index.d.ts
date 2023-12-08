@@ -164,3 +164,7 @@ export const HttpStatusCodes = {
     CONFLICT: number = 409,
     INTERNAL_SERVER_ERROR: number = 500,
 };
+
+export const UserRegisteredEvent: string = 'userRegistered';
+export const UserLoggedInEvent: string = 'userLoggedIn';
+export const UserLoggedOutEvent: string = 'userLoggedOut';

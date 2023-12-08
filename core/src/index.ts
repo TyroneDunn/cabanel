@@ -1,6 +1,8 @@
 import {init, run} from "./app/app";
 import {BuildConfig, buildConfig as buildAppImpl} from "./app/config.utility";
 import {appBuilder as appBuilderImpl, AppBuilder} from "./app/app-builder.utility";
+import EventEmitter from "events";
+import {HalsEventEmitter} from "./app/event-emitter.service";
 
 export const App = {
     init: init,
@@ -10,3 +12,5 @@ export const App = {
 export const buildConfig: BuildConfig = buildAppImpl;
 
 export const appBuilder: AppBuilder = appBuilderImpl;
+
+export const halsEventEmitter: EventEmitter = HalsEventEmitter;
