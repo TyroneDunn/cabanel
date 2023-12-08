@@ -12,6 +12,12 @@ import {Response as HalsResponse} from "../app/response.type"
 import {CREATED, INTERNAL_SERVER_ERROR, OK} from "../shared/http-status-codes.constant";
 import {authGuard} from "./authentication.utility";
 import {User} from "../users/user.type";
+import {
+    HalsEventEmitter,
+    UserRegisteredEvent,
+    UserLoggedInEvent,
+    UserLoggedOutEvent
+} from "../app/event-emitter.service";
 
 export const configureLocalAuthRouter = (authService: AuthService): Router => {
     const authRouter: Router = Router();
@@ -24,10 +30,15 @@ export const configureLocalAuthRouter = (authService: AuthService): Router => {
 };
 
 const register = (authService: AuthService): RequestHandler =>
-    async (request: ExpressRequest, response: ExpressResponse, next: NextFunction) => {
+    async (request: ExpressRequest, response: ExpressResponse, next: NextFunction): Promise<void> => {
         const dto: RegisterUserDTO = mapToRegisterUserDTO(request);
         const halsResponse: HalsResponse = await authService.registerUser(dto);
-        if (halsResponse.status === CREATED) return next();
+        if (halsResponse.status === CREATED) {
+            const user: User = halsResponse.collection?.pop() as User;
+            HalsEventEmitter.emit(UserRegisteredEvent, user);
+            next();
+            return;
+        }
         response.status(halsResponse.status).json(halsResponse);
     };
 
@@ -38,23 +49,25 @@ const mapToRegisterUserDTO = (req: ExpressRequest): RegisterUserDTO => ({
     password: req.body.password,
 });
 
-const loggedIn: RequestHandler = (request: ExpressRequest, response: ExpressResponse) => {
+const loggedIn: RequestHandler = (request: ExpressRequest, response: ExpressResponse): void => {
     response.json({status: OK, message: 'Logged in successfully.'});
+    HalsEventEmitter.emit(UserLoggedInEvent, request.user as User);
 };
 
-const logout: RequestHandler = (req: ExpressRequest, res: ExpressResponse): void => {
-    req.logout((error) => {
+const logout: RequestHandler = (request: ExpressRequest, response: ExpressResponse): void => {
+    request.logout((error) => {
         if (error) {
-            res.status(INTERNAL_SERVER_ERROR).json({
+            response.status(INTERNAL_SERVER_ERROR).json({
                 status: INTERNAL_SERVER_ERROR,
                 message: 'Log out failed.'
             });
             return;
         }
-        res.json({
+        response.json({
             status: OK,
             message: 'Logged out successfully.'
         });
+        HalsEventEmitter.emit(UserLoggedOutEvent, request.user as User);
     });
 };
 
