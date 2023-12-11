@@ -96,6 +96,18 @@ export const configureRouters =
                         expressRouter.post(path, sideEffects, ...middlewares, requestHandler);
                         break;
                     }
+                    case "PATCH": {
+                        expressRouter.patch(path, sideEffects, ...middlewares, requestHandler);
+                        break;
+                    }
+                    case "PUT": {
+                        expressRouter.put(path, sideEffects, ...middlewares, requestHandler);
+                        break;
+                    }
+                    case "DELETE": {
+                        expressRouter.delete(path, sideEffects, ...middlewares, requestHandler);
+                        break;
+                    }
                 }
             }
 
