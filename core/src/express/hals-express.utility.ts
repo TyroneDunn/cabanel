@@ -32,9 +32,10 @@ export const mapToMiddlewareRequestHandlers = (halsMethod: HalsMethod): ExpressR
         });
 
 const mapSideEffectsToRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler =>
-    (expressRequest: ExpressRequest, expressResponse: ExpressResponse) => {
+    (expressRequest: ExpressRequest, expressResponse: ExpressResponse, next: NextFunction): void => {
         const halsRequest: HalsRequest = mapToHalsRequest(expressRequest, halsMethod);
         executeSideEffects(halsRequest, halsMethod.sideEffects);
+        next();
     };
 
 export const mapToPath = (halsMethod: HalsMethod): string => {
