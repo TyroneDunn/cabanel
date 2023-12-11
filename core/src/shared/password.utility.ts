@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
+import {HashingAlgorithm} from "../app/hashing-algorithm.type";
 
 export const generateHash = (
     password: string,

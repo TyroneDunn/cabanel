@@ -1,4 +1,4 @@
-import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
+import {HashingAlgorithm} from "./hashing-algorithm.type";
 
 export type LocalStrategy = {
     usersDbName: string,

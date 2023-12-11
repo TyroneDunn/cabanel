@@ -6,6 +6,8 @@ import {
     WebFrameworkOption,
     AuthStrategy,
 } from "./config.type";
+import {DatabaseOption, LocalStrategy} from "./local-strategy.type";
+import {HashingAlgorithm} from "./hashing-algorithm.type";
 
 export type BuildConfig = (
     nodeEnv: NodeEnvironmentOption,
