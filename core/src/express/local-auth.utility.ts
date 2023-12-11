@@ -8,7 +8,7 @@ import {validateHash} from "../shared/password.utility";
 import {Config} from "../app/config.type";
 import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
-import {configureUsersRepository} from "../users/users-repository.utility";
+import {configureAuthRepository} from "../auth/auth-repository.utility";
 import {AuthService, configureAuthService} from "../auth/auth.service";
 import {configureLocalAuthRouter} from "./local-auth-router.utility";
 import LocalStrategy = require('passport-local');
@@ -17,7 +17,7 @@ import {OK} from "../shared/http-status-codes.constant";
 
 export const configureLocalAuthentication = (config: Config, app: ExpressApplication): void => {
     const localStrategyConfig: HalsLocalStrategy = config.authStrategy as HalsLocalStrategy;
-    const usersRepository: AuthRepository = configureUsersRepository(
+    const authRepository: AuthRepository = configureAuthRepository(
         localStrategyConfig.usersDbName,
         localStrategyConfig.usersDbOption,
         localStrategyConfig.usersDbUrl,
@@ -26,7 +26,7 @@ export const configureLocalAuthentication = (config: Config, app: ExpressApplica
         localStrategyConfig.hashingAlgorithm,
         localStrategyConfig.hashingIterations
     );
-    const authService = configureAuthService(usersRepository);
+    const authService = configureAuthService(authRepository);
     configurePassportLocalStrategy(
         localStrategyConfig,
         authService

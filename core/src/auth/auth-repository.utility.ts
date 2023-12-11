@@ -1,13 +1,11 @@
-import {UsersRepository} from "./users-repository";
-import {generateHash} from "../utils/password.utility";
-import {configureMongoUsersRepository} from "./mongo-users-repository-config.service";
-import {generateUserModel} from "./mongo-user-model-config.service";
-import {HashingAlgorithm} from "../shared/hashing-algorithm.type";
-import {DatabaseOption} from "../app/local-strategy.type";
+import {AuthRepository} from "./auth-repository.type";
+import {generateHash} from "../shared/password.utility";
+import {configureMongoAuthRepository} from "./mongo-auth-repository-config.service";
+import {generateUserModel} from "../users/mongo-user-model-config.service";
+import {HashingAlgorithm} from "./hashing-algorithm.type";
+import {DatabaseOption} from "./local-strategy.type";
 
-// JWT may need to configure users repo too, doesn't make sense to pass a local strategy parameter
-
-export const configureUsersRepository = (
+export const configureAuthRepository = (
     usersDbName: string,
     usersDbOption: DatabaseOption,
     usersDbUrl: string,
@@ -15,7 +13,7 @@ export const configureUsersRepository = (
     passwordLength: number,
     hashingAlgorithm: HashingAlgorithm,
     hashingIterations: number
-): UsersRepository => {
+): AuthRepository => {
     const generateHashWrapper = (key: string) => generateHash(
         key,
         passwordSalt,
@@ -23,10 +21,9 @@ export const configureUsersRepository = (
         passwordLength,
         hashingAlgorithm
     );
-    let usersRepository: UsersRepository;
     switch (usersDbOption) {
         case "MongoDB": {
-            return usersRepository = configureMongoUsersRepository(
+            return configureMongoAuthRepository(
                 generateUserModel(usersDbUrl, usersDbName),
                 generateHashWrapper,
             );
