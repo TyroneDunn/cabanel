@@ -1,4 +1,4 @@
-import {AuthStrategy} from "./config.type";
+import {AuthStrategy} from "../app/config.type";
 
 export const isLocalStrategy = (authStrategy: AuthStrategy) =>
     (

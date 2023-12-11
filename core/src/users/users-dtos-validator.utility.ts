@@ -4,7 +4,7 @@ import {
 } from "./users-dtos";
 import {ValidationOutcome} from "../shared/validation-outcome.type";
 import {Error} from "../shared/error.type";
-import {AuthRepository} from "./auth-repository.type";
+import {AuthRepository} from "../auth/auth-repository.type";
 
 export type UsersDtosValidator = {
     validateGetUserDTO: (dto: GetUserDTO) => Promise<ValidationOutcome>,

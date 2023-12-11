@@ -1,4 +1,4 @@
-import {AuthService} from "../app/auth.service";
+import {AuthService} from "../auth/auth.service";
 import {
     NextFunction,
     Request as ExpressRequest,

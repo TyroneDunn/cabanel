@@ -1,8 +1,8 @@
 import {AuthRepository} from "./auth-repository.type";
-import {User} from "./user.type";
+import {User} from "../users/user.type";
 import {Model, now} from "mongoose";
-import {GetUserDTO, RegisterUserDTO} from "./users-dtos";
-import {UserDocument} from "./mongo-user-model-config.service";
+import {GetUserDTO, RegisterUserDTO} from "../users/users-dtos";
+import {UserDocument} from "../users/mongo-user-model-config.service";
 
 export const configureMongoAuthRepository =
     (userModel: Model<UserDocument>, generateHash: (key: string) => string): AuthRepository => ({

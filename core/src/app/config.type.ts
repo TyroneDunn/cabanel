@@ -1,6 +1,6 @@
 import {CorsOptions} from "cors";
-import {LocalStrategy} from "./local-strategy.type";
-import {JWTStrategy} from "./jwt-strategy.type";
+import {LocalStrategy} from "../auth/local-strategy.type";
+import {JWTStrategy} from "../auth/jwt-strategy.type";
 
 export type Config = {
     nodeEnv: NodeEnvironmentOption;

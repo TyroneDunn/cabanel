@@ -6,7 +6,7 @@ import {
     Response
 } from "express";
 import {Config} from "../app/config.type";
-import {isLocalStrategy} from "../app/local-strategy.utility";
+import {isLocalStrategy} from "../auth/local-strategy.utility";
 import {configureLocalAuthentication} from "./local-auth.utility";
 import {UNAUTHORIZED} from "../shared/http-status-codes.constant";
 

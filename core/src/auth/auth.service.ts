@@ -1,7 +1,7 @@
-import {AuthRepository} from "../users/auth-repository.type";
+import {AuthRepository} from "./auth-repository.type";
 import {GetUserDTO, RegisterUserDTO} from "../users/users-dtos";
 import {ValidationOutcome} from "../shared/validation-outcome.type";
-import {Response} from "./response.type";
+import {Response} from "../app/response.type";
 import {
     BAD_REQUEST,
     CREATED,

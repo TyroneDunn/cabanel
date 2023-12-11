@@ -1,8 +1,8 @@
-import {User} from "./user.type";
+import {User} from "../users/user.type";
 import {
     GetUserDTO,
     RegisterUserDTO,
-} from "./users-dtos";
+} from "../users/users-dtos";
 
 export type AuthRepository = {
     getUser: (dto: GetUserDTO) => Promise<User | null>,
