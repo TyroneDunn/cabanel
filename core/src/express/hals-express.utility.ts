@@ -77,17 +77,16 @@ export const mapToHalsQueryParamMap = (queryParamKeys: string[], expressRequest:
     }
     return queryParamMap;
 };
+
 export const configureRouters =
     (app: ExpressApplication, halsControllers: HalsController[]): void => {
         for (const controller of halsControllers) {
-            // configure router and its request handlers
             const expressRouter: ExpressRouter = ExpressRouter();
             for (const method of controller.methods) {
                 const path = mapToPath(method);
                 const sideEffects: ExpressRequestHandler = mapSideEffectsToRequestHandler(method);
                 const middlewares: ExpressRequestHandler[] = mapToMiddlewareRequestHandlers(method);
                 const requestHandler: ExpressRequestHandler = mapRequestHandler(method);
-
                 switch (method.type) {
                     case "GET": {
                         expressRouter.get(path, sideEffects, ...middlewares, requestHandler);
@@ -96,8 +95,6 @@ export const configureRouters =
                     case "POST": {
                         expressRouter.post(path, sideEffects, ...middlewares, requestHandler);
                         break;
-                        // implement rest
-                        //      ...
                     }
                 }
             }
@@ -108,4 +105,3 @@ export const configureRouters =
                 app.use('/' + controller.path, expressRouter);
         }
     };
-
