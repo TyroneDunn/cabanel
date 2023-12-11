@@ -1,7 +1,7 @@
 import {UsersRepository} from "../users/users-repository";
 import {GetUserDTO, RegisterUserDTO} from "../users/users-dtos";
 import {ValidationOutcome} from "../shared/validation-outcome.type";
-import {Response} from "../app/response.type";
+import {Response} from "./response.type";
 import {
     BAD_REQUEST,
     CREATED,
@@ -9,6 +9,7 @@ import {
     OK
 } from "../shared/http-status-codes.constant";
 import {usersDtosValidator} from "../users/users-dtos-validator.utility";
+import {User} from "../users/user.type";
 
 export type AuthService = {
     getUser: (dto: GetUserDTO) => Promise<Response>,
