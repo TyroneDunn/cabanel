@@ -4,14 +4,14 @@ import {
 } from "./users-dtos";
 import {ValidationOutcome} from "../shared/validation-outcome.type";
 import {Error} from "../shared/error.type";
-import {UsersRepository} from "./users-repository";
+import {AuthRepository} from "./auth-repository.type";
 
 export type UsersDtosValidator = {
     validateGetUserDTO: (dto: GetUserDTO) => Promise<ValidationOutcome>,
     validateRegisterUserDTO: (dto: RegisterUserDTO) => Promise<ValidationOutcome>,
 };
 
-export const usersDtosValidator = (usersRepository: UsersRepository): UsersDtosValidator => ({
+export const usersDtosValidator = (usersRepository: AuthRepository): UsersDtosValidator => ({
     validateGetUserDTO: async (dto: GetUserDTO): Promise<ValidationOutcome> => {
         const errors: Error[] = [];
         if (!dto.username) errors.push({type: "BadRequest", message: 'Username required.'});

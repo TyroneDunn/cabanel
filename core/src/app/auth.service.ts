@@ -1,4 +1,4 @@
-import {UsersRepository} from "../users/users-repository";
+import {AuthRepository} from "../users/auth-repository.type";
 import {GetUserDTO, RegisterUserDTO} from "../users/users-dtos";
 import {ValidationOutcome} from "../shared/validation-outcome.type";
 import {Response} from "./response.type";
@@ -17,7 +17,7 @@ export type AuthService = {
     registerUser: (dto: RegisterUserDTO) => Promise<Response>,
 };
 
-export const configureAuthService = (repository: UsersRepository): AuthService => ({
+export const configureAuthService = (repository: AuthRepository): AuthService => ({
     getUser: async (dto: GetUserDTO): Promise<Response> => {
         try {
             const validationOutcome: ValidationOutcome =
