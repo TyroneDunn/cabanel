@@ -122,4 +122,3 @@ const configureMongoSessionStore = (url: string): MongoStore =>
         mongoUrl: url,
         collectionName: 'sessions',
     });
-
