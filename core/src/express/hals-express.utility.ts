@@ -40,7 +40,7 @@ const mapSideEffectsToRequestHandler = (halsMethod: HalsMethod): ExpressRequestH
 
 export const mapToPath = (halsMethod: HalsMethod): string => {
     // todo: implement w recursion and pure function
-    let endpoint: string = halsMethod.path ? '/' + halsMethod.path + '/' : '';
+    let endpoint: string = halsMethod.path ? '/' + halsMethod.path + '/' : '/';
 
     for (let i = 0; i < halsMethod.paramKeys.length; i++) {
         endpoint = endpoint.concat(':', halsMethod.paramKeys[i]);
