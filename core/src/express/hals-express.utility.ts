@@ -22,7 +22,7 @@ export const mapRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler
     };
 
 export const mapToMiddlewareRequestHandlers = (halsMethod: HalsMethod): ExpressRequestHandler[] =>
-    halsMethod.middleware.map((middleware: HalsRequestHandler) =>
+    halsMethod.middleware.map((middleware: HalsRequestHandler): ExpressRequestHandler =>
         async (expressRequest: ExpressRequest, expressResponse: ExpressResponse, next: NextFunction) => {
             const halsRequest: HalsRequest = mapToHalsRequest(expressRequest, halsMethod);
             const halsResponse: HalsResponse = await middleware(halsRequest);
