@@ -6,6 +6,7 @@ import {
     BAD_REQUEST,
     CREATED,
     INTERNAL_SERVER_ERROR,
+    NOT_FOUND,
     OK
 } from "../shared/http-status-codes.constant";
 import {usersDtosValidator} from "../users/users-dtos-validator.utility";
@@ -22,10 +23,16 @@ export const configureAuthService = (repository: UsersRepository): AuthService =
             const validationOutcome: ValidationOutcome =
                 await usersDtosValidator(repository).validateGetUserDTO(dto);
             if (validationOutcome.errors.length) return mapToErrorResponse(validationOutcome);
-            return {
+            const user: User | null = await repository.getUser(dto)
+            if (user) return {
                 status: OK,
                 collection: [await repository.getUser(dto)],
                 count: 1,
+            };
+            else return {
+                status: NOT_FOUND,
+                collection: [],
+                count: 0,
             };
         }
         catch (error) {
