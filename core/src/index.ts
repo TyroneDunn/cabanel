@@ -1,12 +1,12 @@
 import {init, run} from "./app/app";
 import {
     BuildConfig,
-    buildConfig as buildAppImpl,
-    buildLocalAuthStrategy as buildLocalAuthStrategyImpl
+    buildConfig as buildAppImpl
 } from "./app/config.utility";
 import {appBuilder as appBuilderImpl, AppBuilder} from "./app/app-builder.utility";
 import EventEmitter from "events";
 import {HalsEventEmitter} from "./app/event-emitter.service";
+import {buildLocalAuthStrategy as buildLocalAuthStrategyImpl} from "./auth/local-strategy.utility";
 
 export const App = {
     init: init,

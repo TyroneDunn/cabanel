@@ -1,14 +1,11 @@
 import {CorsOptions} from "cors";
 import {OK} from "../shared/http-status-codes.constant";
 import {
+    AuthStrategy,
     Config,
     NodeEnvironmentOption,
-    WebFrameworkOption,
-    AuthStrategy,
+    WebFrameworkOption
 } from "./config.type";
-import {DatabaseOption, LocalStrategy} from "./local-strategy.type";
-import {HashingAlgorithm} from "./hashing-algorithm.type";
-
 export type BuildConfig = (
     nodeEnv: NodeEnvironmentOption,
     api: WebFrameworkOption,
