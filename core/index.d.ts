@@ -155,14 +155,15 @@ export type Response = {
 };
 
 export const HttpStatusCodes = {
-    OK: number = 200,
-    CREATED: number = 201,
-    BAD_REQUEST: number = 400,
-    UNAUTHORIZED: number = 401,
-    FORBIDDEN: number = 403,
-    NOT_FOUND: number = 404,
-    CONFLICT: number = 409,
-    INTERNAL_SERVER_ERROR: number = 500,
+    OK: number,
+    CREATED: number,
+    BAD_REQUEST: number,
+    NO_CONTENT: number,
+    UNAUTHORIZED: number,
+    FORBIDDEN: number,
+    NOT_FOUND: number,
+    CONFLICT: number,
+    INTERNAL_SERVER_ERROR: number,
 };
 
 export const UserRegisteredEvent: string = 'userRegistered';
