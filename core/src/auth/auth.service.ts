@@ -9,8 +9,8 @@ import {
     NOT_FOUND,
     OK
 } from "../shared/http-status-codes.constant";
-import {usersDtosValidator} from "../users/users-dtos-validator.utility";
 import {User} from "../users/user.type";
+import {validateGetUserDTO, validateRegisterUserDTO} from "../users/users-dtos-validator.utility";
 
 export type AuthService = {
     getUser: (dto: GetUserDTO) => Promise<Response>,
@@ -21,7 +21,7 @@ export const configureAuthService = (repository: AuthRepository): AuthService =>
     getUser: async (dto: GetUserDTO): Promise<Response> => {
         try {
             const validationOutcome: ValidationOutcome =
-                await usersDtosValidator(repository).validateGetUserDTO(dto);
+                await validateGetUserDTO(dto);
             if (validationOutcome.errors.length) return mapToErrorResponse(validationOutcome);
             const user: User | null = await repository.getUser(dto)
             if (user) return {
@@ -34,8 +34,7 @@ export const configureAuthService = (repository: AuthRepository): AuthService =>
                 collection: [],
                 count: 0,
             };
-        }
-        catch (error) {
+        } catch (error) {
             return {
                 status: INTERNAL_SERVER_ERROR,
                 error: 'Auth Service: "getUser" error.'
@@ -46,15 +45,14 @@ export const configureAuthService = (repository: AuthRepository): AuthService =>
     registerUser: async (dto: RegisterUserDTO): Promise<Response> => {
         try {
             const validationOutcome: ValidationOutcome =
-                await usersDtosValidator(repository).validateRegisterUserDTO(dto);
+                await validateRegisterUserDTO(dto);
             if (validationOutcome.errors.length) return mapToErrorResponse(validationOutcome);
             return {
                 status: CREATED,
                 collection: [await repository.registerUser(dto)],
                 count: 1,
             };
-        }
-        catch (error) {
+        } catch (error) {
             return {
                 status: INTERNAL_SERVER_ERROR,
                 error: 'Auth Service: "registerUser" error.'
