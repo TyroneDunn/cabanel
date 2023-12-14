@@ -6,7 +6,7 @@ import {
     NodeEnvironmentOption,
     WebFrameworkOption
 } from "./schema.type";
-export type BuildConfig = (
+export type BuildSchema = (
     nodeEnv: NodeEnvironmentOption,
     api: WebFrameworkOption,
     title: string,
@@ -16,7 +16,7 @@ export type BuildConfig = (
     authStrategy: AuthStrategy,
 ) => Schema;
 
-export const buildSchema: BuildConfig = (
+export const buildSchema: BuildSchema = (
     nodeEnv: NodeEnvironmentOption,
     api: WebFrameworkOption,
     title: string,
