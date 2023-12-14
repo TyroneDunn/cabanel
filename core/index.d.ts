@@ -2,6 +2,11 @@ import {CorsOptions} from "cors";
 import {Init, init as initApp, Run, run as runApp} from "./src/app/app";
 import {buildConfig as buildAppImpl} from "./src/app/config.utility";
 import {appBuilder as appBuilderImpl} from "./src/app/app-builder.utility";
+import EventEmitter from "events";
+import {HalsEventEmitter} from "./src/app/event-emitter.service";
+import {
+    buildLocalAuthStrategy as buildLocalAuthStrategyImpl
+} from "./src/auth/local-strategy.utility";
 
 export type HashingAlgorithm =
     'RSA-MD5' |
@@ -107,10 +112,24 @@ export type BuildConfig = (
     authStrategy: AuthStrategy,
 ) => Config;
 
+export type BuildLocalAuthStrategy = (
+    usersDbName: string,
+    usersDbOption: DatabaseOption,
+    usersDbUrl: string,
+    sessionSecret: string,
+    hashingAlgorithm: HashingAlgorithm,
+    hashingIterations: number,
+    passwordLength: number,
+    passwordSalt: string
+) => LocalStrategy;
 
 export const buildConfig: BuildConfig = buildAppImpl;
 
 export const appBuilder: AppBuilder = appBuilderImpl;
+
+export const buildLocalAuthStrategy: BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
+
+export const halsEventEmitter: EventEmitter = HalsEventEmitter;
 
 export type AppWrapper = {
     run: () => void,
