@@ -1,24 +1,18 @@
-import {init, run} from "./app/app";
-import {
-    BuildConfig,
-    buildConfig as buildAppImpl
-} from "./app/config.utility";
-import {appBuilder as appBuilderImpl, AppBuilder} from "./app/app-builder.utility";
+import {BuildSchema, buildSchema as buildSchemaImpl} from "./app/schema.utility";
 import EventEmitter from "events";
 import {HalsEventEmitter} from "./app/event-emitter.service";
-import {buildLocalAuthStrategy as buildLocalAuthStrategyImpl} from "./auth/local-strategy.utility";
+import {
+    BuildLocalAuthStrategy,
+    buildLocalAuthStrategy as buildLocalAuthStrategyImpl
+} from "./auth/local-strategy.utility";
+import {
+    InitialiseApplication,
+    newApplication as newApplicationImpl
+} from "./app/application.utility";
 
-export const App = {
-    init: init,
-    run: run
-};
-
-export const buildConfig: BuildConfig = buildAppImpl;
-
-export const buildLocalAuthStrategy = buildLocalAuthStrategyImpl;
-
-export const appBuilder: AppBuilder = appBuilderImpl;
-
+export const newApplication: InitialiseApplication = newApplicationImpl;
+export const buildLocalAuthStrategy: BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
+export const buildSchema: BuildSchema = buildSchemaImpl;
 export const halsEventEmitter: EventEmitter = HalsEventEmitter;
 
 export const HttpStatusCodes = {
