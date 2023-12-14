@@ -1,6 +1,6 @@
 import {Config as HalsConfig} from "../app/config.type";
 import {Controller as HalsController} from "../app/controller.type";
-import {AppWrapper as HalsAppWrapper} from "../app/app-wrapper.type";
+import {Application as HalsApplication} from "../app/application.type";
 const express = require("express");
 import {
     Application as ExpressApplication,
@@ -14,7 +14,7 @@ import {configureAuthentication} from "./authentication.utility";
 import {configureRouters} from "./hals-express.utility";
 
 export const expressAppBuilder: HalsAppBuilder = {
-    buildApp(config: HalsConfig, controllers: HalsController[]): HalsAppWrapper {
+    buildApp(config: HalsConfig, controllers: HalsController[]): HalsApplication {
         const expressApp: ExpressApplication = express();
         expressApp.use(express.json());
         expressApp.use(cors(config.corsOptions));
