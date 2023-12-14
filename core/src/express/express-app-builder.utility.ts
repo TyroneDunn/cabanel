@@ -1,4 +1,4 @@
-import {Config as HalsConfig} from "../app/config.type";
+import {Schema as HalsSchema} from "../app/schema.type";
 import {Controller as HalsController} from "../app/controller.type";
 import {Application as HalsApplication} from "../app/application.type";
 const express = require("express");
@@ -14,17 +14,17 @@ import {configureAuthentication} from "./authentication.utility";
 import {configureRouters} from "./hals-express.utility";
 
 export const expressAppBuilder: HalsAppBuilder = {
-    buildApp(config: HalsConfig, controllers: HalsController[]): HalsApplication {
+    buildApp(schema: HalsSchema, controllers: HalsController[]): HalsApplication {
         const expressApp: ExpressApplication = express();
         expressApp.use(express.json());
-        expressApp.use(cors(config.corsOptions));
-        configureAuthentication(expressApp, config);
+        expressApp.use(cors(schema.corsOptions));
+        configureAuthentication(expressApp, schema);
         configureRouters(expressApp, controllers);
-        expressApp.get('/', metadata(config.title, config.port, config.version));
+        expressApp.get('/', metadata(schema.title, schema.port, schema.version));
         return {
             run: (): void => {
-                expressApp.listen(config.port,() =>
-                    console.log(`${config.title} @ port: ${config.port}`));
+                expressApp.listen(schema.port,() =>
+                    console.log(`${schema.title} @ port: ${schema.port}`));
             }
         };
     }

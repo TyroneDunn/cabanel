@@ -1,8 +1,8 @@
 import {ValidationOutcome} from "../shared/validation-outcome.type";
-import {Config} from "./config.type";
+import {Schema} from "./schema.type";
 import {Error} from "../shared/error.type";
 
-export const validateAppConfig = (config: Config): ValidationOutcome => {
+export const validateAppSchema = (schema: Schema): ValidationOutcome => {
     const errors: Error[] = [];
     return {errors: errors};
 };

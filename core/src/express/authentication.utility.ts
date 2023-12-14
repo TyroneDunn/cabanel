@@ -5,16 +5,16 @@ import {
     RequestHandler,
     Response
 } from "express";
-import {Config} from "../app/config.type";
+import {Schema} from "../app/schema.type";
 import {isLocalStrategy} from "../auth/local-strategy.utility";
 import {configureLocalAuthentication} from "./local-auth.utility";
 import {UNAUTHORIZED} from "../shared/http-status-codes.constant";
 
-export const configureAuthentication = (app: ExpressApplication, config: Config) => {
-    if (config.authStrategy === "None") return;
+export const configureAuthentication = (app: ExpressApplication, schema: Schema) => {
+    if (schema.authStrategy === "None") return;
 
-    if (isLocalStrategy(config.authStrategy)) {
-        configureLocalAuthentication(config, app);
+    if (isLocalStrategy(schema.authStrategy)) {
+        configureLocalAuthentication(schema, app);
         return;
     }
 

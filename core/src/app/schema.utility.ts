@@ -2,10 +2,10 @@ import {CorsOptions} from "cors";
 import {OK} from "../shared/http-status-codes.constant";
 import {
     AuthStrategy,
-    Config,
+    Schema,
     NodeEnvironmentOption,
     WebFrameworkOption
-} from "./config.type";
+} from "./schema.type";
 export type BuildConfig = (
     nodeEnv: NodeEnvironmentOption,
     api: WebFrameworkOption,
@@ -14,9 +14,9 @@ export type BuildConfig = (
     port: number,
     corsOptions: CorsOptions,
     authStrategy: AuthStrategy,
-) => Config;
+) => Schema;
 
-export const buildConfig: BuildConfig = (
+export const buildSchema: BuildConfig = (
     nodeEnv: NodeEnvironmentOption,
     api: WebFrameworkOption,
     title: string,
@@ -24,7 +24,7 @@ export const buildConfig: BuildConfig = (
     port: number,
     corsOptions: CorsOptions,
     authStrategy: AuthStrategy = "None",
-): Config =>
+): Schema =>
     ({
         nodeEnv: nodeEnv,
         api: api,

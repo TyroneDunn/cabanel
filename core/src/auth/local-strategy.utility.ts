@@ -1,4 +1,4 @@
-import {AuthStrategy} from "../app/config.type";
+import {AuthStrategy} from "../app/schema.type";
 import {DatabaseOption, LocalStrategy} from "./local-strategy.type";
 import {HashingAlgorithm} from "./hashing-algorithm.type";
 

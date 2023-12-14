@@ -2,7 +2,7 @@ import {CorsOptions} from "cors";
 import {LocalStrategy} from "../auth/local-strategy.type";
 import {JWTStrategy} from "../auth/jwt-strategy.type";
 
-export type Config = {
+export type Schema = {
     nodeEnv: NodeEnvironmentOption;
     api: WebFrameworkOption,
     title: string,
