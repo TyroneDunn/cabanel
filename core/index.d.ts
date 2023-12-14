@@ -1,12 +1,126 @@
 import {CorsOptions} from "cors";
-import {Init, init as initApp, Run, run as runApp} from "./src/app/app";
-import {buildConfig as buildAppImpl} from "./src/app/config.utility";
-import {appBuilder as appBuilderImpl} from "./src/app/app-builder.utility";
+import {
+    InitialiseApplication,
+    newApplication as newApplicationImpl,
+} from "./src/app/application.utility";
+import {buildSchema as buildSchemaImpl,} from "./src/app/schema.utility";
 import EventEmitter from "events";
 import {HalsEventEmitter} from "./src/app/event-emitter.service";
 import {
     buildLocalAuthStrategy as buildLocalAuthStrategyImpl
 } from "./src/auth/local-strategy.utility";
+
+export type Application = {
+    run: () => void,
+};
+
+export const newApplication: InitialiseApplication = newApplicationImpl;
+
+export type Schema = {
+    nodeEnv: NodeEnvironmentOption;
+    api: WebFrameworkOption,
+    title: string,
+    version: string;
+    port: number,
+    corsOptions?: CorsOptions,
+    authStrategy: AuthStrategy,
+}
+
+export type WebFrameworkOption = "Express" | "Nest" | "Fastify";
+
+export type NodeEnvironmentOption = "production" | "development";
+export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
+export type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
+
+export type BuildSchema = (
+    nodeEnv: NodeEnvironmentOption,
+    api: WebFrameworkOption,
+    title: string,
+    version: string,
+    port: number,
+    corsOptions: CorsOptions,
+    authStrategy: AuthStrategy,
+) => Schema;
+
+export const buildSchema: BuildSchema = buildSchemaImpl;
+
+export type LocalStrategy = {
+    usersDbName: string,
+    usersDbOption: DatabaseOption
+    usersDbUrl: string,
+    sessionSecret: string,
+    hashingAlgorithm: HashingAlgorithm,
+    hashingIterations: number,
+    passwordLength: number
+    passwordSalt: string
+};
+
+export type BuildLocalAuthStrategy = (
+    usersDbName: string,
+    usersDbOption: DatabaseOption,
+    usersDbUrl: string,
+    sessionSecret: string,
+    hashingAlgorithm: HashingAlgorithm,
+    hashingIterations: number,
+    passwordLength: number,
+    passwordSalt: string
+) => LocalStrategy;
+
+export const buildLocalAuthStrategy: BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
+export const halsEventEmitter: EventEmitter = HalsEventEmitter;
+
+export type Controller = {
+    path: string,
+    guard: boolean,
+    methods: Method[],
+};
+
+export type Method = {
+    type: MethodType,
+    path?: string,
+    paramKeys: string[],
+    queryParamKeys: string[]
+    sideEffects: SideEffect[],
+    middleware: RequestHandler[],
+    requestHandler: RequestHandler,
+};
+
+export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+export type RequestHandler = (dto: Request) => Promise<Response>;
+export type SideEffect = (request: Request) => Promise<void>;
+
+export type Request = {
+    paramMap?: ParamMap,
+    queryParamMap?: ParamMap,
+    payload?: Object,
+};
+
+export type ParamMap = Record<string, string>;
+
+export type Response = {
+    status: number
+    error?: string,
+    collection?: any[],
+    count?: number,
+    index?: number,
+    limit?: number,
+};
+
+export const HttpStatusCodes = {
+    OK: number,
+    CREATED: number,
+    BAD_REQUEST: number,
+    NO_CONTENT: number,
+    UNAUTHORIZED: number,
+    FORBIDDEN: number,
+    NOT_FOUND: number,
+    CONFLICT: number,
+    INTERNAL_SERVER_ERROR: number,
+};
+
+export const UserRegisteredEvent: string = 'userRegistered';
+export const UserLoggedInEvent: string = 'userLoggedIn';
+export const UserLoggedOutEvent: string = 'userLoggedOut';
 
 export type HashingAlgorithm =
     'RSA-MD5' |
@@ -61,130 +175,3 @@ export type HashingAlgorithm =
     'sm3WithRSAEncryption' |
     'ssl3-md5' |
     'ssl3-sha1';
-
-const init: Init = initApp;
-const run: Run = runApp;
-export const App = {
-    init: init,
-    run: run
-};
-
-
-export type AppBuilder = {
-    buildApp: (config: Config, controllers: Controller[]) => AppWrapper,
-};
-
-
-export type Config = {
-    nodeEnv: NodeEnvironmentOption;
-    api: WebFrameworkOption,
-    title: string,
-    version: string;
-    port: number,
-    corsOptions?: CorsOptions,
-    authStrategy: AuthStrategy,
-}
-
-export type WebFrameworkOption = "Express" | "Nest" | "Fastify";
-export type NodeEnvironmentOption = "production" | "development";
-export type AuthStrategy = "None" | LocalStrategy | JWTStrategy;
-
-export type LocalStrategy = {
-    usersDbName: string,
-    usersDbOption: DatabaseOption
-    usersDbUrl: string,
-    sessionSecret: string,
-    hashingAlgorithm: HashingAlgorithm,
-    hashingIterations: number,
-    passwordLength: number
-    passwordSalt: string
-};
-
-export type DatabaseOption = "MongoDB" | "MySQL" | "GraphQL";
-
-export type BuildConfig = (
-    nodeEnv: NodeEnvironmentOption,
-    api: WebFrameworkOption,
-    title: string,
-    version: string,
-    port: number,
-    corsOptions: CorsOptions,
-    authStrategy: AuthStrategy,
-) => Config;
-
-export type BuildLocalAuthStrategy = (
-    usersDbName: string,
-    usersDbOption: DatabaseOption,
-    usersDbUrl: string,
-    sessionSecret: string,
-    hashingAlgorithm: HashingAlgorithm,
-    hashingIterations: number,
-    passwordLength: number,
-    passwordSalt: string
-) => LocalStrategy;
-
-export const buildConfig: BuildConfig = buildAppImpl;
-
-export const appBuilder: AppBuilder = appBuilderImpl;
-
-export const buildLocalAuthStrategy: BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
-
-export const halsEventEmitter: EventEmitter = HalsEventEmitter;
-
-export type AppWrapper = {
-    run: () => void,
-};
-
-export type Controller = {
-    path: string,
-    guard: boolean,
-    methods: Method[],
-};
-
-export type Method = {
-    type: MethodType,
-    path?: string,
-    paramKeys: string[],
-    queryParamKeys: string[]
-    sideEffects: SideEffect[],
-    middleware: RequestHandler[],
-    requestHandler: RequestHandler,
-};
-
-export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-export type RequestHandler = (dto: Request) => Promise<Response>;
-
-export type SideEffect = (request: Request) => Promise<void>;
-
-export type Request = {
-    paramMap?: ParamMap,
-    queryParamMap?: ParamMap,
-    payload?: Object,
-};
-
-export type ParamMap = Record<string, string>;
-
-export type Response = {
-    status: number
-    error?: string,
-    collection?: any[],
-    count?: number,
-    index?: number,
-    limit?: number,
-};
-
-export const HttpStatusCodes = {
-    OK: number,
-    CREATED: number,
-    BAD_REQUEST: number,
-    NO_CONTENT: number,
-    UNAUTHORIZED: number,
-    FORBIDDEN: number,
-    NOT_FOUND: number,
-    CONFLICT: number,
-    INTERNAL_SERVER_ERROR: number,
-};
-
-export const UserRegisteredEvent: string = 'userRegistered';
-export const UserLoggedInEvent: string = 'userLoggedIn';
-export const UserLoggedOutEvent: string = 'userLoggedOut';
