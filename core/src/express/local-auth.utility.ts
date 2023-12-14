@@ -5,7 +5,7 @@ import {AuthRepository} from "../auth/auth-repository.type";
 import {GetUserDTO} from "../users/users-dtos";
 import {User} from "../users/user.type";
 import {validateHash} from "../shared/password.utility";
-import {Config} from "../app/config.type";
+import {Schema} from "../app/schema.type";
 import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
 import {configureAuthRepository} from "../auth/auth-repository.utility";
@@ -15,8 +15,8 @@ import LocalStrategy = require('passport-local');
 import {Response} from "../app/response.type";
 import {OK} from "../shared/http-status-codes.constant";
 
-export const configureLocalAuthentication = (config: Config, app: ExpressApplication): void => {
-    const localStrategyConfig: HalsLocalStrategy = config.authStrategy as HalsLocalStrategy;
+export const configureLocalAuthentication = (schema: Schema, app: ExpressApplication): void => {
+    const localStrategyConfig: HalsLocalStrategy = schema.authStrategy as HalsLocalStrategy;
     const authRepository: AuthRepository = configureAuthRepository(
         localStrategyConfig.usersDbName,
         localStrategyConfig.usersDbOption,
@@ -31,7 +31,7 @@ export const configureLocalAuthentication = (config: Config, app: ExpressApplica
         localStrategyConfig,
         authService
     );
-    app.use(sessionMiddleware(config));
+    app.use(sessionMiddleware(schema));
     app.use(passport.initialize());
     app.use(passport.session());
     app.use('/auth/', configureLocalAuthRouter(authService));
@@ -88,18 +88,18 @@ const configurePassportLocalStrategy = (
 };
 
 const sessionMiddleware =
-    (config: Config): RequestHandler => session(configureSessionOptions(config));
+    (config: Schema): RequestHandler => session(configureSessionOptions(config));
 
-const configureSessionOptions = (config: Config): SessionOptions =>
+const configureSessionOptions = (schema: Schema): SessionOptions =>
     ({
-        secret: (config.authStrategy as HalsLocalStrategy).sessionSecret,
+        secret: (schema.authStrategy as HalsLocalStrategy).sessionSecret,
         resave: false,
         saveUninitialized: true,
-        store: configureSessionStore(config.authStrategy as HalsLocalStrategy),
+        store: configureSessionStore(schema.authStrategy as HalsLocalStrategy),
         cookie: {
             // Session Lifespan: 21 Days.
             maxAge: 21 * (24 * (60 * (1000 * 60))),
-            httpOnly: (config.nodeEnv === "production"),
+            httpOnly: (schema.nodeEnv === "production"),
         },
     });
 
