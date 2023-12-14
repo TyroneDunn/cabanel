@@ -6,6 +6,7 @@ import {
     NodeEnvironmentOption,
     WebFrameworkOption
 } from "./schema.type";
+
 export type BuildSchema = (
     nodeEnv: NodeEnvironmentOption,
     api: WebFrameworkOption,
