@@ -6,7 +6,7 @@ import {
     ForbiddenError,
     NotFoundError,
     UnauthorizedError
-} from "../errors/errors.type";
+} from "../errors/error.type";
 import {
     BAD_REQUEST,
     CONFLICT,
