@@ -14,4 +14,3 @@ export type Method = {
 
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 export type RequestHandler = (dto: Request) => Promise<Response>;
-
