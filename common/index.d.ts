@@ -1,19 +1,19 @@
-import {CommandResult as CommandResultType} from "./src/command-result/command-result.type";
-import {DateRange as DateRangeType} from "./src/timestamps/date-range.type";
-import {Error as Error_Type, ErrorType as ErrorType_Type} from "./src/error/error.type";
+import {CommandResult as CommandResultType} from "./lib/command-result/command-result.type";
+import {DateRange as DateRangeType} from "./lib/timestamps/date-range.type";
+import {Error as Error_Type, ErrorType as ErrorType_Type} from "./lib/error/error.type";
 import {
     GenerateSalt as GenerateSaltType,
     HashUtility as HashUtilityType
-} from "./src/password/password.type";
-import {NumberRange as NumberRangeType} from "./src/number-range/number-range.type";
-import {OrderOption as OrderOptionType} from "./src/order/order-option.type";
-import {Timestamps as TimestampsType} from "./src/timestamps/timestamps.type";
-import {Request as RequestType, Respnse as ResponseType} from "./src/app/request.type";
-import {Page as PageType} from "./src/page/page.type";
-import {ParamMap as ParamMapType} from "./src/app/param-map.type";
+} from "./lib/password/password.type";
+import {NumberRange as NumberRangeType} from "./lib/number-range/number-range.type";
+import {OrderOption as OrderOptionType} from "./lib/order/order-option.type";
+import {Timestamps as TimestampsType} from "./lib/timestamps/timestamps.type";
+import {Request as RequestType, Respnse as ResponseType} from "./lib/app/request.type";
+import {Page as PageType} from "./lib/page/page.type";
+import {ParamMap as ParamMapType} from "./lib/app/param-map.type";
 import {
     ValidationOutcome as ValidationOutcomeType
-} from "./src/validation-outcome/validation-outcome.type";
+} from "./lib/validation-outcome/validation-outcome.type";
 import {
     BAD_REQUEST as BAD_REQUESTconst,
     CONFLICT as CONFLICTconst,
@@ -23,25 +23,25 @@ import {
     NOT_FOUND as NOT_FOUNDconst,
     OK as OKconst,
     UNAUTHORIZED as UNAUTHORIZEDconst,
-} from "./src/http/http-status-codes.constant";
+} from "./lib/http/http-status-codes.constant";
 
 import {
     addRequestPageDataToResponse as addRequestPageDataToResponseImpl
-} from "./src/app/app.utility";
-import {configureHashUtility as configureHashUtilityImpl} from "./src/password/password.utility";
-import {generateSalt as generateSaltImpl} from "./src/password/password.utility";
+} from "./lib/app/app.utility";
+import {configureHashUtility as configureHashUtilityImpl} from "./lib/password/password.utility";
+import {generateSalt as generateSaltImpl} from "./lib/password/password.utility";
 import {
     mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl,
     mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
     mapUpdateResultToResponse as mapUpdateResultToResponseImpl
-} from "./src/command-result/command-result.utility";
-import {mapRequestToPage as mapRequestToPageImpl} from "./src/page/page.utility";
-import {mapRequestToTimestamps as mapRequestToTimestampsImpl} from "./src/timestamps/timestamps.utility";
-import {mapValidationOutcomeToErrorResponse as mapValidationOutcomeToErrorResponseImpl} from "./src/validation-outcome/validation-outcome.utility";
+} from "./lib/command-result/command-result.utility";
+import {mapRequestToPage as mapRequestToPageImpl} from "./lib/page/page.utility";
+import {mapRequestToTimestamps as mapRequestToTimestampsImpl} from "./lib/timestamps/timestamps.utility";
+import {mapValidationOutcomeToErrorResponse as mapValidationOutcomeToErrorResponseImpl} from "./lib/validation-outcome/validation-outcome.utility";
 import {
     mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
     throwErrors as throwErrorsImpl
-} from "./src/error/errors.utility";
+} from "./lib/error/errors.utility";
 
 export type CommandResult = CommandResultType;
 export type DateRange = DateRangeType;
