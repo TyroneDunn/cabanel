@@ -1,7 +1,7 @@
 import {GenerateSalt, HashUtility} from "./password.type";
 import crypto from "crypto";
 
-export const hashUtility = (
+export const configureHashUtility = (
     salt: string,
     iterations: number,
     length: number,
