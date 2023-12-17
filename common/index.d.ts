@@ -6,8 +6,7 @@ import {
     HashUtility as HashUtilityType
 } from "./src/password/password.type";
 import {NumberRange as NumberRangeType} from "./src/number-range/number-range.type";
-import {OrderOption as OrderOptionType} from "./src/sort/order-option.type";
-import {Sort as SortType} from "./src/sort/sort.type";
+import {OrderOption as OrderOptionType} from "./src/order/order-option.type";
 import {Timestamps as TimestampsType} from "./src/timestamps/timestamps.type";
 import {Request as RequestType, Respnse as ResponseType} from "./src/app/request.type";
 import {Page as PageType} from "./src/page/page.type";
@@ -54,7 +53,6 @@ export type NumberRange = NumberRangeType;
 export type OrderOption = OrderOptionType;
 export type Request = RequestType;
 export type Response = ResponseType;
-export type Sort = SortType;
 export type Timestamps = TimestampsType;
 export type Page = PageType;
 export type ParamMap = ParamMapType;
