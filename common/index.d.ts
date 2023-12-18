@@ -1,4 +1,9 @@
 import {CommandResult as CommandResultType} from "./lib/command-result/command-result.type";
+import {
+    CorsOptions as CorsOptionsType,
+    CustomOrigin as CustomOriginType,
+    StaticOrigin as StaticOriginType,
+} from "./lib/cors/cors-options.type";
 import {DateRange as DateRangeType} from "./lib/timestamps/date-range.type";
 import {Error as Error_Type, ErrorType as ErrorType_Type} from "./lib/error/error.type";
 import {
@@ -44,6 +49,9 @@ import {
 } from "./lib/error/errors.utility";
 
 export type CommandResult = CommandResultType;
+export type CorsOptions = CorsOptionsType;
+export type CustomOrigin = CustomOriginType;
+export type StaticOrigin = StaticOriginType;
 export type DateRange = DateRangeType;
 export type Error = Error_Type;
 export type ErrorType = ErrorType_Type;
