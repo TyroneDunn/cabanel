@@ -19,10 +19,11 @@ export const hals: InitialiseApplication = (
 
 export const serverStartMessage = (title: string, port: number, version: string, environment: NodeEnvironmentOption): string => {
    const messageTitle: string = `'${title}' Hals Server Started\n `;
-   const messageDivider: string = '----------------------------------------';
-   return messageTitle + messageDivider + serverMetadata(title, port, version, environment) + messageDivider;
+   const messageDivider: string = '----------------------------------------\n';
+   const messageActions: string = `App running at http://localhost:${port}\nPress Ctrl+C to stop the server.\n`;
+   return messageTitle + messageDivider + serverMetadata(title, port, version, environment) + '\n' + messageActions + messageDivider;
 };
 
 export const serverMetadata = (title: string, port: number, version: string, environment: NodeEnvironmentOption): string => {
-   return `Server: ${title}\nPort: ${port}\nEnvironment: ${environment}\nVersion: ${version}\n\nApp running at http://localhost:${port}\nPress Ctrl+C to stop the server.`;
+   return `Server: ${title}\nPort: ${port}\nEnvironment: ${environment}\nVersion: ${version}\n`;
 }

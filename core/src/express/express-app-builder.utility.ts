@@ -38,5 +38,5 @@ export const expressAppBuilder: HalsAppBuilder = {
 const metadata =
    (title: string, port: number, version: string, environment: NodeEnvironmentOption): ExpressRequestHandler =>
       (request: ExpressRequest, response: ExpressResponse): void => {
-         response.send(serverMetadata(title, port, version, environment));
+         response.json(serverMetadata(title, port, version, environment));
       };
