@@ -1,8 +1,7 @@
-import {ParamMap} from "./param-map.type";
+import { ParamMap } from "./param-map.type";
 
 export type Request = {
-    // sender: User,
-    paramMap?: ParamMap,
-    queryParamMap?: ParamMap,
-    payload?: Object,
+   paramMap: ParamMap,
+   queryParamMap: ParamMap,
+   payload: Object,
 };
