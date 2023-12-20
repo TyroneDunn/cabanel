@@ -1,9 +1,9 @@
 import {
-    Application as ExpressApplication,
-    NextFunction,
-    Request,
-    RequestHandler,
-    Response,
+   Application as ExpressApplication,
+   NextFunction,
+   Request,
+   RequestHandler,
+   Response,
 } from "express";
 import { isLocalStrategy } from "../auth/local-strategy.utility";
 import { configureLocalAuthentication } from "./local-auth.utility";
