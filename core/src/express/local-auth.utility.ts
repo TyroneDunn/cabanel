@@ -4,7 +4,6 @@ import {LocalStrategy as HalsLocalStrategy} from "../auth/local-strategy.type";
 import {AuthRepository} from "../auth/auth-repository.type";
 import {GetUserDTO} from "../users/users-dtos";
 import {User} from "../users/user.type";
-import {validateHash} from "../shared/password.utility";
 import {Schema} from "../app/schema.type";
 import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
@@ -13,7 +12,7 @@ import {AuthService, configureAuthService} from "../auth/auth.service";
 import {configureLocalAuthRouter} from "./local-auth-router.utility";
 import LocalStrategy = require('passport-local');
 import {Response} from "../app/response.type";
-import {OK} from "../shared/http-status-codes.constant";
+import {OK, configureHashUtility} from "@hals/common";
 
 export const configureLocalAuthentication = (schema: Schema, app: ExpressApplication): void => {
     const localStrategyConfig: HalsLocalStrategy = schema.authStrategy as HalsLocalStrategy;
@@ -55,13 +54,15 @@ const configurePassportLocalStrategy = (
         }
 
         const user: User = response.collection?.pop() as User;
-        if (!validateHash(
+        const hashUtility = configureHashUtility(
+           config.passwordSalt,
+           config.hashingIterations,
+           config.passwordLength,
+           config.hashingAlgorithm
+        );
+        if (!hashUtility.validateHash(
             password,
             user.hash,
-            config.passwordSalt,
-            config.hashingIterations,
-            config.passwordLength,
-            config.hashingAlgorithm
         )) {
             done(null, false);
             return;
