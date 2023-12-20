@@ -6,9 +6,9 @@ import {
    INTERNAL_SERVER_ERROR,
    NOT_FOUND,
    OK,
+   Response,
    ValidationOutcome,
 } from "@hals/common";
-import { Response } from "../app/response.type";
 import { User } from "../users/user.type";
 import { validateGetUserDTO, validateRegisterUserDTO } from "../users/users-dtos-validator.utility";
 
