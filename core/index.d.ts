@@ -89,18 +89,6 @@ export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 export type RequestHandler = (dto: Request) => Promise<Response>;
 export type SideEffect = (request: Request) => Promise<void>;
 
-export const HttpStatusCodes = {
-    OK: number,
-    CREATED: number,
-    BAD_REQUEST: number,
-    NO_CONTENT: number,
-    UNAUTHORIZED: number,
-    FORBIDDEN: number,
-    NOT_FOUND: number,
-    CONFLICT: number,
-    INTERNAL_SERVER_ERROR: number,
-};
-
 export const UserRegisteredEvent: string = 'userRegistered';
 export const UserLoggedInEvent: string = 'userLoggedIn';
 export const UserLoggedOutEvent: string = 'userLoggedOut';

@@ -12,17 +12,8 @@ import {
 
 export const newApplication: InitialiseApplication = newApplicationImpl;
 export const buildLocalAuthStrategy: BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
+
+// todo: consider removing build schema, it is a simple process and defining it is the same as
+//  using the function
 export const buildSchema: BuildSchema = buildSchemaImpl;
 export const halsEventEmitter: EventEmitter = HalsEventEmitter;
-
-export const HttpStatusCodes = {
-    OK: 200,
-    CREATED: 201,
-    NO_CONTENT: 204,
-    BAD_REQUEST: 400,
-    UNAUTHORIZED: 401,
-    FORBIDDEN: 403,
-    NOT_FOUND: 404,
-    CONFLICT: 409,
-    INTERNAL_SERVER_ERROR: 500,
-};
