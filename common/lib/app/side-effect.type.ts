@@ -1,3 +1,3 @@
-import {Request} from "./request.type";
+import { Request } from "./request.type";
 
 export type SideEffect = (request: Request) => Promise<void>;
