@@ -1,5 +1,5 @@
 import {CorsOptions} from "cors";
-import { ApplicationSchema, AuthStrategy, OK } from "@hals/common";
+import { ApplicationSchema, AuthStrategy } from "@hals/common";
 import {
    NodeEnvironmentOption,
    WebFrameworkOption,
