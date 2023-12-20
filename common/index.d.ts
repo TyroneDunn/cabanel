@@ -44,9 +44,10 @@ import {mapRequestToPage as mapRequestToPageImpl} from "./lib/page/page.utility"
 import {mapRequestToTimestamps as mapRequestToTimestampsImpl} from "./lib/timestamps/timestamps.utility";
 import {mapValidationOutcomeToErrorResponse as mapValidationOutcomeToErrorResponseImpl} from "./lib/validation-outcome/validation-outcome.utility";
 import {
+    isError as isErrorImpl,
     mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
-    throwErrors as throwErrorsImpl
-} from "./lib/error/errors.utility";
+    throwErrors as throwErrorsImpl,
+} from "./lib/error/error.utility";
 
 export type CommandResult = CommandResultType;
 export type CorsOptions = CorsOptionsType;
@@ -79,6 +80,8 @@ export const INTERNAL_SERVER_ERROR: number = INTERNAL_SERVER_ERRORconst;
 export const addRequestPageDataToResponse = addRequestPageDataToResponseImpl;
 export const configureHashUtility = configureHashUtilityImpl;
 export const generateSalt = generateSaltImpl;
+
+export const isError = isErrorImpl;
 export const mapCommandResultToSuccessResponse = mapCommandResultToSuccessResponseImpl;
 export const mapDeleteResultToResponse = mapDeleteResultToResponseImpl;
 export const mapErrorToInternalServerErrorResponse = mapErrorToInternalServerErrorResponseImpl;

@@ -23,9 +23,10 @@ import {mapRequestToPage as mapRequestToPageImpl} from "./page/page.utility";
 import {mapRequestToTimestamps as mapRequestToTimestampsImpl} from "./timestamps/timestamps.utility";
 import {mapValidationOutcomeToErrorResponse as mapValidationOutcomeToErrorResponseImpl} from "./validation-outcome/validation-outcome.utility";
 import {
+    isError as isErrorImpl,
     mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
-    throwErrors as throwErrorsImpl
-} from "./error/errors.utility";
+    throwErrors as throwErrorsImpl,
+} from "./error/error.utility";
 
 
 export const OK: number = OKconst;
@@ -41,6 +42,7 @@ export const INTERNAL_SERVER_ERROR: number = INTERNAL_SERVER_ERRORconst;
 export const addRequestPageDataToResponse = addRequestPageDataToResponseImpl;
 export const configureHashUtility = configureHashUtilityImpl;
 export const generateSalt = generateSaltImpl;
+export const isError = isErrorImpl;
 export const mapCommandResultToSuccessResponse = mapCommandResultToSuccessResponseImpl;
 export const mapDeleteResultToResponse = mapDeleteResultToResponseImpl;
 export const mapErrorToInternalServerErrorResponse = mapErrorToInternalServerErrorResponseImpl;

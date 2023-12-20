@@ -12,3 +12,10 @@ export const throwErrors = (errors: Error[]): void => {
     for (const error of errors) errorMessages.concat(error.message, '\n');
     throw new Error(errorMessages);
 };
+
+export const isError = (object: any): object is Error =>
+   (
+      typeof object === 'object'
+      && 'type' in object
+      && 'message' in object
+   );
