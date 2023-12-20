@@ -1,4 +1,4 @@
-import { User } from "./user.type";
+import { User } from "@hals/common";
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface UserDocument extends Document, User {

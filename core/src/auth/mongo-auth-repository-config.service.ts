@@ -1,5 +1,5 @@
 import {AuthRepository} from "./auth-repository.type";
-import {User} from "../users/user.type";
+import {User} from "@hals/common";
 import {Model, now} from "mongoose";
 import {GetUserDTO, RegisterUserDTO} from "../users/users-dtos";
 import {UserDocument} from "../users/mongo-user-model-config.service";

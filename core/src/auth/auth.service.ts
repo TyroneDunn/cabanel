@@ -8,8 +8,8 @@ import {
    OK,
    Response,
    ValidationOutcome,
+   User,
 } from "@hals/common";
-import { User } from "../users/user.type";
 import { validateGetUserDTO, validateRegisterUserDTO } from "../users/users-dtos-validator.utility";
 
 export type AuthService = {

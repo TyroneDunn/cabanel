@@ -6,10 +6,10 @@ import {
    LocalStrategy as HalsLocalStrategy,
    OK,
    Response,
+   User,
 } from "@hals/common";
 import { AuthRepository } from "../auth/auth-repository.type";
 import { GetUserDTO } from "../users/users-dtos";
-import { User } from "../users/user.type";
 import session, { SessionOptions } from "express-session";
 import MongoStore from "connect-mongo";
 import { configureAuthRepository } from "../auth/auth-repository.utility";
