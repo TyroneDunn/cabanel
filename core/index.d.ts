@@ -11,10 +11,10 @@ import EventEmitter from "events";
 import { HalsEventEmitter } from "./src/app/event-emitter.service";
 import {
    InitialiseApplication,
-   newApplication as newApplicationImpl,
+   hals as halsImpl,
 } from "./src/app/application.utility";
 
-export const newApplication: InitialiseApplication = newApplicationImpl;
+export const hals: InitialiseApplication = halsImpl;
 
 export type BuildLocalAuthStrategy = (
    usersDbName: string,

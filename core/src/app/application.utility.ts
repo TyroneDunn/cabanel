@@ -7,7 +7,7 @@ export type InitialiseApplication = (
    controllers: Controller[],
 ) => Application;
 
-export const newApplication: InitialiseApplication = (
+export const hals: InitialiseApplication = (
    config: ApplicationSchema,
    controllers: Controller[] = [],
 ): Application => {

@@ -6,9 +6,9 @@ import {
 } from "./auth/local-strategy.utility";
 import {
    InitialiseApplication,
-   newApplication as newApplicationImpl,
+   hals as halsImpl,
 } from "./app/application.utility";
 
 export const buildLocalAuthStrategy: BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
 export const halsEventEmitter: EventEmitter = HalsEventEmitter;
-export const newApplication: InitialiseApplication = newApplicationImpl;
+export const hals: InitialiseApplication = halsImpl;
