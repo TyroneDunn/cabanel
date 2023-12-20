@@ -3,5 +3,3 @@ export type User = {
     username: string,
     hash: string,
 };
-
-export type UserSortOption = "username";
