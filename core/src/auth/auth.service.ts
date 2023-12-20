@@ -7,8 +7,8 @@ import {
    NOT_FOUND,
    OK,
    Response,
-   ValidationOutcome,
    User,
+   ValidationOutcome,
 } from "@hals/common";
 import { validateGetUserDTO, validateRegisterUserDTO } from "../users/users-dtos-validator.utility";
 
