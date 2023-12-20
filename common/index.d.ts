@@ -1,3 +1,4 @@
+import { AuthStrategy as AuthStrategyType } from "./lib/auth/auth-strategy.type";
 import { CommandResult as CommandResultType } from "./lib/command-result/command-result.type";
 import {
    CorsOptions as CorsOptionsType,
@@ -62,6 +63,7 @@ import {
    throwErrors as throwErrorsImpl,
 } from "./lib/error/error.utility";
 
+export type AuthStrategy = AuthStrategyType;
 export type CommandResult = CommandResultType;
 export type CorsOptions = CorsOptionsType;
 export type CustomOrigin = CustomOriginType;
