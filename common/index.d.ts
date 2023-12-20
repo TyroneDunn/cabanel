@@ -1,6 +1,7 @@
 import { ApplicationSchema as ApplicationSchemaType } from "./lib/app/application-schema.type";
 import { AuthStrategy as AuthStrategyType } from "./lib/auth/auth-strategy.type";
 import { CommandResult as CommandResultType } from "./lib/command-result/command-result.type";
+import { Controller as ControllerType } from "./lib/app/controller.type";
 import {
    CorsOptions as CorsOptionsType,
    CustomOrigin as CustomOriginType,
@@ -68,6 +69,7 @@ import {
 export type ApplicationSchema = ApplicationSchemaType;
 export type AuthStrategy = AuthStrategyType;
 export type CommandResult = CommandResultType;
+export type Controller = ControllerType;
 export type CorsOptions = CorsOptionsType;
 export type CustomOrigin = CustomOriginType;
 export type StaticOrigin = StaticOriginType;
