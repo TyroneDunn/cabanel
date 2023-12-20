@@ -13,7 +13,9 @@ import {
 import {NumberRange as NumberRangeType} from "./lib/number-range/number-range.type";
 import {OrderOption as OrderOptionType} from "./lib/order/order-option.type";
 import {Timestamps as TimestampsType} from "./lib/timestamps/timestamps.type";
-import {Request as RequestType, Respnse as ResponseType} from "./lib/app/request.type";
+import {Request as RequestType} from "./lib/app/request.type";
+import {Respnse as ResponseType} from "./lib/app/response.type";
+import {RequestHandler as RequestHandlerType} from "./lib/app/request-handler.type";
 import {Page as PageType} from "./lib/page/page.type";
 import {ParamMap as ParamMapType} from "./lib/app/param-map.type";
 import {
@@ -62,6 +64,7 @@ export type NumberRange = NumberRangeType;
 export type OrderOption = OrderOptionType;
 export type Request = RequestType;
 export type Response = ResponseType;
+export type RequestHandler = RequestHandlerType;
 export type Timestamps = TimestampsType;
 export type Page = PageType;
 export type ParamMap = ParamMapType;
