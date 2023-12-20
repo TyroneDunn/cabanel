@@ -2,8 +2,7 @@ import {Application} from "./application.type";
 import {Schema} from "./schema.type";
 import {Controller} from "./controller.type";
 import {validateAppSchema} from "./app-validator.service";
-import {ValidationOutcome} from "../shared/validation-outcome.type";
-import {throwErrors} from "../shared/error-handler.service";
+import {ValidationOutcome} from "@hals/common";
 import {appBuilder} from "./app-builder.utility";
 
 export type InitialiseApplication = (
@@ -16,7 +15,6 @@ export const newApplication: InitialiseApplication = (
     controllers: Controller[] = []
 ): Application => {
     const validationOutcome: ValidationOutcome = validateAppSchema(config);
-    if (validationOutcome.errors.length)
-        throwErrors(validationOutcome.errors.map(error => new Error(error.message)));
+    if (validationOutcome.error) throw new Error(validationOutcome.error.message);
     return appBuilder.buildApp(config, controllers);
 };
