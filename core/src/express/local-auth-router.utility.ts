@@ -1,21 +1,20 @@
 import { AuthService } from "../auth/auth.service";
 import {
-    NextFunction,
-    Request as ExpressRequest,
-    RequestHandler,
-    Response as ExpressResponse,
-    Router,
+   NextFunction,
+   Request as ExpressRequest,
+   RequestHandler,
+   Response as ExpressResponse,
+   Router,
 } from "express";
 import passport from "passport";
 import { RegisterUserDTO } from "../users/users-dtos";
-import { CREATED, INTERNAL_SERVER_ERROR, OK, Response as HalsResponse } from "@hals/common";
+import { CREATED, INTERNAL_SERVER_ERROR, OK, Response as HalsResponse, User } from "@hals/common";
 import { authGuard } from "./authentication.utility";
-import { User } from "../users/user.type";
 import {
-    HalsEventEmitter,
-    UserLoggedInEvent,
-    UserLoggedOutEvent,
-    UserRegisteredEvent,
+   HalsEventEmitter,
+   UserLoggedInEvent,
+   UserLoggedOutEvent,
+   UserRegisteredEvent,
 } from "../app/event-emitter.service";
 
 export const configureLocalAuthRouter = (authService: AuthService): Router => {
