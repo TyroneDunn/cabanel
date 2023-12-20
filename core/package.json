@@ -14,7 +14,6 @@
   "author": "Tyrone B. Dunn",
   "license": "ISC",
   "devDependencies": {
-    "@hals/common": "file:../../../lib/@hals/common",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.17.10",
@@ -27,6 +26,7 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "@hals/common": "file:../../../lib/@hals/common",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
