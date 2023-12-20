@@ -1,6 +1,6 @@
-export type GetUserDTO = {username: string};
+export type GetUserDTO = { username: string };
 
 export type RegisterUserDTO = {
-    username: string,
-    password: string,
+   username: string,
+   password: string,
 };
