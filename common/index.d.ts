@@ -12,6 +12,7 @@ import {
 } from "./lib/password/password.type";
 import { HashAlgorithm as HashAlgorithmType } from "./lib/auth/hash-algorithm.type";
 import {JwtStrategy as JwtStrategyType} from "./lib/auth/jwt-strategy.type";
+import { LocalStrategy as LocalStrategyType } from "./lib/auth/local-strategy.type";
 import { Method as Method_Type, MethodType as MethodType_Type } from "./lib/app/method.type";
 import { NumberRange as NumberRangeType } from "./lib/number-range/number-range.type";
 import { OrderOption as OrderOptionType } from "./lib/order/order-option.type";
@@ -72,6 +73,7 @@ export type GenerateSalt = GenerateSaltType;
 export type HashAlgorithm = HashAlgorithmType;
 export type HashUtility = HashUtilityType;
 export type JwtStrategy = JwtStrategyType;
+export type LocalStrategy = LocalStrategyType;
 export type Method = Method_Type;
 export type MethodType = MethodType_Type;
 export type NumberRange = NumberRangeType;
