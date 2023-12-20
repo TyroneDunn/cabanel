@@ -1,11 +1,9 @@
 import {CorsOptions} from "cors";
-import {OK} from "../shared/http-status-codes.constant";
+import { ApplicationSchema, AuthStrategy, OK } from "@hals/common";
 import {
-    AuthStrategy,
-    Schema,
-    NodeEnvironmentOption,
-    WebFrameworkOption
-} from "./schema.type";
+   NodeEnvironmentOption,
+   WebFrameworkOption,
+} from "@hals/common/lib/app/application-schema.type";
 
 export type BuildSchema = (
     nodeEnv: NodeEnvironmentOption,
@@ -15,7 +13,7 @@ export type BuildSchema = (
     port: number,
     corsOptions: CorsOptions,
     authStrategy: AuthStrategy,
-) => Schema;
+) => ApplicationSchema;
 
 export const buildSchema: BuildSchema = (
     nodeEnv: NodeEnvironmentOption,
@@ -25,7 +23,7 @@ export const buildSchema: BuildSchema = (
     port: number,
     corsOptions: CorsOptions,
     authStrategy: AuthStrategy = "None",
-): Schema =>
+): ApplicationSchema =>
     ({
         nodeEnv: nodeEnv,
         api: api,
@@ -35,11 +33,3 @@ export const buildSchema: BuildSchema = (
         corsOptions: corsOptions,
         authStrategy: authStrategy
     });
-
-export const DEFAULT_CORS_OPTIONS: CorsOptions = {
-    origin: [
-        '*',
-    ],
-    optionsSuccessStatus: OK,
-    methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
-};

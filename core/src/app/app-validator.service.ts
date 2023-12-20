@@ -1,8 +1,6 @@
-import {ValidationOutcome} from "../shared/validation-outcome.type";
-import {Schema} from "./schema.type";
-import {Error} from "../shared/error.type";
+import { ApplicationSchema, ValidationOutcome } from "@hals/common";
 
-export const validateAppSchema = (schema: Schema): ValidationOutcome => {
-    const errors: Error[] = [];
-    return {errors: errors};
+export const validateAppSchema = (schema: ApplicationSchema): ValidationOutcome => {
+   // implement validation
+   return {};
 };
