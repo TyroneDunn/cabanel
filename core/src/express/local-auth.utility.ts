@@ -4,7 +4,7 @@ import {LocalStrategy as HalsLocalStrategy} from "../auth/local-strategy.type";
 import {AuthRepository} from "../auth/auth-repository.type";
 import {GetUserDTO} from "../users/users-dtos";
 import {User} from "../users/user.type";
-import {ApplicationSchema} from "../app/schema.type";
+import {ApplicationSchema} from "../app/application-schema.type";
 import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
 import {configureAuthRepository} from "../auth/auth-repository.utility";

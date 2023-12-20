@@ -1,4 +1,4 @@
-import {ApplicationSchema} from "./schema.type";
+import {ApplicationSchema} from "./application-schema.type";
 import {Application} from "./application.type";
 import {Controller} from "./controller.type";
 import {expressAppBuilder} from "../express/express-app-builder.utility";

@@ -1,5 +1,5 @@
 import { Application } from "./application.type";
-import { ApplicationSchema } from "./schema.type";
+import { ApplicationSchema } from "./application-schema.type";
 import { Controller } from "./controller.type";
 import { validateAppSchema } from "./app-validator.service";
 import { ValidationOutcome } from "@hals/common";
