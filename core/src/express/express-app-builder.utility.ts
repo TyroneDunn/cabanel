@@ -12,9 +12,10 @@ import {
 import { AppBuilder as HalsAppBuilder } from "../app/app-builder.utility";
 import { configureAuthentication } from "./authentication.utility";
 import { configureRouters } from "./hals-express.utility";
+import { serverMetadata, serverStartMessage } from "../app/application.utility";
+import { NodeEnvironmentOption } from "@hals/common/lib/app/application-schema.type";
 
 const express = require("express");
-
 const cors = require('cors');
 
 export const expressAppBuilder: HalsAppBuilder = {
@@ -24,21 +25,18 @@ export const expressAppBuilder: HalsAppBuilder = {
       expressApp.use(cors(schema.corsOptions));
       configureAuthentication(expressApp, schema);
       configureRouters(expressApp, controllers);
-      expressApp.get('/', metadata(schema.title, schema.port, schema.version));
+      expressApp.get('/', metadata(schema.title, schema.port, schema.version, schema.nodeEnv));
       return {
          run: (): void => {
             expressApp.listen(schema.port, () =>
-               console.log(`${schema.title} @ port: ${schema.port}`));
+               console.log(serverStartMessage(schema.title, schema.port, schema.version, schema.nodeEnv)));
          },
       };
    },
 };
 
 const metadata =
-   (title: string = 'Untitled', port: number = 2400, version?: string): ExpressRequestHandler =>
+   (title: string, port: number, version: string, environment: NodeEnvironmentOption): ExpressRequestHandler =>
       (request: ExpressRequest, response: ExpressResponse): void => {
-         response.send({
-            "message": `${title} @ port: ${port}`,
-            ...version && { "version": `${version}` },
-         });
+         response.send(serverMetadata(title, port, version, environment));
       };
