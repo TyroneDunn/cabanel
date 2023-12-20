@@ -1,4 +1,3 @@
-
 import {CorsOptions} from "cors";
 import {
     InitialiseApplication,
@@ -89,8 +88,6 @@ export type Method = {
 export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 export type RequestHandler = (dto: Request) => Promise<Response>;
 export type SideEffect = (request: Request) => Promise<void>;
-
-export type ParamMap = Record<string, string>;
 
 export const HttpStatusCodes = {
     OK: number,
