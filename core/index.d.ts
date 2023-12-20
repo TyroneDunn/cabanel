@@ -1,4 +1,3 @@
-import {Request as RequestType} from "./src/app/request.type";
 
 import {CorsOptions} from "cors";
 import {
@@ -91,18 +90,7 @@ export type MethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 export type RequestHandler = (dto: Request) => Promise<Response>;
 export type SideEffect = (request: Request) => Promise<void>;
 
-export type Request = RequestType;
-
 export type ParamMap = Record<string, string>;
-
-export type Response = {
-    status: number
-    error?: string,
-    collection?: any[],
-    count?: number,
-    index?: number,
-    limit?: number,
-};
 
 export const HttpStatusCodes = {
     OK: number,
