@@ -1,14 +1,14 @@
-import {Schema} from "./schema.type";
+import {ApplicationSchema} from "./schema.type";
 import {Application} from "./application.type";
 import {Controller} from "./controller.type";
 import {expressAppBuilder} from "../express/express-app-builder.utility";
 
 export type AppBuilder = {
-    buildApp: (schema: Schema, controllers: Controller[]) => Application,
+    buildApp: (schema: ApplicationSchema, controllers: Controller[]) => Application,
 };
 
 export const appBuilder: AppBuilder = {
-    buildApp(schema: Schema, controllers: Controller[]): Application {
+    buildApp(schema: ApplicationSchema, controllers: Controller[]): Application {
         switch (schema.api) {
             case "Express": {
                 return expressAppBuilder.buildApp(schema, controllers);

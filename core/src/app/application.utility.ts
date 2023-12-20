@@ -1,17 +1,17 @@
 import { Application } from "./application.type";
-import { Schema } from "./schema.type";
+import { ApplicationSchema } from "./schema.type";
 import { Controller } from "./controller.type";
 import { validateAppSchema } from "./app-validator.service";
 import { ValidationOutcome } from "@hals/common";
 import { appBuilder } from "./app-builder.utility";
 
 export type InitialiseApplication = (
-   config: Schema,
+   config: ApplicationSchema,
    controllers: Controller[],
 ) => Application;
 
 export const newApplication: InitialiseApplication = (
-   config: Schema,
+   config: ApplicationSchema,
    controllers: Controller[] = [],
 ): Application => {
    const validationOutcome: ValidationOutcome = validateAppSchema(config);

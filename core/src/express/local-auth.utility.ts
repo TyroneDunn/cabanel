@@ -4,7 +4,7 @@ import {LocalStrategy as HalsLocalStrategy} from "../auth/local-strategy.type";
 import {AuthRepository} from "../auth/auth-repository.type";
 import {GetUserDTO} from "../users/users-dtos";
 import {User} from "../users/user.type";
-import {Schema} from "../app/schema.type";
+import {ApplicationSchema} from "../app/schema.type";
 import session, {SessionOptions} from "express-session";
 import MongoStore from "connect-mongo";
 import {configureAuthRepository} from "../auth/auth-repository.utility";
@@ -14,7 +14,7 @@ import LocalStrategy = require('passport-local');
 import {Response} from "../app/response.type";
 import {OK, configureHashUtility} from "@hals/common";
 
-export const configureLocalAuthentication = (schema: Schema, app: ExpressApplication): void => {
+export const configureLocalAuthentication = (schema: ApplicationSchema, app: ExpressApplication): void => {
     const localStrategyConfig: HalsLocalStrategy = schema.authStrategy as HalsLocalStrategy;
     const authRepository: AuthRepository = configureAuthRepository(
         localStrategyConfig.usersDbName,
@@ -89,9 +89,9 @@ const configurePassportLocalStrategy = (
 };
 
 const sessionMiddleware =
-    (config: Schema): RequestHandler => session(configureSessionOptions(config));
+    (config: ApplicationSchema): RequestHandler => session(configureSessionOptions(config));
 
-const configureSessionOptions = (schema: Schema): SessionOptions =>
+const configureSessionOptions = (schema: ApplicationSchema): SessionOptions =>
     ({
         secret: (schema.authStrategy as HalsLocalStrategy).sessionSecret,
         resave: false,

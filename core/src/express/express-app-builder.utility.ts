@@ -1,4 +1,4 @@
-import {Schema as HalsSchema} from "../app/schema.type";
+import {ApplicationSchema as HalsSchema} from "../app/schema.type";
 import {Controller as HalsController} from "../app/controller.type";
 import {Application as HalsApplication} from "../app/application.type";
 const express = require("express");
