@@ -12,7 +12,7 @@ import {
    HashUtility as HashUtilityType,
 } from "./lib/password/password.type";
 import { HashAlgorithm as HashAlgorithmType } from "./lib/auth/hash-algorithm.type";
-import {JwtStrategy as JwtStrategyType} from "./lib/auth/jwt-strategy.type";
+import { JwtStrategy as JwtStrategyType } from "./lib/auth/jwt-strategy.type";
 import { LocalStrategy as LocalStrategyType } from "./lib/auth/local-strategy.type";
 import { Method as Method_Type, MethodType as MethodType_Type } from "./lib/app/method.type";
 import { NumberRange as NumberRangeType } from "./lib/number-range/number-range.type";
@@ -45,6 +45,7 @@ import {
    configureHashUtility as configureHashUtilityImpl,
    generateSalt as generateSaltImpl,
 } from "./lib/password/password.utility";
+import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
 import {
    mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl,
    mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
@@ -103,6 +104,7 @@ export const addRequestPageDataToResponse = addRequestPageDataToResponseImpl;
 export const configureHashUtility = configureHashUtilityImpl;
 export const generateSalt = generateSaltImpl;
 export const isError = isErrorImpl;
+export const isLocalStrategy = isLocalStrategyImpl;
 export const mapCommandResultToSuccessResponse = mapCommandResultToSuccessResponseImpl;
 export const mapDeleteResultToResponse = mapDeleteResultToResponseImpl;
 export const mapErrorToInternalServerErrorResponse = mapErrorToInternalServerErrorResponseImpl;
