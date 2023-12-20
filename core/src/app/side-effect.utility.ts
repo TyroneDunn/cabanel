@@ -1,5 +1,4 @@
-import {Request as HalsRequest} from "./request.type";
-import {SideEffect as HalsSideEffect} from "./side-effect.type";
+import { Request as HalsRequest, SideEffect as HalsSideEffect } from "@hals/common";
 
 export const executeSideEffects = (dto: HalsRequest, sideEffects: HalsSideEffect[]): void =>
-    sideEffects.forEach(sideEffect => sideEffect(dto));
+   sideEffects.forEach(sideEffect => sideEffect(dto));
