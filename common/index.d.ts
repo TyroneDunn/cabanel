@@ -1,3 +1,4 @@
+import { Application as ApplicationType } from "./lib/app/application.type";
 import { ApplicationSchema as ApplicationSchemaType } from "./lib/app/application-schema.type";
 import { AuthStrategy as AuthStrategyType } from "./lib/auth/auth-strategy.type";
 import { CommandResult as CommandResultType } from "./lib/command-result/command-result.type";
@@ -66,6 +67,7 @@ import {
    throwErrors as throwErrorsImpl,
 } from "./lib/error/error.utility";
 
+export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
 export type AuthStrategy = AuthStrategyType;
 export type CommandResult = CommandResultType;
