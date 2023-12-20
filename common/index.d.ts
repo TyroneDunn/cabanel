@@ -27,6 +27,7 @@ import { Timestamps as TimestampsType } from "./lib/timestamps/timestamps.type";
 import { RequestHandler as RequestHandlerType } from "./lib/app/request-handler.type";
 import { Page as PageType } from "./lib/page/page.type";
 import { ParamMap as ParamMapType } from "./lib/app/param-map.type";
+import { User as UserType } from "./lib/users/user.type";
 import {
    ValidationOutcome as ValidationOutcomeType,
 } from "./lib/validation-outcome/validation-outcome.type";
@@ -94,6 +95,7 @@ export type SideEffect = SideEffectType;
 export type Timestamps = TimestampsType;
 export type Page = PageType;
 export type ParamMap = ParamMapType;
+export type User = UserType;
 export type ValidationOutcome = ValidationOutcomeType;
 
 export const OK: number = OKconst;
