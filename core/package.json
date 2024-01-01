@@ -12,7 +12,7 @@
     "web framework"
   ],
   "author": "Tyrone B. Dunn",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
