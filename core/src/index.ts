@@ -4,11 +4,8 @@ import {
    BuildLocalAuthStrategy,
    buildLocalAuthStrategy as buildLocalAuthStrategyImpl,
 } from "./auth/local-strategy.utility";
-import {
-   InitialiseApplication,
-   hals as halsImpl,
-} from "./app/application.utility";
+import { hals as halsImpl, InitialiseApplication } from "./app/application.utility";
 
-export const buildLocalAuthStrategy: BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
-export const halsEventEmitter: EventEmitter = HalsEventEmitter;
-export const hals: InitialiseApplication = halsImpl;
+export const buildLocalAuthStrategy : BuildLocalAuthStrategy = buildLocalAuthStrategyImpl;
+export const halsEventEmitter : EventEmitter = HalsEventEmitter;
+export const hals : InitialiseApplication = halsImpl;
