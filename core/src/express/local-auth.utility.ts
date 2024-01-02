@@ -2,7 +2,7 @@ import { Application as ExpressApplication, RequestHandler } from "express";
 import passport from "passport";
 import {
    ApplicationSchema,
-   configureHashUtility,
+   configureHashUtility, HashUtility,
    LocalStrategy as HalsLocalStrategy,
    OK,
    Response,
@@ -17,9 +17,12 @@ import { AuthService, configureAuthService } from "../auth/auth.service";
 import { configureLocalAuthRouter } from "./local-auth-router.utility";
 import LocalStrategy = require('passport-local');
 
-export const configureLocalAuthentication = (schema: ApplicationSchema, app: ExpressApplication): void => {
-   const localStrategyConfig: HalsLocalStrategy = schema.authStrategy as HalsLocalStrategy;
-   const authRepository: AuthRepository = configureAuthRepository(
+export const configureLocalAuthentication = (
+   schema : ApplicationSchema,
+   app    : ExpressApplication
+) : void => {
+   const localStrategyConfig : HalsLocalStrategy = schema.authStrategy as HalsLocalStrategy;
+   const authRepository : AuthRepository = configureAuthRepository(
       localStrategyConfig.usersDbName,
       localStrategyConfig.usersDbOption,
       localStrategyConfig.usersDbUrl,
@@ -28,7 +31,7 @@ export const configureLocalAuthentication = (schema: ApplicationSchema, app: Exp
       localStrategyConfig.hashingAlgorithm,
       localStrategyConfig.hashingIterations,
    );
-   const authService = configureAuthService(authRepository);
+   const authService : AuthService = configureAuthService(authRepository);
    configurePassportLocalStrategy(
       localStrategyConfig,
       authService,
@@ -40,49 +43,51 @@ export const configureLocalAuthentication = (schema: ApplicationSchema, app: Exp
 };
 
 const configurePassportLocalStrategy = (
-   config: HalsLocalStrategy,
-   authService: AuthService,
-): void => {
+   config      : HalsLocalStrategy,
+   authService : AuthService,
+) : void => {
    const userField = {
       usernameField: 'username',
       passwordField: 'password',
    };
 
-   const verifyCallback = async (username: string, password: string, done: any): Promise<void> => {
-      const dto: GetUserDTO = { username: username };
-      const response: Response = await authService.getUser(dto);
+   const verifyCallback = async (
+      username : string,
+      password : string,
+      done     : any
+   ) : Promise<void> => {
+      const dto : GetUserDTO = { username: username };
+      const response : Response = await authService.getUser(dto);
       if (response.status !== OK) {
          done(null, false);
          return;
       }
 
-      const user: User = response.collection?.pop() as User;
-      const hashUtility = configureHashUtility(
+      const user : User = response.collection?.pop() as User;
+      const hashUtility : HashUtility = configureHashUtility(
          config.passwordSalt,
          config.hashingIterations,
          config.passwordLength,
          config.hashingAlgorithm,
       );
-      if (!hashUtility.validateHash(
+      if (hashUtility.validateHash(
          password,
          user.hash,
-      )) {
+      ))
+         done(null, user);
+      else {
          done(null, false);
          return;
       }
-
-      done(null, user);
    };
 
    passport.use(new LocalStrategy.Strategy(userField, verifyCallback));
-
-   passport.serializeUser((user: any, done: any) => {
+   passport.serializeUser((user : any, done : any) => {
       done(null, user.username);
    });
-
-   passport.deserializeUser(async (username: any, done: any) => {
+   passport.deserializeUser(async (username : any, done : any) => {
       try {
-         const dto: GetUserDTO = { username: username };
+         const dto : GetUserDTO = { username: username };
          const user = await authService.getUser(dto);
          done(null, user);
       }
@@ -92,38 +97,32 @@ const configurePassportLocalStrategy = (
    });
 };
 
-const sessionMiddleware =
-   (config: ApplicationSchema): RequestHandler => session(configureSessionOptions(config));
+const sessionMiddleware = (config : ApplicationSchema) : RequestHandler =>
+   session(configureSessionOptions(config));
 
-const configureSessionOptions = (schema: ApplicationSchema): SessionOptions =>
-   ({
-      secret: (schema.authStrategy as HalsLocalStrategy).sessionSecret,
-      resave: false,
-      saveUninitialized: true,
-      store: configureSessionStore(schema.authStrategy as HalsLocalStrategy),
-      cookie: {
-         // Session Lifespan: 21 Days.
-         maxAge: 21 * (24 * (60 * (1000 * 60))),
-         httpOnly: (schema.nodeEnv === "production"),
-      },
-   });
+const configureSessionOptions = (schema : ApplicationSchema) : SessionOptions => ({
+   secret            : (schema.authStrategy as HalsLocalStrategy).sessionSecret,
+   resave            : false,
+   saveUninitialized : true,
+   store             : configureSessionStore(schema.authStrategy as HalsLocalStrategy),
+   cookie            : {
+      // Session Lifespan: 21 Days.
+      maxAge         : 21 * (24 * (60 * (1000 * 60))),
+      httpOnly       : (schema.nodeEnv === "production"),
+   },
+});
 
-const configureSessionStore = (authStrategy: HalsLocalStrategy) => {
-   let sessionStore;
+const configureSessionStore = (authStrategy : HalsLocalStrategy) => {
    switch (authStrategy.usersDbOption) {
-      case "MongoDB": {
-         sessionStore = configureMongoSessionStore(authStrategy.usersDbUrl);
-         break;
-      }
-      default: {
+      case "MongoDB":
+         return configureMongoSessionStore(authStrategy.usersDbUrl);
+      default:
          throw new Error(`"${authStrategy.usersDbOption} session store not implemented. Please choose another session store option.`);
-      }
    }
-   return sessionStore;
 };
 
-const configureMongoSessionStore = (url: string): MongoStore =>
+const configureMongoSessionStore = (url : string) : MongoStore =>
    MongoStore.create({
-      mongoUrl: url,
-      collectionName: 'sessions',
+      mongoUrl       : url,
+      collectionName : 'sessions',
    });
