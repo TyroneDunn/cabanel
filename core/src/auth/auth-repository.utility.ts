@@ -5,26 +5,24 @@ import { generateUserModel } from "../users/mongo-user-model-config.service";
 import { DatabaseOption } from "@hals/common/lib/auth/local-strategy.type";
 
 export const configureAuthRepository = (
-   usersDbName: string,
-   usersDbOption: DatabaseOption,
-   usersDbUrl: string,
-   passwordSalt: string,
-   passwordLength: number,
-   hashingAlgorithm: HashAlgorithm,
-   hashingIterations: number,
-): AuthRepository => {
-   const generateHashWrapper = (key: string) =>
+   usersDbName       : string,
+   usersDbOption     : DatabaseOption,
+   usersDbUrl        : string,
+   passwordSalt      : string,
+   passwordLength    : number,
+   hashingAlgorithm  : HashAlgorithm,
+   hashingIterations : number,
+) : AuthRepository => {
+   const generateHash = (key : string) =>
       configureHashUtility(passwordSalt, hashingIterations, passwordLength, hashingAlgorithm)
       .generateHash(key);
    switch (usersDbOption) {
-      case "MongoDB": {
+      case "MongoDB":
          return configureMongoAuthRepository(
             generateUserModel(usersDbUrl, usersDbName),
-            generateHashWrapper,
+            generateHash,
          );
-      }
-      default: {
+      default:
          throw new Error(`"${usersDbOption}" DB option not implemented. Please select another option.`);
-      }
    }
 };
