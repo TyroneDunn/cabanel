@@ -17,22 +17,25 @@ import {
    UserRegisteredEvent,
 } from "../app/event-emitter.service";
 
-export const configureLocalAuthRouter = (authService: AuthService): Router => {
-   const authRouter: Router = Router();
+export const configureLocalAuthRouter = (authService : AuthService) : Router => {
+   const authRouter : Router = Router();
    authRouter.post('/register/', register(authService), authenticate, loggedIn);
    authRouter.post('/login/', authenticate, loggedIn);
    authRouter.post('/logout/', authGuard, logout);
    authRouter.get('/protected/', authGuard, authenticated);
-
    return authRouter;
 };
 
-const register = (authService: AuthService): RequestHandler =>
-   async (request: ExpressRequest, response: ExpressResponse, next: NextFunction): Promise<void> => {
-      const dto: RegisterUserDTO = mapToRegisterUserDTO(request);
-      const halsResponse: HalsResponse = await authService.registerUser(dto);
+const register = (authService : AuthService) : RequestHandler =>
+   async (
+      request  : ExpressRequest,
+      response : ExpressResponse,
+      next     : NextFunction
+   ) : Promise<void> => {
+      const dto : RegisterUserDTO = mapToRegisterUserDTO(request);
+      const halsResponse : HalsResponse = await authService.registerUser(dto);
       if (halsResponse.status === CREATED) {
-         const user: User = halsResponse.collection?.pop() as User;
+         const user : User = halsResponse.collection?.pop() as User;
          HalsEventEmitter.emit(UserRegisteredEvent, user);
          next();
          return;
@@ -40,39 +43,47 @@ const register = (authService: AuthService): RequestHandler =>
       response.status(halsResponse.status).json(halsResponse);
    };
 
-const authenticate: RequestHandler = passport.authenticate('local');
+const authenticate : RequestHandler = passport.authenticate('local');
 
-const mapToRegisterUserDTO = (req: ExpressRequest): RegisterUserDTO => ({
-   username: req.body.username,
-   password: req.body.password,
+const mapToRegisterUserDTO = (req : ExpressRequest) : RegisterUserDTO => ({
+   username : req.body.username,
+   password : req.body.password,
 });
 
-const loggedIn: RequestHandler = (request: ExpressRequest, response: ExpressResponse): void => {
+const loggedIn : RequestHandler = (
+   request  : ExpressRequest,
+   response : ExpressResponse
+) : void => {
    response.json({ status: OK, message: 'Logged in successfully.' });
    HalsEventEmitter.emit(UserLoggedInEvent, request.user as User);
 };
 
-const logout: RequestHandler = (request: ExpressRequest, response: ExpressResponse): void => {
+const logout : RequestHandler = (
+   request  : ExpressRequest,
+   response : ExpressResponse
+) : void => {
    request.logout((error) => {
       if (error) {
          response.status(INTERNAL_SERVER_ERROR).json({
-            status: INTERNAL_SERVER_ERROR,
-            message: 'Log out failed.',
+            status  : INTERNAL_SERVER_ERROR,
+            message : 'Log out failed.',
          });
          return;
       }
       response.json({
-         status: OK,
-         message: 'Logged out successfully.',
+         status  : OK,
+         message : 'Logged out successfully.',
       });
       HalsEventEmitter.emit(UserLoggedOutEvent, request.user as User);
    });
 };
 
-const authenticated: RequestHandler =
-   (request: ExpressRequest, response: ExpressResponse): void => {
-      response.json({
-         status: OK,
-         username: (request.user as User).username,
-      });
-   };
+const authenticated : RequestHandler = (
+   request  : ExpressRequest,
+   response : ExpressResponse
+) : void => {
+   response.json({
+      status   : OK,
+      username : (request.user as User).username,
+   });
+};
