@@ -1,8 +1,8 @@
 export type Response = {
    status      : number
-   error       : string | undefined,
-   collection  : [any]  | undefined,
-   count       : number | undefined,
-   index       : number | undefined,
-   limit       : number | undefined,
+   error?      : string,
+   collection? : [any],
+   count?      : number,
+   index?      : number,
+   limit?      : number,
 };

@@ -1,4 +1,4 @@
 export type CommandResult = {
-    success: boolean,
-    affectedCount: number
+   success       : boolean,
+   affectedCount : number
 };
