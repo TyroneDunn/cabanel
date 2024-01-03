@@ -98,14 +98,14 @@ export type ParamMap = ParamMapType;
 export type User = UserType;
 export type ValidationOutcome = ValidationOutcomeType;
 
-export const OK: number = OKconst;
-export const CREATED: number = CREATEDconst;
-export const BAD_REQUEST: number = BAD_REQUESTconst;
-export const UNAUTHORIZED: number = UNAUTHORIZEDconst;
-export const FORBIDDEN: number = FORBIDDENconst;
-export const NOT_FOUND: number = NOT_FOUNDconst;
-export const CONFLICT: number = CONFLICTconst;
-export const INTERNAL_SERVER_ERROR: number = INTERNAL_SERVER_ERRORconst;
+export const OK : number = OKconst;
+export const CREATED : number = CREATEDconst;
+export const BAD_REQUEST : number = BAD_REQUESTconst;
+export const UNAUTHORIZED : number = UNAUTHORIZEDconst;
+export const FORBIDDEN : number = FORBIDDENconst;
+export const NOT_FOUND : number = NOT_FOUNDconst;
+export const CONFLICT : number = CONFLICTconst;
+export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 
 export const addRequestPageDataToResponse = addRequestPageDataToResponseImpl;
