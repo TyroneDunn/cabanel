@@ -1,4 +1,4 @@
 export type Page = {
-    index: number;
-    limit: number;
+   index : number;
+   limit : number;
 };
