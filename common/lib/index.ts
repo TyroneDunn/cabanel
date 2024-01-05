@@ -10,7 +10,7 @@ import {
 } from "./http/http-status-codes.constant";
 
 import {
-   addRequestPageDataToResponse as addRequestPageDataToResponseImpl,
+   addPageDataToResponse as addPageDataToResponseImpl,
 } from "./app/app.utility";
 import {
    configureHashUtility as configureHashUtilityImpl,
@@ -47,7 +47,7 @@ export const CONFLICT : number = CONFLICTconst;
 export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 
-export const addRequestPageDataToResponse = addRequestPageDataToResponseImpl;
+export const addPageDataToResponse = addPageDataToResponseImpl;
 export const configureHashUtility = configureHashUtilityImpl;
 export const generateSalt = generateSaltImpl;
 export const isError = isErrorImpl;
