@@ -24,17 +24,27 @@ export const mapRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler
       expressResponse.status(halsResponse.status).json(halsResponse);
    };
 
-export const mapToMiddlewareRequestHandlers = (halsMethod: HalsMethod): ExpressRequestHandler[] =>
-   halsMethod.middleware.map((middleware: HalsRequestHandler): ExpressRequestHandler =>
-      async (expressRequest: ExpressRequest, expressResponse: ExpressResponse, next: NextFunction) => {
-         const halsRequest: HalsRequest = mapToHalsRequest(expressRequest, halsMethod);
-         const halsResponse: HalsResponse = await middleware(halsRequest);
-         if (halsResponse.error)
-            return expressResponse.status(halsResponse.status).json(halsResponse);
-         return next();
-      });
+export const mapMethodToExpressMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler[] =>
+   halsMethod.middleware === undefined
+      ? []
+      : halsMethod.middleware.map((middleware : HalsRequestHandler) : ExpressRequestHandler =>
+         async (
+            expressRequest : ExpressRequest,
+            expressResponse : ExpressResponse,
+            next : NextFunction
+         )  => {
+            const halsRequest : HalsRequest = mapToHalsRequest(
+               expressRequest,
+               halsMethod.paramKeys,
+               halsMethod.queryParamKeys
+            );
+            const halsResponse : HalsResponse = await middleware(halsRequest);
+            if (halsResponse.error)
+               return expressResponse.status(halsResponse.status).json(halsResponse);
+            else next();
+         });
 
-const mapSideEffectsToMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler => {
+const mapSideEffectsToExpressMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler => {
    return (expressRequest : ExpressRequest, expressResponse : ExpressResponse, next : NextFunction) : void => {
       if (halsMethod.sideEffects === undefined || halsMethod.sideEffects.length === 0)
          next();
@@ -98,8 +108,8 @@ export const configureRouters =
          const expressRouter: ExpressRouter = ExpressRouter();
          for (const method of controller.methods) {
             const endpoint = constructEndpoint(method);
-            const sideEffectMiddleware: ExpressRequestHandler = mapSideEffectsToMiddleware(method);
-            const middlewares: ExpressRequestHandler[] = mapToMiddlewareRequestHandlers(method);
+            const sideEffectMiddleware: ExpressRequestHandler = mapSideEffectsToExpressMiddleware(method);
+            const middlewares: ExpressRequestHandler[] = mapMethodToExpressMiddleware(method);
             const requestHandler: ExpressRequestHandler = mapRequestHandler(method);
             switch (method.type) {
                case "GET": {
