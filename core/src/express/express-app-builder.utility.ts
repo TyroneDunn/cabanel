@@ -10,8 +10,8 @@ import {
    Response as ExpressResponse,
 } from "express";
 import { AppBuilder as HalsAppBuilder } from "../app/app-builder.utility";
-import { configureAuthentication } from "./authentication.utility";
-import { configureRouters } from "./hals-express.utility";
+import { configureExpressAppAuthentication } from "./authentication.utility";
+import { configureExpressAppRouters } from "./hals-express.utility";
 import { serverMetadata, serverStartMessage } from "../app/application.utility";
 import { NodeEnvironmentOption } from "@hals/common/lib/app/application-schema.type";
 
@@ -23,8 +23,8 @@ export const expressAppBuilder: HalsAppBuilder = {
       const expressApp: ExpressApplication = express();
       expressApp.use(express.json());
       expressApp.use(cors(schema.corsOptions));
-      configureAuthentication(expressApp, schema);
-      configureRouters(expressApp, controllers);
+      configureExpressAppAuthentication(expressApp, schema);
+      configureExpressAppRouters(expressApp, controllers);
       expressApp.get('/', metadata(schema.title, schema.port, schema.version, schema.nodeEnv));
       return {
          run: (): void => {

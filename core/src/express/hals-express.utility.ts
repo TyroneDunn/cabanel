@@ -17,7 +17,46 @@ import {
 import { executeSideEffects } from "../app/side-effect.utility";
 import { authGuard } from "./authentication.utility";
 
-export const mapRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler =>
+export const configureExpressAppRouters =
+   (app: ExpressApplication, halsControllers: HalsController[]): void => {
+      for (const controller of halsControllers) {
+         const expressRouter: ExpressRouter = ExpressRouter();
+         for (const method of controller.methods) {
+            const endpoint: string = mapMethodToRequestEndpoint(method);
+            const sideEffectMiddleware: ExpressRequestHandler = mapMethodSideEffectsToExpressMiddleware(method);
+            const middlewares: ExpressRequestHandler[] = mapMethodMiddlewaresToExpressMiddleware(method);
+            const requestHandler: ExpressRequestHandler = mapMethodRequestHandlerToExpressRequestHandler(method);
+            switch (method.type) {
+               case "GET": {
+                  expressRouter.get(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  break;
+               }
+               case "POST": {
+                  expressRouter.post(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  break;
+               }
+               case "PATCH": {
+                  expressRouter.patch(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  break;
+               }
+               case "PUT": {
+                  expressRouter.put(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  break;
+               }
+               case "DELETE": {
+                  expressRouter.delete(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  break;
+               }
+            }
+         }
+
+         controller.guard
+         ? app.use('/' + controller.path, authGuard, expressRouter)
+         : app.use('/' + controller.path, expressRouter);
+      }
+   };
+
+export const mapMethodRequestHandlerToExpressRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler =>
    async (expressRequest: ExpressRequest, expressResponse: ExpressResponse) => {
       const halsRequest: HalsRequest = mapToHalsRequest(
          expressRequest,
@@ -28,7 +67,7 @@ export const mapRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler
       expressResponse.status(halsResponse.status).json(halsResponse);
    };
 
-export const mapMethodToExpressMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler[] =>
+export const mapMethodMiddlewaresToExpressMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler[] =>
    halsMethod.middleware === undefined
       ? []
       : halsMethod.middleware.map((middleware : HalsRequestHandler) : ExpressRequestHandler =>
@@ -48,7 +87,7 @@ export const mapMethodToExpressMiddleware = (halsMethod: HalsMethod): ExpressReq
             else next();
          });
 
-const mapSideEffectsToExpressMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler => {
+const mapMethodSideEffectsToExpressMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler => {
    return (expressRequest : ExpressRequest, expressResponse : ExpressResponse, next : NextFunction) : void => {
       if (halsMethod.sideEffects === undefined || halsMethod.sideEffects.length === 0)
          next();
@@ -64,7 +103,7 @@ const mapSideEffectsToExpressMiddleware = (halsMethod: HalsMethod): ExpressReque
    };
 };
 
-export const constructEndpoint = (halsMethod: HalsMethod): string => {
+export const mapMethodToRequestEndpoint = (halsMethod: HalsMethod): string => {
    const path: string = halsMethod.path ? '/' + halsMethod.path + '/' : '/';
    return appendParamKeys(halsMethod.paramKeys, path);
 };
@@ -105,43 +144,3 @@ export const mapToHalsQueryParamMap = (queryParamKeys: string[], expressRequest:
    }
    return queryParamMap;
 };
-
-export const configureRouters =
-   (app: ExpressApplication, halsControllers: HalsController[]): void => {
-      for (const controller of halsControllers) {
-         const expressRouter: ExpressRouter = ExpressRouter();
-         for (const method of controller.methods) {
-            const endpoint = constructEndpoint(method);
-            const sideEffectMiddleware: ExpressRequestHandler = mapSideEffectsToExpressMiddleware(method);
-            const middlewares: ExpressRequestHandler[] = mapMethodToExpressMiddleware(method);
-            const requestHandler: ExpressRequestHandler = mapRequestHandler(method);
-            switch (method.type) {
-               case "GET": {
-                  expressRouter.get(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
-                  break;
-               }
-               case "POST": {
-                  expressRouter.post(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
-                  break;
-               }
-               case "PATCH": {
-                  expressRouter.patch(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
-                  break;
-               }
-               case "PUT": {
-                  expressRouter.put(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
-                  break;
-               }
-               case "DELETE": {
-                  expressRouter.delete(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
-                  break;
-               }
-            }
-         }
-
-         if (controller.guard)
-            app.use('/' + controller.path, authGuard, expressRouter);
-         else
-            app.use('/' + controller.path, expressRouter);
-      }
-   };

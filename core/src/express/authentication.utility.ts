@@ -9,7 +9,10 @@ import { isLocalStrategy } from "../auth/local-strategy.utility";
 import { configureLocalAuthentication } from "./local-auth.utility";
 import { ApplicationSchema, UNAUTHORIZED } from "@hals/common";
 
-export const configureAuthentication = (app: ExpressApplication, schema: ApplicationSchema) => {
+export const configureExpressAppAuthentication = (
+   app: ExpressApplication,
+   schema: ApplicationSchema
+) => {
    if (schema.authStrategy === "None") return;
 
    if (isLocalStrategy(schema.authStrategy)) {
