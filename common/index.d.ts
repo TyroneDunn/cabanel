@@ -30,7 +30,7 @@ import { ParamMap as ParamMapType } from "./lib/app/param-map.type";
 import { User as UserType } from "./lib/users/user.type";
 import {
    ValidationError as ValidationErrorType,
-} from "./lib/validation-outcome/validation-error.type";
+} from "./lib/validation-error/validation-error.type";
 import {
    BAD_REQUEST as BAD_REQUESTconst,
    CONFLICT as CONFLICTconst,
@@ -62,7 +62,7 @@ import {
 import {
    isValidationError as isValidationErrorImpl,
    mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
-} from "./lib/validation-outcome/validation-error.utility";
+} from "./lib/validation-error/validation-error.utility";
 import {
    isError as isErrorImpl,
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,

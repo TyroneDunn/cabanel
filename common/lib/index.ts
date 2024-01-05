@@ -28,7 +28,7 @@ import {
 import {
    mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
    isValidationError as isValidationErrorImpl
-} from "./validation-outcome/validation-error.utility";
+} from "./validation-error/validation-error.utility";
 import {
    isError as isErrorImpl,
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
