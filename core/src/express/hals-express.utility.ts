@@ -19,7 +19,11 @@ import { authGuard } from "./authentication.utility";
 
 export const mapRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler =>
    async (expressRequest: ExpressRequest, expressResponse: ExpressResponse) => {
-      const halsRequest: HalsRequest = mapToHalsRequest(expressRequest, halsMethod);
+      const halsRequest: HalsRequest = mapToHalsRequest(
+         expressRequest,
+         halsMethod.paramKeys,
+         halsMethod.queryParamKeys
+      );
       const halsResponse: HalsResponse = await halsMethod.requestHandler(halsRequest);
       expressResponse.status(halsResponse.status).json(halsResponse);
    };
