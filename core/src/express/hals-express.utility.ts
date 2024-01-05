@@ -34,12 +34,21 @@ export const mapToMiddlewareRequestHandlers = (halsMethod: HalsMethod): ExpressR
          return next();
       });
 
-const mapSideEffectsToRequestHandler = (halsMethod: HalsMethod): ExpressRequestHandler =>
-   (expressRequest: ExpressRequest, expressResponse: ExpressResponse, next: NextFunction): void => {
-      const halsRequest: HalsRequest = mapToHalsRequest(expressRequest, halsMethod);
-      executeSideEffects(halsRequest, halsMethod.sideEffects);
-      next();
+const mapSideEffectsToMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler => {
+   return (expressRequest : ExpressRequest, expressResponse : ExpressResponse, next : NextFunction) : void => {
+      if (halsMethod.sideEffects === undefined || halsMethod.sideEffects.length === 0)
+         next();
+      else {
+         const halsRequest : HalsRequest = mapToHalsRequest(
+            expressRequest,
+            halsMethod.paramKeys,
+            halsMethod.queryParamKeys,
+         );
+         executeSideEffects(halsRequest, halsMethod.sideEffects);
+         next();
+      }
    };
+};
 
 export const constructEndpoint = (halsMethod: HalsMethod): string => {
    const path: string = halsMethod.path ? '/' + halsMethod.path + '/' : '/';
@@ -51,9 +60,13 @@ const appendParamKeys = (paramKeys : string[] | undefined, path : string) : stri
    else return appendParamKeys(paramKeys.slice(1), path.concat(':', paramKeys[0], '/'));
 };
 
-export const mapToHalsRequest = (expressRequest: ExpressRequest, halsMethod: HalsMethod): HalsRequest => ({
-   paramMap: mapToHalsParamMap(halsMethod.paramKeys, expressRequest),
-   queryParamMap: mapToHalsQueryParamMap(halsMethod.queryParamKeys, expressRequest),
+export const mapToHalsRequest = (
+   expressRequest: ExpressRequest,
+   paramKeys: string[] | undefined,
+   queryParamKeys: string[] | undefined
+): HalsRequest => ({
+   paramMap: paramKeys !== undefined ? mapToHalsParamMap(paramKeys, expressRequest) : {},
+   queryParamMap: queryParamKeys !== undefined ? mapToHalsQueryParamMap(queryParamKeys, expressRequest) : {},
    payload: expressRequest.body,
 });
 
@@ -85,28 +98,28 @@ export const configureRouters =
          const expressRouter: ExpressRouter = ExpressRouter();
          for (const method of controller.methods) {
             const endpoint = constructEndpoint(method);
-            const sideEffects: ExpressRequestHandler = mapSideEffectsToRequestHandler(method);
+            const sideEffectMiddleware: ExpressRequestHandler = mapSideEffectsToMiddleware(method);
             const middlewares: ExpressRequestHandler[] = mapToMiddlewareRequestHandlers(method);
             const requestHandler: ExpressRequestHandler = mapRequestHandler(method);
             switch (method.type) {
                case "GET": {
-                  expressRouter.get(endpoint, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.get(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
                   break;
                }
                case "POST": {
-                  expressRouter.post(endpoint, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.post(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
                   break;
                }
                case "PATCH": {
-                  expressRouter.patch(endpoint, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.patch(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
                   break;
                }
                case "PUT": {
-                  expressRouter.put(endpoint, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.put(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
                   break;
                }
                case "DELETE": {
-                  expressRouter.delete(endpoint, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.delete(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
                   break;
                }
             }
