@@ -3,7 +3,7 @@ import { RequestHandler } from "./request-handler.type";
 
 export type Method = {
    type           : MethodType,
-   path           : string | undefined,
+   path?          : string,
    paramKeys      : string[],
    queryParamKeys : string[]
    sideEffects    : SideEffect[],
