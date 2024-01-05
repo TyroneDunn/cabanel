@@ -110,7 +110,12 @@ export const mapMethodToRequestEndpoint = (halsMethod: HalsMethod): string => {
 
 const appendParamKeys = (paramKeys : string[] | undefined, path : string) : string => {
    if (paramKeys === undefined || paramKeys.length === 0) return path;
-   else return appendParamKeys(paramKeys.slice(1), path.concat(':', paramKeys[0], '/'));
+   else return appendParamKeys(
+      paramKeys.slice(1),
+      paramKeys.length > 1
+      ? path.concat(':', paramKeys[0], '/')
+      : path.concat(':', paramKeys[0])
+   );
 };
 
 export const mapToHalsRequest = (
