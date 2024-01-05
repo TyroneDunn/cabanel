@@ -1,13 +1,13 @@
 import { GetUserDTO, RegisterUserDTO } from "./users-dtos";
-import { ValidationOutcome } from "@hals/common";
+import { ValidationError } from "@hals/common";
 
-export const validateGetUserDTO = async (dto : GetUserDTO) : Promise<ValidationOutcome> => {
-   if (!dto.username) return { error : { type: "BadRequest", message : 'Username required.' } };
-   return {};
+export const validateGetUserDTO = async (dto : GetUserDTO) : Promise<ValidationError | null> => {
+   if (!dto.username) return ValidationError("BadRequest", 'Username required.');
+   return null;
 };
 
-export const validateRegisterUserDTO = async (dto : RegisterUserDTO) : Promise<ValidationOutcome> => {
-   if (!dto.username) return { error : { type: "BadRequest", message : 'Username required.' } };
-   if (!dto.password) return { error : { type: "BadRequest", message : 'Password required.' } };
-   return {};
+export const validateRegisterUserDTO = async (dto : RegisterUserDTO) : Promise<ValidationError | null> => {
+   if (!dto.username) return ValidationError("BadRequest", 'Username required.');
+   if (!dto.password) return ValidationError("BadRequest", 'Password required.');
+   return null;
 };
