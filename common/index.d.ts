@@ -9,7 +9,11 @@ import {
    StaticOrigin as StaticOriginType,
 } from "./lib/cors/cors-options.type";
 import { DateRange as DateRangeType } from "./lib/timestamps/date-range.type";
-import { Error as Error_Type, ErrorType as ErrorType_Type } from "./lib/error/error.type";
+import {
+   Error as ErrorImpl,
+   Error as Error_Type,
+   ErrorType as ErrorType_Type,
+} from "./lib/error/error.type";
 import {
    GenerateSalt as GenerateSaltType,
    HashUtility as HashUtilityType,
@@ -113,6 +117,7 @@ export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 export const addPageDataToResponse = addPageDataToResponseImpl;
 export const configureHashUtility = configureHashUtilityImpl;
+export const Error = ErrorImpl;
 export const generateSalt = generateSaltImpl;
 export const handleRequest = handleRequestImpl;
 export const isError = isErrorImpl;
