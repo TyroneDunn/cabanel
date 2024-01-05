@@ -41,16 +41,14 @@ const mapSideEffectsToRequestHandler = (halsMethod: HalsMethod): ExpressRequestH
       next();
    };
 
-export const mapToPath = (halsMethod: HalsMethod): string => {
-   // todo: implement w recursion and pure function
-   let endpoint: string = halsMethod.path ? '/' + halsMethod.path + '/' : '/';
+export const constructEndpoint = (halsMethod: HalsMethod): string => {
+   const path: string = halsMethod.path ? '/' + halsMethod.path + '/' : '/';
+   return appendParamKeys(halsMethod.paramKeys, path);
+};
 
-   for (let i = 0; i < halsMethod.paramKeys.length; i++) {
-      endpoint = endpoint.concat(':', halsMethod.paramKeys[i]);
-      if (i !== halsMethod.paramKeys.length - 1) endpoint = endpoint.concat('/');
-   }
-
-   return endpoint;
+const appendParamKeys = (paramKeys : string[] | undefined, path : string) : string => {
+   if (paramKeys === undefined || paramKeys.length === 0) return path;
+   else return appendParamKeys(paramKeys.slice(1), path.concat(':', paramKeys[0], '/'));
 };
 
 export const mapToHalsRequest = (expressRequest: ExpressRequest, halsMethod: HalsMethod): HalsRequest => ({
@@ -86,29 +84,29 @@ export const configureRouters =
       for (const controller of halsControllers) {
          const expressRouter: ExpressRouter = ExpressRouter();
          for (const method of controller.methods) {
-            const path = mapToPath(method);
+            const endpoint = constructEndpoint(method);
             const sideEffects: ExpressRequestHandler = mapSideEffectsToRequestHandler(method);
             const middlewares: ExpressRequestHandler[] = mapToMiddlewareRequestHandlers(method);
             const requestHandler: ExpressRequestHandler = mapRequestHandler(method);
             switch (method.type) {
                case "GET": {
-                  expressRouter.get(path, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.get(endpoint, sideEffects, ...middlewares, requestHandler);
                   break;
                }
                case "POST": {
-                  expressRouter.post(path, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.post(endpoint, sideEffects, ...middlewares, requestHandler);
                   break;
                }
                case "PATCH": {
-                  expressRouter.patch(path, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.patch(endpoint, sideEffects, ...middlewares, requestHandler);
                   break;
                }
                case "PUT": {
-                  expressRouter.put(path, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.put(endpoint, sideEffects, ...middlewares, requestHandler);
                   break;
                }
                case "DELETE": {
-                  expressRouter.delete(path, sideEffects, ...middlewares, requestHandler);
+                  expressRouter.delete(endpoint, sideEffects, ...middlewares, requestHandler);
                   break;
                }
             }
