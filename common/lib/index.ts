@@ -11,6 +11,7 @@ import {
 
 import {
    addPageDataToResponse as addPageDataToResponseImpl,
+   handleRequest as handleRequestImpl
 } from "./app/app.utility";
 import {
    configureHashUtility as configureHashUtilityImpl,
@@ -50,6 +51,7 @@ export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 export const addPageDataToResponse = addPageDataToResponseImpl;
 export const configureHashUtility = configureHashUtilityImpl;
 export const generateSalt = generateSaltImpl;
+export const handleRequest = handleRequestImpl;
 export const isError = isErrorImpl;
 export const mapCommandResultToSuccessResponse = mapCommandResultToSuccessResponseImpl;
 export const mapDeleteResultToResponse = mapDeleteResultToResponseImpl;
