@@ -29,8 +29,8 @@ import { Page as PageType } from "./lib/page/page.type";
 import { ParamMap as ParamMapType } from "./lib/app/param-map.type";
 import { User as UserType } from "./lib/users/user.type";
 import {
-   ValidationOutcome as ValidationOutcomeType,
-} from "./lib/validation-outcome/validation-outcome.type";
+   ValidationError as ValidationErrorType,
+} from "./lib/validation-outcome/validation-error.type";
 import {
    BAD_REQUEST as BAD_REQUESTconst,
    CONFLICT as CONFLICTconst,
@@ -60,8 +60,8 @@ import {
    mapRequestToTimestamps as mapRequestToTimestampsImpl,
 } from "./lib/timestamps/timestamps.utility";
 import {
-   mapValidationOutcomeToErrorResponse as mapValidationOutcomeToErrorResponseImpl,
-} from "./lib/validation-outcome/validation-outcome.utility";
+   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
+} from "./lib/validation-outcome/validation-error.utility";
 import {
    isError as isErrorImpl,
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
@@ -96,7 +96,7 @@ export type Timestamps = TimestampsType;
 export type Page = PageType;
 export type ParamMap = ParamMapType;
 export type User = UserType;
-export type ValidationOutcome = ValidationOutcomeType;
+export type ValidationError = ValidationErrorType;
 
 export const OK : number = OKconst;
 export const CREATED : number = CREATEDconst;
@@ -119,5 +119,5 @@ export const mapErrorToInternalServerErrorResponse = mapErrorToInternalServerErr
 export const mapRequestToPage = mapRequestToPageImpl;
 export const mapRequestToTimestamps = mapRequestToTimestampsImpl;
 export const mapUpdateResultToResponse = mapUpdateResultToResponseImpl;
-export const mapValidationOutcomeToErrorResponse = mapValidationOutcomeToErrorResponseImpl;
+export const mapValidationErrorToErrorResponse = mapValidationErrorToErrorResponseImpl;
 export const throwErrors = throwErrorsImpl;

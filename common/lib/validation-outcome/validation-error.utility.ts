@@ -1,4 +1,4 @@
-import { ValidationOutcome } from "./validation-outcome.type";
+import { ValidationError } from "./validation-error.type";
 import { Response } from "../app/response.type";
 import {
    BAD_REQUEST,
@@ -6,13 +6,10 @@ import {
    FORBIDDEN,
    INTERNAL_SERVER_ERROR,
    NOT_FOUND,
-   OK,
    UNAUTHORIZED,
 } from "../http/http-status-codes.constant";
 
-export const mapValidationOutcomeToErrorResponse = (validationOutcome : ValidationOutcome) : Response => {
-   if (validationOutcome.error === undefined) return { status: OK };
-
+export const mapValidationErrorToErrorResponse = (validationOutcome : ValidationError) : Response => {
    if (validationOutcome.error.type === "BadRequest") return ({
       status : BAD_REQUEST,
       error  : validationOutcome.error.message,
@@ -40,6 +37,6 @@ export const mapValidationOutcomeToErrorResponse = (validationOutcome : Validati
 
    return {
       status : INTERNAL_SERVER_ERROR,
-      error  : validationOutcome.error?.message,
+      error  : validationOutcome.error.message,
    };
 };
