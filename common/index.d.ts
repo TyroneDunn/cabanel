@@ -72,7 +72,6 @@ import {
 import {
    isError as isErrorImpl,
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
-   throwErrors as throwErrorsImpl,
 } from "./lib/error/error.utility";
 
 export type Application = ApplicationType;
@@ -131,4 +130,3 @@ export const mapRequestToTimestamps = mapRequestToTimestampsImpl;
 export const mapUpdateResultToResponse = mapUpdateResultToResponseImpl;
 export const mapValidationErrorToErrorResponse = mapValidationErrorToErrorResponseImpl;
 export const ValidationError = ValidationErrorImpl;
-export const throwErrors = throwErrorsImpl;

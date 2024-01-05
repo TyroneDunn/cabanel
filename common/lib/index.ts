@@ -35,7 +35,6 @@ import { ValidationError as ValidationErrorImpl } from "./validation-error/valid
 import {
    isError as isErrorImpl,
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
-   throwErrors as throwErrorsImpl,
 } from "./error/error.utility";
 
 
@@ -64,4 +63,3 @@ export const mapUpdateResultToResponse = mapUpdateResultToResponseImpl;
 export const mapValidationErrorToErrorResponse = mapValidationErrorToErrorResponseImpl;
 export const ValidationError = ValidationErrorImpl;
 export const isValidationError = isValidationErrorImpl;
-export const throwErrors = throwErrorsImpl;

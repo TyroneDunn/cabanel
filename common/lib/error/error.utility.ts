@@ -7,12 +7,6 @@ export const mapErrorToInternalServerErrorResponse = (error : Error) : Response 
    error  : error.message,
 });
 
-export const throwErrors = (errors : Error[]) : void => {
-   const errorMessages : string = '';
-   for (const error of errors) errorMessages.concat(error.message, '\n');
-   throw new Error(errorMessages);
-};
-
 export const isError = (object : any) : object is Error => (
    object !== null
    && typeof object === 'object'
