@@ -27,8 +27,9 @@ import {
 } from "./timestamps/timestamps.utility";
 import {
    mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
-   isValidationError as isValidationErrorImpl
+   isValidationError as isValidationErrorImpl,
 } from "./validation-error/validation-error.utility";
+import { ValidationError as ValidationErrorImpl } from "./validation-error/validation-error.type";
 import {
    isError as isErrorImpl,
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
@@ -57,5 +58,6 @@ export const mapRequestToPage = mapRequestToPageImpl;
 export const mapRequestToTimestamps = mapRequestToTimestampsImpl;
 export const mapUpdateResultToResponse = mapUpdateResultToResponseImpl;
 export const mapValidationErrorToErrorResponse = mapValidationErrorToErrorResponseImpl;
+export const ValidationError = ValidationErrorImpl;
 export const isValidationError = isValidationErrorImpl;
 export const throwErrors = throwErrorsImpl;

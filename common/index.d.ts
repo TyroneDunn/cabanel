@@ -29,6 +29,7 @@ import { Page as PageType } from "./lib/page/page.type";
 import { ParamMap as ParamMapType } from "./lib/app/param-map.type";
 import { User as UserType } from "./lib/users/user.type";
 import {
+   ValidationError as ValidationErrorImpl,
    ValidationError as ValidationErrorType,
 } from "./lib/validation-error/validation-error.type";
 import {
@@ -122,4 +123,5 @@ export const mapRequestToPage = mapRequestToPageImpl;
 export const mapRequestToTimestamps = mapRequestToTimestampsImpl;
 export const mapUpdateResultToResponse = mapUpdateResultToResponseImpl;
 export const mapValidationErrorToErrorResponse = mapValidationErrorToErrorResponseImpl;
+export const ValidationError = ValidationErrorImpl;
 export const throwErrors = throwErrorsImpl;
