@@ -60,6 +60,7 @@ import {
    mapRequestToTimestamps as mapRequestToTimestampsImpl,
 } from "./lib/timestamps/timestamps.utility";
 import {
+   isValidationError as isValidationErrorImpl,
    mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
 } from "./lib/validation-outcome/validation-error.utility";
 import {
@@ -113,6 +114,7 @@ export const configureHashUtility = configureHashUtilityImpl;
 export const generateSalt = generateSaltImpl;
 export const isError = isErrorImpl;
 export const isLocalStrategy = isLocalStrategyImpl;
+export const isValidationError = isValidationErrorImpl;
 export const mapCommandResultToSuccessResponse = mapCommandResultToSuccessResponseImpl;
 export const mapDeleteResultToResponse = mapDeleteResultToResponseImpl;
 export const mapErrorToInternalServerErrorResponse = mapErrorToInternalServerErrorResponseImpl;

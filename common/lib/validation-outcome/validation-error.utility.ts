@@ -40,3 +40,8 @@ export const mapValidationErrorToErrorResponse = (validationOutcome : Validation
       error  : validationOutcome.error.message,
    };
 };
+
+export const isValidationError = (object : any) : object is ValidationError => (
+   typeof object === 'object'
+   && 'error'     in object
+);
