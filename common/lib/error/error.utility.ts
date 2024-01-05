@@ -14,7 +14,8 @@ export const throwErrors = (errors : Error[]) : void => {
 };
 
 export const isError = (object : any) : object is Error => (
-   typeof object === 'object'
+   object !== null
+   && typeof object === 'object'
    && 'type'     in object
    && 'message'  in object
 );
