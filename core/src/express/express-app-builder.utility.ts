@@ -18,16 +18,16 @@ import { NodeEnvironmentOption } from "@hals/common/lib/app/application-schema.t
 const express = require("express");
 const cors = require('cors');
 
-export const expressAppBuilder: HalsAppBuilder = {
-   buildApp(schema: HalsSchema, controllers: HalsController[]): HalsApplication {
-      const expressApp: ExpressApplication = express();
+export const expressAppBuilder : HalsAppBuilder = {
+   buildApp(schema : HalsSchema, controllers : HalsController[]) : HalsApplication {
+      const expressApp : ExpressApplication = express();
       expressApp.use(express.json());
       expressApp.use(cors(schema.corsOptions));
       configureExpressAppAuthentication(expressApp, schema);
       configureExpressAppRouters(expressApp, controllers);
       expressApp.get('/', metadata(schema.title, schema.port, schema.version, schema.nodeEnv));
       return {
-         run: (): void => {
+         run: () : void => {
             expressApp.listen(schema.port, () =>
                console.log(serverStartMessage(schema.title, schema.port, schema.version, schema.nodeEnv)));
          },
@@ -35,8 +35,12 @@ export const expressAppBuilder: HalsAppBuilder = {
    },
 };
 
-const metadata =
-   (title: string, port: number, version: string, environment: NodeEnvironmentOption): ExpressRequestHandler =>
-      (request: ExpressRequest, response: ExpressResponse): void => {
-         response.json(serverMetadata(title, port, version, environment));
-      };
+const metadata = (
+   title : string,
+   port : number,
+   version : string,
+   environment : NodeEnvironmentOption,
+) : ExpressRequestHandler =>
+   (request : ExpressRequest, response : ExpressResponse) : void => {
+      response.json(serverMetadata(title, port, version, environment));
+   };
