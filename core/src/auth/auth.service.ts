@@ -1,14 +1,13 @@
 import { AuthRepository } from "./auth-repository.type";
 import { GetUserDTO, RegisterUserDTO } from "../users/users-dtos";
 import {
-   BAD_REQUEST,
    CREATED,
-   INTERNAL_SERVER_ERROR,
+   INTERNAL_SERVER_ERROR, isValidationError, mapValidationErrorToErrorResponse,
    NOT_FOUND,
    OK,
    Response,
    User,
-   ValidationOutcome,
+   ValidationError,
 } from "@hals/common";
 import { validateGetUserDTO, validateRegisterUserDTO } from "../users/users-dtos-validator.utility";
 
@@ -20,8 +19,9 @@ export type AuthService = {
 export const configureAuthService = (repository : AuthRepository) : AuthService => ({
    getUser: async (dto : GetUserDTO) : Promise<Response> => {
       try {
-         const validationOutcome : ValidationOutcome = await validateGetUserDTO(dto);
-         if (validationOutcome.error) return mapToErrorResponse(validationOutcome);
+         const validationOutcome : ValidationError | null = await validateGetUserDTO(dto);
+         if (isValidationError(validationOutcome))
+            return mapValidationErrorToErrorResponse(validationOutcome);
          const user : User | null = await repository.getUser(dto);
          if (user) return {
             status     : OK,
@@ -44,10 +44,12 @@ export const configureAuthService = (repository : AuthRepository) : AuthService 
 
    registerUser: async (dto : RegisterUserDTO) : Promise<Response> => {
       try {
-         const validationOutcome : ValidationOutcome = await validateRegisterUserDTO(dto);
-         if (validationOutcome.error) return mapToErrorResponse(validationOutcome);
+         const validationOutcome : ValidationError | null = await validateRegisterUserDTO(dto);
+         if (isValidationError(validationOutcome))
+            return mapValidationErrorToErrorResponse(validationOutcome);
          else return {
             status     : CREATED,
+            // todo : improve repository error handling by returning either error or result
             collection : [ await repository.registerUser(dto) ],
             count      : 1,
          };
@@ -59,9 +61,4 @@ export const configureAuthService = (repository : AuthRepository) : AuthService 
          };
       }
    },
-});
-
-export const mapToErrorResponse = (validationOutcome : ValidationOutcome) : Response => ({
-   status : BAD_REQUEST,
-   error  : validationOutcome.error?.message,
 });
