@@ -1,7 +1,10 @@
 import { Application as ApplicationType } from "./lib/app/application.type";
 import { ApplicationSchema as ApplicationSchemaType } from "./lib/app/application-schema.type";
 import { AuthStrategy as AuthStrategyType } from "./lib/auth/auth-strategy.type";
-import { CommandResult as CommandResultType } from "./lib/command-result/command-result.type";
+import {
+   CommandResult as CommandResultImpl,
+   CommandResult as CommandResultType,
+} from "./lib/command-result/command-result.type";
 import { Controller as ControllerType } from "./lib/app/controller.type";
 import {
    CorsOptions as CorsOptionsType,
@@ -115,6 +118,7 @@ export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 
 export const addPageDataToResponse = addPageDataToResponseImpl;
+export const CommandResult = CommandResultImpl;
 export const configureHashUtility = configureHashUtilityImpl;
 export const Error = ErrorImpl;
 export const generateSalt = generateSaltImpl;

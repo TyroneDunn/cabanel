@@ -11,13 +11,14 @@ import {
 
 import {
    addPageDataToResponse as addPageDataToResponseImpl,
-   handleRequest as handleRequestImpl
+   handleRequest as handleRequestImpl,
 } from "./app/app.utility";
+import { CommandResult as CommandResultImpl } from "./command-result/command-result.type";
 import {
    configureHashUtility as configureHashUtilityImpl,
    generateSalt as generateSaltImpl,
 } from "./password/password.utility";
-import {Error as ErrorImpl} from "./error/error.type";
+import { Error as ErrorImpl } from "./error/error.type";
 import {
    mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl,
    mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
@@ -28,8 +29,8 @@ import {
    mapRequestToTimestamps as mapRequestToTimestampsImpl,
 } from "./timestamps/timestamps.utility";
 import {
-   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
    isValidationError as isValidationErrorImpl,
+   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
 } from "./validation-error/validation-error.utility";
 import { ValidationError as ValidationErrorImpl } from "./validation-error/validation-error.type";
 import {
@@ -49,6 +50,7 @@ export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 
 export const addPageDataToResponse = addPageDataToResponseImpl;
+export const CommandResult = CommandResultImpl;
 export const configureHashUtility = configureHashUtilityImpl;
 export const Error = ErrorImpl;
 export const generateSalt = generateSaltImpl;
