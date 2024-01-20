@@ -1,4 +1,4 @@
-import { Request } from "../app/request.type";
+import { Request } from '../app/request.type';
 
 export const mapRequestToPage = (request : Request) => {
    if (request.queryParamMap === undefined) return {};
