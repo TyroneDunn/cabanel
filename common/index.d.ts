@@ -61,7 +61,6 @@ import {
 } from "./lib/password/password.utility";
 import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
 import {
-   mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl,
    mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
    mapUpdateResultToResponse as mapUpdateResultToResponseImpl,
 } from "./lib/command-result/command-result.utility";
@@ -82,6 +81,9 @@ import {
 import {
    addPageDataToResponse as addPageDataToResponseImpl
 } from './lib/utilities/addPageDataToResponse.utility';
+import {
+   mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl
+} from './lib/utilities/map-command-result-to-success-response.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;

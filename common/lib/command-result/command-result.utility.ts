@@ -2,11 +2,6 @@ import { CommandResult } from "./command-result.type";
 import { Response } from "../app/response.type";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "../http/http-status-codes.constant";
 
-export const mapCommandResultToSuccessResponse = (result : CommandResult) : Response => ({
-   status : OK,
-   count  : result.affectedCount,
-});
-
 export const mapUpdateResultToResponse = (result : CommandResult) : Response => ({
    status: result.success ? OK : INTERNAL_SERVER_ERROR,
    ...result.success && { count : result.affectedCount },
