@@ -3,7 +3,7 @@ import { AuthStrategy } from "../auth/auth-strategy.type";
 
 export type ApplicationSchema = {
    nodeEnv      : NodeEnvironmentOption;
-   api          : WebFrameworkOption,
+   serverOption : ServerFrameworkOption,
    title        : string,
    version      : string;
    port         : number,
@@ -15,7 +15,7 @@ export type NodeEnvironmentOption =
    | "production"
    | "development";
 
-export type WebFrameworkOption =
+export type ServerFrameworkOption =
    | "Express"
    | "Nest"
    | "Fastify";
