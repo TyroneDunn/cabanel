@@ -61,9 +61,6 @@ import {
 } from "./lib/password/password.utility";
 import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
 import {
-   mapRequestToTimestamps as mapRequestToTimestampsImpl,
-} from "./lib/timestamps/timestamps.utility";
-import {
    isValidationError as isValidationErrorImpl,
    mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
 } from "./lib/validation-error/validation-error.utility";
@@ -86,6 +83,9 @@ import {
    mapDeleteResultToResponse as mapDeleteResultToResponseImpl
 } from './lib/utilities/map-delete-result-to-response-utility';
 import { mapRequestToPage as mapRequestToPageImpl } from './lib/utilities/map-request-to-page.utility';
+import {
+   mapRequestToTimestamps as mapRequestToTimestampsImpl
+} from './lib/utilities/map-request-to-timestamps.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;

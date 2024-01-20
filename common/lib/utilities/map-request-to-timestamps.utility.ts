@@ -1,5 +1,5 @@
-import { Request } from "../app/request.type";
-import { DateRange } from "./date-range.type";
+import { Request } from '../app/request.type';
+import { DateRange } from '../timestamps/date-range.type';
 
 export const mapRequestToTimestamps = (request : Request) => {
    if (request.queryParamMap === undefined) return {};
