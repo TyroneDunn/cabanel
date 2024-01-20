@@ -62,7 +62,7 @@ import {
 import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
 import {
    mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
-   mapUpdateResultToResponse as mapUpdateResultToResponseImpl,
+
 } from "./lib/command-result/command-result.utility";
 import { mapRequestToPage as mapRequestToPageImpl } from "./lib/page/page.utility";
 import {
@@ -84,6 +84,9 @@ import {
 import {
    mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl
 } from './lib/utilities/map-command-result-to-success-response.utility';
+import {
+   mapUpdateResultToResponse as mapUpdateResultToResponseImpl
+} from './lib/utilities/map-update-result-to-response.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;

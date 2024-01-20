@@ -2,15 +2,6 @@ import { CommandResult } from "./command-result.type";
 import { Response } from "../app/response.type";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "../http/http-status-codes.constant";
 
-export const mapUpdateResultToResponse = (result : CommandResult) : Response => ({
-   status: result.success ? OK : INTERNAL_SERVER_ERROR,
-   ...result.success && { count : result.affectedCount },
-   ...(!result.success) && {
-      error : 'Update Error: An unexpected error occurred. Please try' +
-         ' again or contact support for assistance.',
-   },
-});
-
 export const mapDeleteResultToResponse = (result : CommandResult) : Response => ({
    status: result.success && result.affectedCount > 0
       ? OK
