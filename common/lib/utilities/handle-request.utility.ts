@@ -1,4 +1,4 @@
-import { Response } from "./response.type";
+import { Response } from "../app/response.type";
 import { ValidationError } from "../validation-error/validation-error.type";
 import {
    isValidationError,

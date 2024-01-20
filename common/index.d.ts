@@ -54,7 +54,7 @@ import {
 
 import {
    handleRequest as handleRequestImpl,
-} from "./lib/app/app.utility";
+} from "./lib/utilities/handle-request.utility";
 import {
    configureHashUtility as configureHashUtilityImpl,
    generateSalt as generateSaltImpl,
