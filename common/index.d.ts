@@ -53,7 +53,6 @@ import {
 } from "./lib/http/http-status-codes.constant";
 
 import {
-   addPageDataToResponse as addPageDataToResponseImpl,
    handleRequest as handleRequestImpl,
 } from "./lib/app/app.utility";
 import {
@@ -80,6 +79,9 @@ import {
 import {
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl
 } from './lib/utilities/mapErrorToInternalServerErrorResponse.utility';
+import {
+   addPageDataToResponse as addPageDataToResponseImpl
+} from './lib/utilities/addPageDataToResponse.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
