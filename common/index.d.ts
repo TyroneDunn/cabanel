@@ -75,7 +75,7 @@ import {
 } from './lib/utilities/mapErrorToInternalServerErrorResponse.utility';
 import {
    addPageDataToResponse as addPageDataToResponseImpl
-} from './lib/utilities/addPageDataToResponse.utility';
+} from './lib/utilities/add-page-data-to-response.utility';
 import {
    mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl
 } from './lib/utilities/map-command-result-to-success-response.utility';
