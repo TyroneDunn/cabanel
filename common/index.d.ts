@@ -60,10 +60,6 @@ import {
    generateSalt as generateSaltImpl,
 } from "./lib/password/password.utility";
 import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
-import {
-   mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
-
-} from "./lib/command-result/command-result.utility";
 import { mapRequestToPage as mapRequestToPageImpl } from "./lib/page/page.utility";
 import {
    mapRequestToTimestamps as mapRequestToTimestampsImpl,
@@ -87,6 +83,9 @@ import {
 import {
    mapUpdateResultToResponse as mapUpdateResultToResponseImpl
 } from './lib/utilities/map-update-result-to-response.utility';
+import {
+   mapDeleteResultToResponse as mapDeleteResultToResponseImpl
+} from './lib/utilities/map-delete-result-to-response-utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
