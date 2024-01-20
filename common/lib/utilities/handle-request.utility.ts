@@ -2,8 +2,11 @@ import { Response } from "../app/response.type";
 import { ValidationError } from "../validation-error/validation-error.type";
 import {
    isValidationError,
-   mapValidationErrorToErrorResponse,
+
 } from "../validation-error/validation-error.utility";
+import {
+   mapValidationErrorToErrorResponse
+} from './map-validation-error-to-error-response.utility';
 
 export const handleRequest = async <T>(
    request: T,

@@ -62,7 +62,7 @@ import {
 import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
 import {
    isValidationError as isValidationErrorImpl,
-   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
+
 } from "./lib/validation-error/validation-error.utility";
 import {
    isError as isErrorImpl,
@@ -86,6 +86,9 @@ import { mapRequestToPage as mapRequestToPageImpl } from './lib/utilities/map-re
 import {
    mapRequestToTimestamps as mapRequestToTimestampsImpl
 } from './lib/utilities/map-request-to-timestamps.utility';
+import {
+   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl
+} from './lib/utilities/map-validation-error-to-error-response.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
