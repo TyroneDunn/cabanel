@@ -13,10 +13,6 @@ import {
    handleRequest as handleRequestImpl,
 } from "./utilities/handle-request.utility";
 import { CommandResult as CommandResultImpl } from "./command-result/command-result.type";
-import {
-   configureHashUtility as configureHashUtilityImpl,
-   generateSalt as generateSaltImpl,
-} from "./password/password.utility";
 import { Error as ErrorImpl } from "./error/error.type";
 import {
    isValidationError as isValidationErrorImpl,
@@ -48,6 +44,10 @@ import {
 import {
    mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl
 } from './utilities/map-validation-error-to-error-response.utility';
+import {
+   GenerateSalt as generateSaltImpl,
+   HashUtility as configureHashUtilityImpl,
+} from './password/password.type';
 
 
 export const OK : number = OKconst;

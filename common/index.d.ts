@@ -20,8 +20,9 @@ import {
    ErrorType as ErrorType_Type,
 } from "./lib/error/error.type";
 import {
+   HashUtility as HashUtilityImpl,
    GenerateSalt as GenerateSaltType,
-   HashUtility as HashUtilityType,
+   HashUtility as HashUtilityType, GenerateSalt as GenerateSaltImpl,
 } from "./lib/password/password.type";
 import { HashAlgorithm as HashAlgorithmType } from "./lib/auth/hash-algorithm.type";
 import { JwtStrategy as JwtStrategyType } from "./lib/auth/jwt-strategy.type";
@@ -55,10 +56,6 @@ import {
 import {
    handleRequest as handleRequestImpl,
 } from "./lib/utilities/handle-request.utility";
-import {
-   configureHashUtility as configureHashUtilityImpl,
-   generateSalt as generateSaltImpl,
-} from "./lib/password/password.utility";
 import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
 import {
    isValidationError as isValidationErrorImpl,
@@ -134,9 +131,9 @@ export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 export const addPageDataToResponse = addPageDataToResponseImpl;
 export const CommandResult = CommandResultImpl;
-export const configureHashUtility = configureHashUtilityImpl;
+export const HashUtility = HashUtilityImpl;
 export const Error = ErrorImpl;
-export const generateSalt = generateSaltImpl;
+export const GenerateSalt = GenerateSaltImpl;
 export const handleRequest = handleRequestImpl;
 export const isError = isErrorImpl;
 export const isLocalStrategy = isLocalStrategyImpl;
