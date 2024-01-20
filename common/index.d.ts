@@ -76,8 +76,10 @@ import {
 } from "./lib/validation-error/validation-error.utility";
 import {
    isError as isErrorImpl,
-   mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
 } from "./lib/error/error.utility";
+import {
+   mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl
+} from './lib/utilities/mapErrorToInternalServerErrorResponse.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
