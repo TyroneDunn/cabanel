@@ -1,5 +1,6 @@
 import { Application as ApplicationType } from "./lib/app/application.type";
 import { ApplicationSchema as ApplicationSchemaType } from "./lib/app/application-schema.type";
+import { RestApplicationSchema as RestApplicationSchemaType } from "./lib/app/application-schema.type";
 import { WebSocketApplicationSchema as WebSocketApplicationSchemaType } from "./lib/app/application-schema.type";
 import { AuthStrategy as AuthStrategyType } from "./lib/auth/auth-strategy.type";
 import {
@@ -80,6 +81,7 @@ import {
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
+export type RestApplicationSchema = RestApplicationSchemaType;
 export type WebSocketApplicationSchema = WebSocketApplicationSchemaType;
 export type AuthStrategy = AuthStrategyType;
 export type CommandResult = CommandResultType;

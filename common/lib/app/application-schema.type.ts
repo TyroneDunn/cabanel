@@ -12,6 +12,17 @@ export type ApplicationSchema = {
    authStrategy : AuthStrategy,
 };
 
+export type RestApplicationSchema = {
+   title        : string,
+   version      : string;
+   port         : number,
+   nodeEnv      : NodeEnvironmentOption;
+   serverOption : ServerFrameworkOption,
+   corsOptions? : CorsOptions,
+   authStrategy : AuthStrategy,
+   controllers  : Controller[],
+};
+
 export type NodeEnvironmentOption =
    | "production"
    | "development";
