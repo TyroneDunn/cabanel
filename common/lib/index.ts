@@ -10,9 +10,8 @@ import {
 } from "./http/http-status-codes.constant";
 
 import {
-   addPageDataToResponse as addPageDataToResponseImpl,
    handleRequest as handleRequestImpl,
-} from "./app/app.utility";
+} from "./utilities/handle-request.utility";
 import { CommandResult as CommandResultImpl } from "./command-result/command-result.type";
 import {
    configureHashUtility as configureHashUtilityImpl,
@@ -20,23 +19,35 @@ import {
 } from "./password/password.utility";
 import { Error as ErrorImpl } from "./error/error.type";
 import {
-   mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl,
-   mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
-   mapUpdateResultToResponse as mapUpdateResultToResponseImpl,
-} from "./command-result/command-result.utility";
-import { mapRequestToPage as mapRequestToPageImpl } from "./page/page.utility";
-import {
-   mapRequestToTimestamps as mapRequestToTimestampsImpl,
-} from "./timestamps/timestamps.utility";
-import {
    isValidationError as isValidationErrorImpl,
-   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
+
 } from "./validation-error/validation-error.utility";
 import { ValidationError as ValidationErrorImpl } from "./validation-error/validation-error.type";
 import {
    isError as isErrorImpl,
-   mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
 } from "./error/error.utility";
+import {
+   mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl
+} from './utilities/mapErrorToInternalServerErrorResponse.utility';
+import {
+   addPageDataToResponse as addPageDataToResponseImpl
+} from './utilities/add-page-data-to-response.utility';
+import {
+   mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl
+} from './utilities/map-command-result-to-success-response.utility';
+import {
+   mapUpdateResultToResponse as mapUpdateResultToResponseImpl
+} from './utilities/map-update-result-to-response.utility';
+import {
+   mapDeleteResultToResponse as mapDeleteResultToResponseImpl
+} from './utilities/map-delete-result-to-response-utility';
+import { mapRequestToPage as mapRequestToPageImpl } from './utilities/map-request-to-page.utility';
+import {
+   mapRequestToTimestamps as mapRequestToTimestampsImpl
+} from './utilities/map-request-to-timestamps.utility';
+import {
+   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl
+} from './utilities/map-validation-error-to-error-response.utility';
 
 
 export const OK : number = OKconst;
