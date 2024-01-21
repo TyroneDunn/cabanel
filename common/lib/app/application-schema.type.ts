@@ -12,7 +12,7 @@ export type RestApplicationSchema = {
    port         : number,
    nodeEnv      : NodeEnvironmentOption;
    serverOption : ServerFrameworkOption,
-   corsOptions? : CorsOptions,
+   corsOptions  : CorsOptions,
    authStrategy : AuthStrategy,
    controllers  : Controller[],
 };
@@ -30,9 +30,9 @@ export type WebSocketApplicationSchema = {
    port          : number,
    nodeEnv       : NodeEnvironmentOption;
    serverOption  : ServerFrameworkOption,
-   corsOptions?  : CorsOptions,
+   corsOptions   : CorsOptions,
    authStrategy  : AuthStrategy,
-   socketEvents? : SocketEvents,
+   socketEvents  : SocketEvents,
    controllers   : Controller[],
 };
 
