@@ -22,6 +22,8 @@ import { ValidationError as ValidationErrorImpl } from "./validation-error/valid
 import {
    isError as isErrorImpl,
 } from "./error/error.utility";
+import { isRestApplicationSchema as isRestApplicationSchemaImpl } from './app/application-schema.utility';
+import { isWebSocketApplicationSchema as isWebSocketApplicationSchemaImpl } from './app/application-schema.utility';
 import {
    mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl
 } from './utilities/mapErrorToInternalServerErrorResponse.utility';
@@ -75,4 +77,6 @@ export const mapRequestToTimestamps = mapRequestToTimestampsImpl;
 export const mapUpdateResultToResponse = mapUpdateResultToResponseImpl;
 export const mapValidationErrorToErrorResponse = mapValidationErrorToErrorResponseImpl;
 export const ValidationError = ValidationErrorImpl;
+export const isRestApplicationSchema = isRestApplicationSchemaImpl;
+export const isWebSocketApplicationSchema = isWebSocketApplicationSchemaImpl;
 export const isValidationError = isValidationErrorImpl;
