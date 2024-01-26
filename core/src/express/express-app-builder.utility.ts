@@ -9,7 +9,7 @@ import {
    RequestHandler as ExpressRequestHandler,
    Response as ExpressResponse,
 } from "express";
-import { AppBuilder as HalsAppBuilder } from "../app/app-builder.utility";
+import { BuildApp } from "../app/build-app.utility";
 import { configureExpressAppAuthentication } from "./authentication.utility";
 import { configureExpressAppRouters } from "./hals-express.utility";
 import { serverMetadata, serverStartMessage } from "../app/application.utility";

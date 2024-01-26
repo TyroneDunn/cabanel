@@ -1,13 +1,6 @@
 import { validateAppSchema } from "./app-validator.service";
-import {
-   Application,
-   ApplicationSchema,
-   Controller,
-   isValidationError,
-   ValidationError,
-} from "@hals/common";
-import { appBuilder } from "./app-builder.utility";
-import { NodeEnvironmentOption } from "@hals/common/lib/app/application-schema.type";
+import { Application, ApplicationSchema, isValidationError, ValidationError } from "@hals/common";
+import { buildApp } from "./build-app.utility";
 
 export type InitialiseApplication = (
    config      : ApplicationSchema,
@@ -20,5 +13,5 @@ export const hals : InitialiseApplication = (
 ) : Application => {
    const validationOutcome : ValidationError | null = validateAppSchema(config);
    if (isValidationError(validationOutcome)) throw new Error(validationOutcome.error.message);
-   else return appBuilder.buildApp(config, controllers);
+   else return buildApp(schema);
 };
