@@ -9,6 +9,7 @@ export type ApplicationSchema =
 export type RestApplicationSchema = {
    title        : string,
    version      : string;
+   host         : LocalHost | HostAddress,
    port         : number,
    nodeEnv      : NodeEnvironmentOption;
    serverOption : ServerFrameworkOption,
@@ -16,6 +17,10 @@ export type RestApplicationSchema = {
    authStrategy : AuthStrategy,
    controllers  : Controller[],
 };
+
+export type LocalHost = '127.0.0.1';
+
+export type HostAddress = string;
 
 export type NodeEnvironmentOption =
    | "production"
@@ -27,6 +32,7 @@ export type ServerFrameworkOption =
 export type WebSocketApplicationSchema = {
    title         : string,
    version       : string;
+   host          : LocalHost | HostAddress,
    port          : number,
    nodeEnv       : NodeEnvironmentOption;
    serverOption  : ServerFrameworkOption,
