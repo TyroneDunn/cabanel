@@ -10,12 +10,12 @@ export const serverStartedMessage = (
    const messageTitle : string = `'${title}' Hals Server Started\n `;
    const messageDivider : string = '----------------------------------------\n';
    const messageActions : string = `App running at http://${host}:${port}\n` +
-      `Press Ctrl+C to stop the server.\n`;
+                                   `Press Ctrl+C to stop the server.\n`;
    return messageTitle + messageDivider + serverMetadata(title, port, version, environment) + '\n' +
       messageActions + messageDivider;
 };
 
-const serverMetadata = (
+export const serverMetadata = (
    title : string,
    port : number,
    version : string,
