@@ -1,7 +1,6 @@
 import {
    Application as HalsApplication,
    ApplicationSchema as HalsSchema,
-   Controller as HalsController,
 } from "@hals/common";
 import {
    Application as ExpressApplication,
@@ -12,27 +11,31 @@ import {
 import { BuildApp } from "../app/build-app.utility";
 import { configureExpressAppAuthentication } from "./authentication.utility";
 import { configureExpressAppRouters } from "./hals-express.utility";
-import { serverMetadata, serverStartMessage } from "../app/application.utility";
 import { NodeEnvironmentOption } from "@hals/common/lib/app/application-schema.type";
+import { serverMetadata, serverStartedMessage } from '../app/server-metadata.utility';
 
 const express = require("express");
 const cors = require('cors');
 
-export const expressAppBuilder : HalsAppBuilder = {
-   buildApp(schema : HalsSchema, controllers : HalsController[]) : HalsApplication {
-      const expressApp : ExpressApplication = express();
-      expressApp.use(express.json());
-      expressApp.use(cors(schema.corsOptions));
-      configureExpressAppAuthentication(expressApp, schema);
-      configureExpressAppRouters(expressApp, controllers);
-      expressApp.get('/', metadata(schema.title, schema.port, schema.version, schema.nodeEnv));
-      return {
-         run: () : void => {
-            expressApp.listen(schema.port, () =>
-               console.log(serverStartMessage(schema.title, schema.port, schema.version, schema.nodeEnv)));
-         },
-      };
-   },
+export const buildExpressRestApp: BuildApp = (schema : HalsSchema) : HalsApplication => {
+   const expressApp : ExpressApplication = express();
+   expressApp.use(express.json());
+   expressApp.use(cors(schema.corsOptions));
+   configureExpressAppAuthentication(expressApp, schema);
+   configureExpressAppRouters(expressApp, schema.controllers);
+   expressApp.get('/', metadata(schema.title, schema.port, schema.version, schema.nodeEnv));
+   return {
+      run: () : void => {
+         expressApp.listen(schema.port, () =>
+            console.log(serverStartedMessage(
+               schema.title,
+               schema.host,
+               schema.port,
+               schema.version,
+               schema.nodeEnv
+            )));
+      },
+   };
 };
 
 const metadata = (
