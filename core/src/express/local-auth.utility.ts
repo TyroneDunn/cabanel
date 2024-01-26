@@ -2,7 +2,7 @@ import { Application as ExpressApplication, RequestHandler } from "express";
 import passport from "passport";
 import {
    ApplicationSchema,
-   configureHashUtility, HashUtility,
+   HashUtility,
    LocalStrategy as HalsLocalStrategy,
    OK,
    Response,
@@ -64,7 +64,7 @@ const configurePassportLocalStrategy = (
       }
 
       const user : User = response.collection?.pop() as User;
-      const hashUtility : HashUtility = configureHashUtility(
+      const hashUtility : HashUtility = HashUtility(
          config.passwordSalt,
          config.hashingIterations,
          config.passwordLength,
