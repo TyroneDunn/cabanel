@@ -1,7 +1,13 @@
 import { Application as ApplicationType } from "./lib/app/application.type";
-import { ApplicationSchema as ApplicationSchemaType } from "./lib/app/application-schema.type";
-import { RestApplicationSchema as RestApplicationSchemaType } from "./lib/app/application-schema.type";
-import { WebSocketApplicationSchema as WebSocketApplicationSchemaType } from "./lib/app/application-schema.type";
+import {
+   ApplicationSchema as ApplicationSchemaType,
+   HostAddress as HostAddressType,
+   LocalHost as LocalHostType,
+   NodeEnvironmentOption as NodeEnvironmentOptionType,
+   RestApplicationSchema as RestApplicationSchemaType,
+   SocketEvents as SocketEventsType,
+   WebSocketApplicationSchema as WebSocketApplicationSchemaType,
+} from "./lib/app/application-schema.type";
 import { AuthStrategy as AuthStrategyType } from "./lib/auth/auth-strategy.type";
 import {
    CommandResult as CommandResultImpl,
@@ -20,9 +26,10 @@ import {
    ErrorType as ErrorType_Type,
 } from "./lib/error/error.type";
 import {
-   HashUtility as HashUtilityImpl,
    GenerateSalt as GenerateSaltType,
-   HashUtility as HashUtilityType, GenerateSalt as GenerateSaltImpl,
+   GenerateSalt as GenerateSaltImpl,
+   HashUtility as HashUtilityType,
+   HashUtility as HashUtilityImpl,
 } from "./lib/password/password.type";
 import { HashAlgorithm as HashAlgorithmType } from "./lib/auth/hash-algorithm.type";
 import { JwtStrategy as JwtStrategyType } from "./lib/auth/jwt-strategy.type";
@@ -53,44 +60,45 @@ import {
    UNAUTHORIZED as UNAUTHORIZEDconst,
 } from "./lib/http/http-status-codes.constant";
 
-import {
-   handleRequest as handleRequestImpl,
-} from "./lib/utilities/handle-request.utility";
+import { handleRequest as handleRequestImpl } from "./lib/utilities/handle-request.utility";
 import { isLocalStrategy as isLocalStrategyImpl } from "./lib/auth/local-strategy.utility";
 import {
    isValidationError as isValidationErrorImpl,
-
 } from "./lib/validation-error/validation-error.utility";
+import { isError as isErrorImpl } from "./lib/error/error.utility";
 import {
-   isError as isErrorImpl,
-} from "./lib/error/error.utility";
-import {
-   mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl
+   mapErrorToInternalServerErrorResponse as mapErrorToInternalServerErrorResponseImpl,
 } from './lib/utilities/mapErrorToInternalServerErrorResponse.utility';
 import {
-   addPageDataToResponse as addPageDataToResponseImpl
+   addPageDataToResponse as addPageDataToResponseImpl,
 } from './lib/utilities/add-page-data-to-response.utility';
 import {
-   mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl
+   mapCommandResultToSuccessResponse as mapCommandResultToSuccessResponseImpl,
 } from './lib/utilities/map-command-result-to-success-response.utility';
 import {
-   mapUpdateResultToResponse as mapUpdateResultToResponseImpl
+   mapUpdateResultToResponse as mapUpdateResultToResponseImpl,
 } from './lib/utilities/map-update-result-to-response.utility';
 import {
-   mapDeleteResultToResponse as mapDeleteResultToResponseImpl
+   mapDeleteResultToResponse as mapDeleteResultToResponseImpl,
 } from './lib/utilities/map-delete-result-to-response-utility';
-import { mapRequestToPage as mapRequestToPageImpl } from './lib/utilities/map-request-to-page.utility';
 import {
-   mapRequestToTimestamps as mapRequestToTimestampsImpl
+   mapRequestToPage as mapRequestToPageImpl,
+} from './lib/utilities/map-request-to-page.utility';
+import {
+   mapRequestToTimestamps as mapRequestToTimestampsImpl,
 } from './lib/utilities/map-request-to-timestamps.utility';
 import {
-   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl
+   mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
 } from './lib/utilities/map-validation-error-to-error-response.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
 export type RestApplicationSchema = RestApplicationSchemaType;
 export type WebSocketApplicationSchema = WebSocketApplicationSchemaType;
+export type NodeEnvironmentOption = NodeEnvironmentOptionType;
+export type LocalHost = LocalHostType;
+export type HostAddress = HostAddressType;
+export type SocketEvents = SocketEventsType;
 export type AuthStrategy = AuthStrategyType;
 export type CommandResult = CommandResultType;
 export type Controller = ControllerType;

@@ -51,7 +51,6 @@ import {
    HashUtility as configureHashUtilityImpl,
 } from './password/password.type';
 
-
 export const OK : number = OKconst;
 export const CREATED : number = CREATEDconst;
 export const BAD_REQUEST : number = BAD_REQUESTconst;
