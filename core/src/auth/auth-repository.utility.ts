@@ -1,5 +1,5 @@
 import { AuthRepository } from "./auth-repository.type";
-import { HashUtility, HashAlgorithm, } from "@hals/common";
+import { HashUtility, HashAlgorithm } from "@hals/common";
 import { configureMongoAuthRepository } from "./mongo-auth-repository-config.service";
 import { generateUserModel } from "../users/mongo-user-model-config.service";
 import { DatabaseOption } from "@hals/common/lib/auth/local-strategy.type";

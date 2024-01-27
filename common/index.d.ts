@@ -90,6 +90,10 @@ import {
 import {
    mapValidationErrorToErrorResponse as mapValidationErrorToErrorResponseImpl,
 } from './lib/utilities/map-validation-error-to-error-response.utility';
+import {
+   isRestApplicationSchema as isRestApplicationSchemaImpl,
+   isWebSocketApplicationSchema as isWebSocketApplicationSchemaImpl,
+} from './lib/app/application-schema.utility';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
@@ -143,6 +147,8 @@ export const HashUtility = HashUtilityImpl;
 export const Error = ErrorImpl;
 export const GenerateSalt = GenerateSaltImpl;
 export const handleRequest = handleRequestImpl;
+export const isRestApplicationSchema = isRestApplicationSchemaImpl;
+export const isWebSocketApplicationSchema = isWebSocketApplicationSchemaImpl;
 export const isError = isErrorImpl;
 export const isLocalStrategy = isLocalStrategyImpl;
 export const isValidationError = isValidationErrorImpl;

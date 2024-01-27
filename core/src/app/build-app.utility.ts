@@ -1,6 +1,10 @@
 import { buildExpressRestApp } from "../express/express-app-builder.utility";
-import { Application, ApplicationSchema } from "@hals/common";
-import { isRestApplicationSchema, isWebSocketApplicationSchema } from '@hals/common/lib';
+import {
+   Application,
+   ApplicationSchema,
+   isRestApplicationSchema,
+   isWebSocketApplicationSchema,
+} from "@hals/common";
 
 export type BuildApp = (schema : ApplicationSchema) => Application;
 
