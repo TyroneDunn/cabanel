@@ -1,8 +1,6 @@
 import { Application as ApplicationType } from "./lib/app/application.type";
 import {
    ApplicationSchema as ApplicationSchemaType,
-   HostAddress as HostAddressType,
-   LocalHost as LocalHostType,
    NodeEnvironmentOption as NodeEnvironmentOptionType,
    RestApplicationSchema as RestApplicationSchemaType,
    SocketEvents as SocketEventsType,
@@ -94,6 +92,8 @@ import {
    isRestApplicationSchema as isRestApplicationSchemaImpl,
    isWebSocketApplicationSchema as isWebSocketApplicationSchemaImpl,
 } from './lib/app/application-schema.utility';
+import { Address as AddressType } from './lib/app/address.type';
+import { LocalHost } from './lib/app/address.constants';
 
 export type Application = ApplicationType;
 export type ApplicationSchema = ApplicationSchemaType;
@@ -101,7 +101,7 @@ export type RestApplicationSchema = RestApplicationSchemaType;
 export type WebSocketApplicationSchema = WebSocketApplicationSchemaType;
 export type NodeEnvironmentOption = NodeEnvironmentOptionType;
 export type LocalHost = LocalHostType;
-export type HostAddress = HostAddressType;
+export type Address = AddressType;
 export type SocketEvents = SocketEventsType;
 export type AuthStrategy = AuthStrategyType;
 export type CommandResult = CommandResultType;
@@ -130,6 +130,8 @@ export type Page = PageType;
 export type ParamMap = ParamMapType;
 export type User = UserType;
 export type ValidationError = ValidationErrorType;
+
+export const LOCAL_HOST : AddressType = LocalHost;
 
 export const OK : number = OKconst;
 export const CREATED : number = CREATEDconst;

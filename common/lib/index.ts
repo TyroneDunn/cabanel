@@ -1,3 +1,5 @@
+import {Address} from './app/address.type';
+
 import {
    BAD_REQUEST as BAD_REQUESTconst,
    CONFLICT as CONFLICTconst,
@@ -50,6 +52,9 @@ import {
    GenerateSalt as generateSaltImpl,
    HashUtility as configureHashUtilityImpl,
 } from './password/password.type';
+import { LocalHost } from './app/address.constants';
+
+export const LOCAL_HOST : Address = LocalHost;
 
 export const OK : number = OKconst;
 export const CREATED : number = CREATEDconst;

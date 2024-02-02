@@ -1,6 +1,7 @@
 import { CorsOptions } from "../cors/cors-options.type";
 import { AuthStrategy } from "../auth/auth-strategy.type";
 import { Controller } from './controller.type';
+import { Address } from './address.type';
 
 export type ApplicationSchema =
    | RestApplicationSchema
@@ -9,7 +10,7 @@ export type ApplicationSchema =
 export type RestApplicationSchema = {
    title        : string,
    version      : string;
-   host         : LocalHost | HostAddress,
+   host         : Address,
    port         : number,
    nodeEnv      : NodeEnvironmentOption;
    serverOption : ServerFrameworkOption,
@@ -17,10 +18,6 @@ export type RestApplicationSchema = {
    authStrategy : AuthStrategy,
    controllers  : Controller[],
 };
-
-export type LocalHost = '127.0.0.1';
-
-export type HostAddress = string;
 
 export type NodeEnvironmentOption =
    | "production"
@@ -32,7 +29,7 @@ export type ServerFrameworkOption =
 export type WebSocketApplicationSchema = {
    title         : string,
    version       : string;
-   host          : LocalHost | HostAddress,
+   host          : Address,
    port          : number,
    nodeEnv       : NodeEnvironmentOption;
    serverOption  : ServerFrameworkOption,
