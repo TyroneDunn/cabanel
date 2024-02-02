@@ -13,6 +13,7 @@ import {
    Request as HalsRequest,
    RequestHandler as HalsRequestHandler,
    Response as HalsResponse,
+   User,
 } from "@hals/common";
 import { executeSideEffects } from "../app/side-effect.utility";
 import { authGuard } from "./authentication.utility";
@@ -124,6 +125,7 @@ export const mapToHalsRequest = (
    paramMap: paramKeys !== undefined ? mapToHalsParamMap(paramKeys, expressRequest) : {},
    queryParamMap: queryParamKeys !== undefined ? mapToHalsQueryParamMap(queryParamKeys, expressRequest) : {},
    payload: expressRequest.body,
+   ...expressRequest.user && { user: expressRequest.user as User }
 });
 
 export const mapToHalsParamMap = (paramKeys: string[], expressRequest: ExpressRequest): HalsParamMap => {
