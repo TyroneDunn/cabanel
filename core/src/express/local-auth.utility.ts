@@ -88,7 +88,8 @@ const configurePassportLocalStrategy = (
    passport.deserializeUser(async (username : any, done : any) => {
       try {
          const dto : GetUserDTO = { username: username };
-         const user = await authService.getUser(dto);
+         const response: Response = await authService.getUser(dto);
+         const user = response.collection[0] as User;
          done(null, user);
       }
       catch (error) {

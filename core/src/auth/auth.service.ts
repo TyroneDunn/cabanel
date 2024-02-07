@@ -25,7 +25,7 @@ export const configureAuthService = (repository : AuthRepository) : AuthService 
          const user : User | null = await repository.getUser(dto);
          if (user) return {
             status     : OK,
-            collection : [ await repository.getUser(dto) ],
+            collection : [ user ],
             count      : 1,
          };
          else return {
