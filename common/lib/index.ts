@@ -50,7 +50,7 @@ import {
 } from './utilities/map-validation-error-to-error-response.utility';
 import {
    GenerateSalt as generateSaltImpl,
-   HashUtility as configureHashUtilityImpl,
+   HashUtility as HashUtilityImpl,
 } from './password/password.type';
 import { LocalHost } from './app/address.constants';
 
@@ -68,7 +68,7 @@ export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 export const addPageDataToResponse = addPageDataToResponseImpl;
 export const CommandResult = CommandResultImpl;
-export const configureHashUtility = configureHashUtilityImpl;
+export const HashUtility = HashUtilityImpl;
 export const Error = ErrorImpl;
 export const generateSalt = generateSaltImpl;
 export const handleRequest = handleRequestImpl;
