@@ -7,7 +7,7 @@ import {
 } from "express";
 import { isLocalStrategy } from "../auth/local-strategy.utility";
 import { configureLocalAuthentication } from "./local-auth.utility";
-import { ApplicationSchema, UNAUTHORIZED } from "@hals/common";
+import { ApplicationSchema, Response as HalsResponse, UNAUTHORIZED } from "@hals/common";
 
 export const configureExpressAppAuthentication = (
    app: ExpressApplication,
@@ -25,6 +25,10 @@ export const configureExpressAppAuthentication = (
 
 export const authGuard: RequestHandler = (request: Request, response: Response, next: NextFunction) => {
    if (!request.isAuthenticated())
-      return response.status(UNAUTHORIZED).json('Unauthorized.');
+      return response.status(UNAUTHORIZED)
+                     .json({
+                        status: UNAUTHORIZED,
+                        error : "Unauthorized user."
+                     } as HalsResponse);
    return next();
 };
