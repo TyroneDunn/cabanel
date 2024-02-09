@@ -58,12 +58,12 @@ const configurePassportLocalStrategy = (
    ) : Promise<void> => {
       const dto : GetUserDTO = { username: username };
       const response : Response = await authService.getUser(dto);
-      if (response.status !== OK) {
+      const user : User | undefined = response.collection?.pop()[0];
+      if (response.status !== OK || user === undefined) {
          done(null, false);
          return;
       }
 
-      const user : User = response.collection?.pop() as User;
       const hashUtility : HashUtility = HashUtility(
          config.passwordSalt,
          config.hashingIterations,
@@ -89,7 +89,9 @@ const configurePassportLocalStrategy = (
       try {
          const dto : GetUserDTO = { username: username };
          const response: Response = await authService.getUser(dto);
-         const user = response.collection[0] as User;
+         const user : User | undefined = response.collection?.pop()[0];
+         if (user === undefined)
+            return done(null, false);
          done(null, user);
       }
       catch (error) {
