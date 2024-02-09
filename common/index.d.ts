@@ -36,7 +36,7 @@ import { Method as Method_Type, MethodType as MethodType_Type } from "./lib/app/
 import { NumberRange as NumberRangeType } from "./lib/number-range/number-range.type";
 import { OrderOption as OrderOptionType } from "./lib/order/order-option.type";
 import { Request as RequestType } from "./lib/app/request.type";
-import { Respnse as ResponseType } from "./lib/app/response.type";
+import { Response as ResponseType } from "./lib/app/response.type";
 import { SideEffect as SideEffectType } from "./lib/app/side-effect.type";
 import { Timestamps as TimestampsType } from "./lib/timestamps/timestamps.type";
 import { RequestHandler as RequestHandlerType } from "./lib/app/request-handler.type";
