@@ -1,7 +1,7 @@
 export type Response = {
    status      : number
    error?      : string,
-   collection? : [any],
+   collection? : any[],
    count?      : number,
    index?      : number,
    limit?      : number,
