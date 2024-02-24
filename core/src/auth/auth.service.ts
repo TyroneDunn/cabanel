@@ -12,7 +12,6 @@ import {
    isValidationError,
    mapValidationErrorToErrorResponse,
    NOT_FOUND,
-   OK,
    Response,
    UNAUTHORIZED,
    User,
@@ -30,8 +29,7 @@ export const configureAuthService = (repository : AuthRepository) : AuthService 
       const validationOutcome : ValidationError | null = await validateGetUserDTO(dto);
       if (isValidationError(validationOutcome))
          return Error(validationOutcome.error.type, validationOutcome.error.message);
-      const user : User | Error = await repository.getUser(dto);
-      return user
+      return await repository.getUser(dto)
    },
 
    registerUser: async (dto : RegisterUserDTO) : Promise<Response> => {

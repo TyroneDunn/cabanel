@@ -1,4 +1,4 @@
-import { User, Error, CommandResult } from "@hals/common";
+import { User, Error } from "@hals/common";
 import { GetUserDTO, RegisterUserDTO } from "../users/users-dtos";
 
 export type AuthRepository = {
