@@ -2,10 +2,10 @@ import { Application as ExpressApplication, RequestHandler } from "express";
 import passport from "passport";
 import {
    ApplicationSchema,
+   Error as HalsError,
    HashUtility,
+   isError,
    LocalStrategy as HalsLocalStrategy,
-   OK,
-   Response,
    User,
 } from "@hals/common";
 import { AuthRepository } from "../auth/auth-repository.type";
@@ -56,25 +56,26 @@ const configurePassportLocalStrategy = (
       password : string,
       done     : any
    ) : Promise<void> => {
-      const dto : GetUserDTO = { username: username };
-      const response : Response = await authService.getUser(dto);
-      const user : User | undefined = response.collection?.pop()[0];
-      if (response.status !== OK || user === undefined) {
+      const user : User | HalsError = await authService.getUser({ username: username });
+      if (isError(user)) {
          done(null, false);
          return;
       }
 
-      const hashUtility : HashUtility = HashUtility(
+      const validateHash  = HashUtility(
          config.passwordSalt,
          config.hashingIterations,
          config.passwordLength,
          config.hashingAlgorithm,
-      );
-      if (hashUtility.validateHash(
+      ).validateHash;
+
+      if (validateHash(
          password,
          user.hash,
-      ))
+      )) {
          done(null, user);
+         return;
+      }
       else {
          done(null, false);
          return;
@@ -88,9 +89,8 @@ const configurePassportLocalStrategy = (
    passport.deserializeUser(async (username : any, done : any) => {
       try {
          const dto : GetUserDTO = { username: username };
-         const response: Response = await authService.getUser(dto);
-         const user : User | undefined = response.collection?.pop()[0];
-         if (user === undefined)
+         const user: User | HalsError = await authService.getUser(dto);
+         if (isError(user))
             return done(null, false);
          done(null, user);
       }
