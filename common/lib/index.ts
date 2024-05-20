@@ -1,3 +1,5 @@
+import {Address} from './app/address.type';
+
 import {
    BAD_REQUEST as BAD_REQUESTconst,
    CONFLICT as CONFLICTconst,
@@ -48,8 +50,11 @@ import {
 } from './utilities/map-validation-error-to-error-response.utility';
 import {
    GenerateSalt as generateSaltImpl,
-   HashUtility as configureHashUtilityImpl,
+   HashUtility as HashUtilityImpl,
 } from './password/password.type';
+import { LocalHost } from './app/address.constants';
+
+export const LOCAL_HOST : Address = LocalHost;
 
 export const OK : number = OKconst;
 export const CREATED : number = CREATEDconst;
@@ -63,7 +68,7 @@ export const INTERNAL_SERVER_ERROR : number = INTERNAL_SERVER_ERRORconst;
 
 export const addPageDataToResponse = addPageDataToResponseImpl;
 export const CommandResult = CommandResultImpl;
-export const configureHashUtility = configureHashUtilityImpl;
+export const HashUtility = HashUtilityImpl;
 export const Error = ErrorImpl;
 export const generateSalt = generateSaltImpl;
 export const handleRequest = handleRequestImpl;
