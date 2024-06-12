@@ -3,7 +3,7 @@ import {
    RestServerApplicationSchema,
 } from './rest-server-application.types';
 import {
-   WebSocketApplicationSchema,
+   WebSocketServerApplicationSchema,
    WebSocketServerApplication,
 } from './web-socket-server-application';
 import { LocalAuthStrategy } from './local-auth-strategy.types';
@@ -15,7 +15,7 @@ export type Application =
 
 export type ApplicationSchema =
    | RestServerApplicationSchema
-   | WebSocketApplicationSchema;
+   | WebSocketServerApplicationSchema;
 
 export type NodeEnvironmentOption =
    | "production"
