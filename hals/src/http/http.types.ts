@@ -41,3 +41,5 @@ export type HttpResponse<T> = {
 };
 
 export type HostAddress = string;
+
+export const localHost : HostAddress = '127.0.0.1';
