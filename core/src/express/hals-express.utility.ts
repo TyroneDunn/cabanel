@@ -85,7 +85,10 @@ export const mapMethodMiddlewaresToExpressMiddleware = (halsMethod: HalsMethod):
             const halsResponse : HalsResponse = await middleware(halsRequest);
             if (halsResponse.error)
                return expressResponse.status(halsResponse.status).json(halsResponse);
-            else next();
+            else {
+               next();
+               return;
+            }
          });
 
 const mapMethodSideEffectsToExpressMiddleware = (halsMethod: HalsMethod): ExpressRequestHandler => {
