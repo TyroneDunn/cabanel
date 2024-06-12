@@ -3,8 +3,8 @@ import {
    NodeEnvironmentOption,
    ServerFrameworkOption,
 } from './application.types';
-import { CorsOptions } from './cors.types';
-import { HostAddress, HttpMethod } from './http.types';
+import { CorsOptions } from '../http/cors.types';
+import { HostAddress, HttpMethod } from '../http/http.types';
 
 export type RestServerApplication = {
    run : () => void,

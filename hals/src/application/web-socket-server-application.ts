@@ -4,8 +4,8 @@ import {
    NodeEnvironmentOption,
    ServerFrameworkOption,
 } from './application.types';
-import { CorsOptions } from './cors.types';
-import { HostAddress } from './http.types';
+import { CorsOptions } from '../http/cors.types';
+import { HostAddress } from '../http/http.types';
 
 export type WebSocketServerApplication = {
    run : () => void,
