@@ -17,8 +17,6 @@ export type ApplicationSchema =
    | RestServerApplicationSchema
    | WebSocketApplicationSchema;
 
-export type HostAddress = string;
-
 export type NodeEnvironmentOption =
    | "production"
    | "development";

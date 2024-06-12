@@ -37,3 +37,5 @@ export type HttpResponse<T> = {
    index?      : number,
    limit?      : number,
 };
+
+export type HostAddress = string;
