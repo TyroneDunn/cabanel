@@ -28,12 +28,12 @@ type RestServerApplicationController =
 
 type UnguardedRestServerApplicationController = {
    path    : string,
-   methods : HttpRequestHandler[],
+   requestHandlers : HttpRequestHandler[],
 };
 
 type GuardedRestServerApplicationController = {
    path    : string,
-   methods : HttpRequestHandler[],
+   requestHandlers : HttpRequestHandler[],
 };
 
 export const isRestServerApplicationSchema = (object : any) : object is RestServerApplicationSchema => (
