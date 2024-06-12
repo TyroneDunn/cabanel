@@ -34,6 +34,7 @@ export { RequestHandler } from "./lib/app/request-handler.type";
 export { Page } from "./lib/page/page.type";
 export { ParamMap } from "./lib/app/param-map.type";
 export { User } from "./lib/users/user.type";
+export { Address } from './lib/app/address.type';
 export { ValidationError } from "./lib/validation-error/validation-error.type";
 export {
    BAD_REQUEST,
@@ -45,7 +46,7 @@ export {
    OK,
    UNAUTHORIZED,
 } from "./lib/http/http-status-codes.constant";
-
+export { LocalHost } from './lib/app/address.constants';
 export { handleRequest } from "./lib/utilities/handle-request.utility";
 export { isLocalStrategy } from "./lib/auth/local-strategy.utility";
 export { isValidationError } from "./lib/validation-error/validation-error.utility";
@@ -62,5 +63,3 @@ export {
    isRestApplicationSchema,
    isWebSocketApplicationSchema,
 } from './lib/app/application-schema.utility';
-export { Address } from './lib/app/address.type';
-export { LocalHost } from './lib/app/address.constants';
