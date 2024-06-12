@@ -1,24 +1,24 @@
 import { ParamMap } from '../shared/param-map.type';
 import { User } from '../users/user.types';
 
-export type HttpMethod = {
-   type : HttpMethodType,
+export type HttpRequestHandler = {
    path? : string,
+   type : HttpRequestType,
    paramKeys? : string[],
    queryParamKeys? : string[],
-   sideEffects? : HttpMethodSideEffect[],
-   middleware? : HttpRequestHandler[],
-   requestHandler : HttpRequestHandler,
+   sideEffects? : HttpRequestSideEffect[],
+   middleware? : HttpRequestMiddleware[],
+   reducer : HttpRequestReducer,
 };
 
-export type HttpMethodType =
+export type HttpRequestType =
    | "GET"
    | "POST"
    | "PUT"
    | "PATCH"
    | "DELETE";
 
-export type HttpMethodSideEffect = (request : HttpRequest) => Promise<void>;
+export type HttpRequestSideEffect = (request : HttpRequest) => Promise<void>;
 
 export type HttpRequest = {
    parameters : ParamMap,
@@ -27,7 +27,9 @@ export type HttpRequest = {
    user : User | undefined,
 };
 
-export type HttpRequestHandler = (request : HttpRequest) => Promise<HttpResponse<any>>;
+export type HttpRequestReducer = (request : HttpRequest) => Promise<HttpResponse<any>>;
+
+export type HttpRequestMiddleware = (request : HttpRequest) => Promise<undefined>;
 
 export type HttpResponse<T> = {
    status      : number

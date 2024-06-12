@@ -4,7 +4,7 @@ import {
    ServerFrameworkOption,
 } from './application.types';
 import { CorsOptions } from '../http/cors.types';
-import { HostAddress, HttpMethod } from '../http/http.types';
+import { HostAddress, HttpRequestHandler } from '../http/http.types';
 
 export type RestServerApplication = {
    run : () => void,
@@ -28,12 +28,12 @@ type RestServerApplicationController =
 
 type UnguardedRestServerApplicationController = {
    path    : string,
-   methods : HttpMethod[],
+   methods : HttpRequestHandler[],
 };
 
 type GuardedRestServerApplicationController = {
    path    : string,
-   methods : HttpMethod[],
+   methods : HttpRequestHandler[],
 };
 
 export const isRestServerApplicationSchema = (object : any) : object is RestServerApplicationSchema => (
