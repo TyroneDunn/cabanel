@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import { pbkdf2Sync, randomBytes } from 'crypto';
 
 export type HashUtility = {
    generateHash : (password : string) => string,
@@ -12,14 +12,14 @@ export const HashUtility = (
    algorithm : string,
 ) : HashUtility => ({
    generateHash: (password : string) : string =>
-      crypto.pbkdf2Sync(password, salt, iterations, length, algorithm).toString('hex'),
+      pbkdf2Sync(password, salt, iterations, length, algorithm).toString('hex'),
 
    validateHash: (password : string, hash : string) : boolean =>
-      (hash === crypto.pbkdf2Sync(password, salt, iterations, length, algorithm)
+      (hash === pbkdf2Sync(password, salt, iterations, length, algorithm)
       .toString('hex')),
 });
 
 export type GenerateSalt = () => string;
 
 export const GenerateSalt : GenerateSalt = () : string =>
-   crypto.randomBytes(256).toString('hex');
+   randomBytes(256).toString('hex');
