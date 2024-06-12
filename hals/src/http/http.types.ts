@@ -69,3 +69,12 @@ export const isHttpRequestError = (object : any) : object is HttpRequestError =>
    && 'type'     in object
    && 'message'  in object
 );
+
+export const ok : number = 200;
+export const created : number = 201;
+export const badRequest : number = 400;
+export const unauthorized : number = 401;
+export const forbidden : number = 403;
+export const notFound : number = 404;
+export const conflict : number = 409;
+export const internalServerError : number = 500;
