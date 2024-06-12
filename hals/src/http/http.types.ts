@@ -43,3 +43,29 @@ export type HttpResponse<T> = {
 export type HostAddress = string;
 
 export const localHost : HostAddress = '127.0.0.1';
+
+export type HttpRequestError = {
+   type    : HttpRequestErrorType
+   message : string,
+};
+
+export type HttpRequestErrorType =
+   | "BadRequest"
+   | "NotFound"
+   | "Unauthorized"
+   | "Conflict"
+   | "Forbidden"
+   | "Internal";
+
+export const HttpRequestError =
+   (type: HttpRequestErrorType, message: string): HttpRequestError => ({
+      type: type,
+      message: message
+   });
+
+export const isHttpRequestError = (object : any) : object is HttpRequestError => (
+   object !== null
+   && typeof object === 'object'
+   && 'type'     in object
+   && 'message'  in object
+);
