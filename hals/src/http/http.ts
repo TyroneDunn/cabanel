@@ -1,6 +1,8 @@
 import { ParamMap } from '../shared/param-map';
 import { User } from '../users/user';
+import { Page } from '../shared/page';
 
+// HTTP Request
 export type HttpRequestHandler = {
    path? : string,
    type : HttpRequestType,
@@ -31,19 +33,6 @@ export type HttpRequestReducer = (request : HttpRequest) => Promise<HttpResponse
 
 export type HttpRequestMiddleware = (request : HttpRequest) => Promise<undefined>;
 
-export type HttpResponse<T> = {
-   status      : number
-   error?      : string,
-   collection? : T[],
-   count?      : number,
-   index?      : number,
-   limit?      : number,
-};
-
-export type HostAddress = string;
-
-export const localHost : HostAddress = '127.0.0.1';
-
 export type HttpRequestError = {
    type    : HttpRequestErrorType
    message : string,
@@ -69,6 +58,33 @@ export const isHttpRequestError = (object : any) : object is HttpRequestError =>
    && 'type'     in object
    && 'message'  in object
 );
+
+// HTTP Response
+export type HttpResponse<T> = {
+   status      : number
+   error?      : string,
+   collection? : T[],
+   count?      : number,
+   index?      : number,
+   limit?      : number,
+};
+
+export type AddPageDataToHttpResponse =
+   <T>(page : Page, response : HttpResponse<T>) => HttpResponse<T>;
+
+export const addPageDataToHttpResponse: AddPageDataToHttpResponse = <T>(
+   page : Page,
+   response : HttpResponse<T>,
+) : HttpResponse<T> => ({
+   ...response,
+   index: page.index,
+   limit: page.limit,
+});
+
+
+export type HostAddress = string;
+
+export const localHost : HostAddress = '127.0.0.1';
 
 export const ok : number = 200;
 export const created : number = 201;
