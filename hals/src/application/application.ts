@@ -8,6 +8,8 @@ import {
 } from './web-socket-server-application';
 import { LocalAuthStrategy } from './local-auth-strategy';
 import { JwtAuthStrategy } from './jwt-auth-strategy';
+import { Result } from '../common/result';
+import { ValidationError } from '../common/validation';
 
 export type Application =
    | RestServerApplication
@@ -28,3 +30,6 @@ export type AuthStrategy =
    | "None"
    | LocalAuthStrategy
    | JwtAuthStrategy;
+
+export type ValidateApplicationSchema =
+   (schema : ApplicationSchema) => Result<undefined, ValidationError>;
