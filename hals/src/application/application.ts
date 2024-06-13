@@ -75,7 +75,7 @@ export const buildApplication: BuildApplication = (schema : ApplicationSchema) :
 };
 
 
-export type StartupMessage = (
+export type ServerStartupMessage = (
    title : string,
    host : string,
    port : number,
@@ -83,7 +83,7 @@ export type StartupMessage = (
    environment : NodeEnvironmentOption,
 ) => string;
 
-export const startupMessage : StartupMessage = (
+export const serverStartupMessage : ServerStartupMessage = (
    title : string,
    host : string,
    port : number,
