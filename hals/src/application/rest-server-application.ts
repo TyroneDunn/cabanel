@@ -2,9 +2,9 @@ import {
    AuthStrategy,
    NodeEnvironmentOption,
    ServerFrameworkOption,
-} from './application.types';
-import { CorsOptions } from '../http/cors.types';
-import { HostAddress, HttpRequestHandler } from '../http/http.types';
+} from './application';
+import { CorsOptions } from '../http/cors';
+import { HostAddress, HttpRequestHandler } from '../http/http';
 
 export type RestServerApplication = {
    run : () => void,

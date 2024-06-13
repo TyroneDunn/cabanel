@@ -1,4 +1,4 @@
-import { AuthStrategy } from './application.types';
+import { AuthStrategy } from './application';
 import { PasswordOptions } from '../password/password';
 
 export type LocalAuthStrategy = {

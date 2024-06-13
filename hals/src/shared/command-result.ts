@@ -1,4 +1,4 @@
-import { Result, Success, Failure } from './result.type';
+import { Result, Success, Failure } from './result';
 
 export type CommandResult = Result<CommandResultSuccess, CommandResultFailure>
 

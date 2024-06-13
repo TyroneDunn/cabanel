@@ -3,9 +3,9 @@ import {
    AuthStrategy,
    NodeEnvironmentOption,
    ServerFrameworkOption,
-} from './application.types';
-import { CorsOptions } from '../http/cors.types';
-import { HostAddress } from '../http/http.types';
+} from './application';
+import { CorsOptions } from '../http/cors';
+import { HostAddress } from '../http/http';
 
 export type WebSocketServerApplication = {
    run : () => void,

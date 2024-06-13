@@ -1,5 +1,5 @@
-import { ParamMap } from '../shared/param-map.type';
-import { User } from '../users/user.types';
+import { ParamMap } from '../shared/param-map';
+import { User } from '../users/user';
 
 export type HttpRequestHandler = {
    path? : string,

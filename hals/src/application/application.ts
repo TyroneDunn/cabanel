@@ -1,13 +1,13 @@
 import {
    RestServerApplication,
    RestServerApplicationSchema,
-} from './rest-server-application.types';
+} from './rest-server-application';
 import {
    WebSocketServerApplicationSchema,
    WebSocketServerApplication,
 } from './web-socket-server-application';
-import { LocalAuthStrategy } from './local-auth-strategy.types';
-import { JwtAuthStrategy } from './jwt-auth-strategy.types';
+import { LocalAuthStrategy } from './local-auth-strategy';
+import { JwtAuthStrategy } from './jwt-auth-strategy';
 
 export type Application =
    | RestServerApplication
