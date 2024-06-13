@@ -30,15 +30,15 @@ export type WebSocketServerApplicationController =
 
 export type UnguardedWebSocketServerApplicationController = {
    path    : string,
-   methods : WebSocketMethod[],
+   methods : WebSocketServerMethod[],
 };
 
 export type GuardedWebSocketServerApplicationController = {
    path    : string,
-   methods : WebSocketMethod[],
+   methods : WebSocketServerMethod[],
 };
 
-export type WebSocketMethod = undefined;
+export type WebSocketServerMethod = undefined;
 
 export type SocketEvents = {
    onConnection? : () => void,
@@ -46,7 +46,7 @@ export type SocketEvents = {
    onEvent? : () => void,
 };
 
-export const isWebSocketApplicationSchema =
+export const isWebSocketServerApplicationSchema =
    (applicationSchema : ApplicationSchema) : applicationSchema is WebSocketServerApplicationSchema => (
       applicationSchema !== null
       && typeof applicationSchema === 'object'
