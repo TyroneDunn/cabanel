@@ -1,6 +1,6 @@
-import { ParamMap } from '../shared/param-map';
+import { ParamMap } from '../common/param-map';
 import { User } from '../users/user';
-import { Page } from '../shared/page';
+import { Page } from '../common/page';
 
 // HTTP Request
 export type HttpRequestHandler = {
