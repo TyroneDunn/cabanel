@@ -7,6 +7,17 @@ export type LocalAuthStrategy = {
    passwordOptions: PasswordOptions,
 };
 
+export type IsLocalAuthStrategy = (authStrategy : AuthStrategy) => authStrategy is LocalAuthStrategy;
+
+export const isLocalAuthStrategy: IsLocalAuthStrategy =
+   (authStrategy : AuthStrategy) : authStrategy is LocalAuthStrategy => (
+      typeof authStrategy === 'object'
+      && 'usersDatabase' in authStrategy
+      && 'sessionSecret' in authStrategy
+      && 'passwordOptions' in authStrategy
+   );
+
+
 export type LocalAuthUsersDatabase = {
    databaseProvider : LocalAuthDatabaseProvider
    usersDatabaseName : string,
@@ -17,16 +28,3 @@ export type LocalAuthDatabaseProvider =
    | "MongoDB"
    | "MySQL"
    | "GraphQL";
-
-export const isLocalAuthStrategy = (authStrategy : AuthStrategy) : authStrategy is LocalAuthStrategy => (
-   typeof authStrategy === 'object'
-   && 'usersDbName' in authStrategy
-   && 'usersDbOption' in authStrategy
-   && 'usersDbUrl' in authStrategy
-   && 'sessionSecret' in authStrategy
-   && 'hashingAlgorithm' in authStrategy
-   && 'hashingIterations' in authStrategy
-   && 'passwordLength' in authStrategy
-   && 'passwordSalt' in authStrategy
-);
-
