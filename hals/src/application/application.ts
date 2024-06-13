@@ -73,3 +73,44 @@ export const buildApplication: BuildApplication = (schema : ApplicationSchema) :
    }
    throw new Error("Invalid application schema definition.");
 };
+
+
+export type StartupMessage = (
+   title : string,
+   host : string,
+   port : number,
+   version : string,
+   environment : NodeEnvironmentOption,
+) => string;
+
+export const startupMessage : StartupMessage = (
+   title : string,
+   host : string,
+   port : number,
+   version : string,
+   environment : NodeEnvironmentOption,
+) : string => {
+   const titleMessage : string = `'${title}' Server Started\n `;
+   const divider : string = '----------------------------------------\n';
+   const serverAddressLine : string = `Server application running at http://${host}:${port}\n`;
+   return titleMessage + divider + serverMetadata(title, port, version, environment) + '\n' +
+      serverAddressLine + divider;
+};
+
+export type ServerMetadata = (
+   title : string,
+   port : number,
+   version : string,
+   environment : NodeEnvironmentOption,
+) => string;
+
+export const serverMetadata : ServerMetadata = (
+   title : string,
+   port : number,
+   version : string,
+   environment : NodeEnvironmentOption,
+) : string =>
+   `Title: ${title}\n
+   Port: ${port}\n
+   Environment: ${environment}\n
+   Version: ${version}\n`;
