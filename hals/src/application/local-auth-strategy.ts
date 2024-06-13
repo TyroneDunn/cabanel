@@ -2,7 +2,7 @@ import { AuthStrategy } from './application';
 import { PasswordOptions } from '../password/password';
 
 export type LocalAuthStrategy = {
-   usersDatabase: LocalAuthUsersDatabase,
+   databaseOptions: LocalAuthDatabaseOptions,
    sessionSecret : string,
    passwordOptions: PasswordOptions,
 };
@@ -18,10 +18,10 @@ export const isLocalAuthStrategy: IsLocalAuthStrategy =
    );
 
 
-export type LocalAuthUsersDatabase = {
+export type LocalAuthDatabaseOptions = {
    databaseProvider : LocalAuthDatabaseProvider
+   databaseUrl : string,
    usersDatabaseName : string,
-   usersDatabaseUrl : string,
 };
 
 export type LocalAuthDatabaseProvider =
