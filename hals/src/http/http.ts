@@ -20,14 +20,19 @@ export type HttpRequestType =
    | "PATCH"
    | "DELETE";
 
-export type HttpRequestSideEffect = (request : HttpRequest) => Promise<void>;
-
 export type HttpRequest = {
    parameters : ParamMap,
    queryParameters : ParamMap,
    payload : any,
    user : User | undefined,
 };
+
+export type HttpRequestSideEffect = (request : HttpRequest) => Promise<void>;
+
+export type ExecuteHttpRequestSideEffects = (
+   request     : HttpRequest,
+   sideEffects : HttpRequestSideEffect[]
+) => void;
 
 export type HttpRequestReducer = (request : HttpRequest) => Promise<HttpResponse<any>>;
 
@@ -94,3 +99,12 @@ export const forbidden : number = 403;
 export const notFound : number = 404;
 export const conflict : number = 409;
 export const internalServerError : number = 500;
+
+
+export const executeHttpRequestSideEffects : ExecuteHttpRequestSideEffects = (
+   request     : HttpRequest,
+   sideEffects : HttpRequestSideEffect[]
+) : void => {
+   if (sideEffects !== undefined)
+      sideEffects.forEach((sideEffect: HttpRequestSideEffect) => sideEffect(request));
+};
