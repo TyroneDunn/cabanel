@@ -1,7 +1,12 @@
 import { Result } from '../common/result';
-import { User } from '../users/user';
-import { LocalAuthDatabaseProvider } from './local-auth-strategy';
 import { PasswordOptions } from '../password/password';
+import { LocalAuthDatabaseProvider } from '../application/local-auth-strategy';
+
+export type User = {
+   _id : string,
+   username : string,
+   hash : string,
+};
 
 export type AuthenticationRepository = {
    getUser      : (request : GetUserRequest) => Promise<Result<User, GetUserRequestError>>,

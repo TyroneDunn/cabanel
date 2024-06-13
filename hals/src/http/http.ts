@@ -1,5 +1,5 @@
 import { ParamMap } from '../common/param-map';
-import { User } from '../users/user';
+import { User } from '../users/users';
 import { Page } from '../common/page';
 
 // HTTP Request
