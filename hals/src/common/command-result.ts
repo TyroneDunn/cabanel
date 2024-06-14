@@ -7,7 +7,7 @@ export type SuccessfulCommandResult = Success<AcknowledgeCount>;
 export type AcknowledgeCount = { acknowledgedCount: number }
 
 export type FailedCommandResult = Failure<CommandResultError>;
-export type CommandResultError = undefined;
+export type CommandResultError = { message: string };
 
 
 export type MapSuccessfulCommandResultToHttpSuccessResponse = <T>(result : SuccessfulCommandResult) => HttpResponse<T>;
