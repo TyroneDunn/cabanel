@@ -22,7 +22,7 @@ export type RestServerApplicationSchema = {
    controllers : RestServerApplicationController[],
 };
 
-type RestServerApplicationController =
+export type RestServerApplicationController =
    | UnguardedRestServerApplicationController
    | GuardedRestServerApplicationController;
 
@@ -32,7 +32,7 @@ type UnguardedRestServerApplicationController = {
 };
 
 type GuardedRestServerApplicationController = {
-   path    : string,
+   guardedPath    : string,
    requestHandlers : HttpRequestHandler[],
 };
 
@@ -47,4 +47,18 @@ export const isRestServerApplicationSchema = (object : any) : object is RestServ
    && 'corsOptions' in object
    && 'authStrategy' in object
    && 'controllers' in object
+);
+
+export const isGuardedRestServerApplicationController = (object : any) : object is GuardedRestServerApplicationController => (
+   object !== null
+   && typeof object === 'object'
+   && 'guardedPath' in object
+   && 'requestHandlers' in object
+);
+
+export const isUnguardedRestServerApplicationController = (object : any) : object is UnguardedRestServerApplicationController => (
+   object !== null
+   && typeof object === 'object'
+   && 'path' in object
+   && 'requestHandlers' in object
 );
