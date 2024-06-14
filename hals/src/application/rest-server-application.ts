@@ -29,12 +29,12 @@ export type RestServerApplicationController =
    | UnguardedRestServerApplicationController
    | GuardedRestServerApplicationController;
 
-type UnguardedRestServerApplicationController = {
+export type UnguardedRestServerApplicationController = {
    path    : string,
    requestHandlers : HttpRequestHandler[],
 };
 
-type GuardedRestServerApplicationController = {
+export type GuardedRestServerApplicationController = {
    guardedPath    : string,
    requestHandlers : HttpRequestHandler[],
 };
