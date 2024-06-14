@@ -175,25 +175,25 @@ const registerRequestHandler = (registerUser: RegisterUser) : ExpressRequestHand
       const registerUserRequest : RegisterUserRequest =
          mapExpressRequestToRegisterUserRequest(request);
 
-      const registerResponse: Result<User, RegisterUserError> =
+      const registerUserResult: Result<User, RegisterUserError> =
          await registerUser(registerUserRequest);
 
-      if (isSuccess(registerResponse)) {
-         HalsEventEmitter.emit(userRegisteredEvent, registerResponse.data);
+      if (isSuccess(registerUserResult)) {
+         HalsEventEmitter.emit(userRegisteredEvent, registerUserResult.data);
          next();
          return;
       }
 
-      else if (isFailure(registerResponse)) {
-         switch (registerResponse.error.type) {
+      else if (isFailure(registerUserResult)) {
+         switch (registerUserResult.error.type) {
             case "Conflict": {
                response.status(conflict)
-               .json({ error: registerResponse.error.message });
+               .json({ error: registerUserResult.error.message });
                return;
             }
             case "Internal": {
                response.status(internalServerError)
-               .json({ error: registerResponse.error.message });
+               .json({ error: registerUserResult.error.message });
                return;
             }
          }
