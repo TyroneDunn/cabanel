@@ -36,7 +36,7 @@ export type ExecuteHttpRequestSideEffects = (
 
 export type HttpRequestReducer = (request : HttpRequest) => Promise<HttpResponse<any>>;
 
-export type HttpRequestMiddleware = (request : HttpRequest) => Promise<undefined>;
+export type HttpRequestMiddleware = <T>(request : HttpRequest) => Promise<HttpResponse<T>>;
 
 export type HttpRequestError = {
    type    : HttpRequestErrorType
