@@ -82,7 +82,7 @@ type ServerStartupMessage = (
    environment : NodeEnvironmentOption,
 ) => string;
 
-const serverStartupMessage : ServerStartupMessage = (
+export const serverStartupMessage : ServerStartupMessage = (
    title : string,
    host : string,
    port : number,
@@ -93,7 +93,7 @@ const serverStartupMessage : ServerStartupMessage = (
    const divider : string = '----------------------------------------\n';
    const serverAddressLine : string = `Server application running at http://${host}:${port}\n`;
    return titleMessage + divider + serverMetadata(title, port, version, environment) + '\n' +
-      serverAddressLine + divider;
+      serverAddressLine;
 };
 
 export type ServerMetadata = (
@@ -109,7 +109,7 @@ export const serverMetadata : ServerMetadata = (
    version : string,
    environment : NodeEnvironmentOption,
 ) : string =>
-   `Title: ${title}\n
-   Port: ${port}\n
-   Environment: ${environment}\n
-   Version: ${version}\n`;
+   `Title: ${title}\n` +
+   `Port: ${port}\n` +
+   `Environment: ${environment}\n` +
+   `Version: ${version}\n`;
