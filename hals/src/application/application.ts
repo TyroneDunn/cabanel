@@ -25,7 +25,7 @@ export type InitialiseApplication = (schema : ApplicationSchema, environment: No
 type ValidateApplicationSchema =
    (schema : ApplicationSchema) => Result<undefined, ValidationError>;
 
-export type BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
+type BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
 
 export type NodeEnvironmentOption =
    | "production"
@@ -56,7 +56,7 @@ const validateApplicationSchema : ValidateApplicationSchema =
       return stubResult;
    };
 
-export const buildApplication: BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
+const buildApplication: BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
    if (isWebSocketServerApplicationSchema(schema))
       // IMPLEMENT
       throw new Error(
