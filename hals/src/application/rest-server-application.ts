@@ -1,14 +1,17 @@
-import {
-   AuthStrategy,
-   NodeEnvironmentOption,
-   ServerFrameworkOption,
-} from './application';
+import { AuthStrategy, NodeEnvironmentOption, ServerFrameworkOption } from './application';
 import { CorsOptions } from '../http/cors';
 import { HostAddress, HttpRequestHandler } from '../http/http';
 
 export type RestServerApplication = {
    run : () => void,
 };
+
+export type InitialiseRestServerApplication = (schema : RestServerApplication) => RestServerApplication;
+
+export type BuildRestServerApplication = (
+   applicationSchema: RestServerApplicationSchema,
+   environment: NodeEnvironmentOption,
+) => RestServerApplication;
 
 export type RestServerApplicationSchema = {
    title : string,
