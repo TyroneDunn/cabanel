@@ -1,32 +1,31 @@
 import {
-   RestServerApplication,
+   isRestServerApplicationSchema,
    RestServerApplicationSchema,
-   isRestServerApplicationSchema
 } from './rest-server-application';
 import {
-   WebSocketServerApplicationSchema,
-   WebSocketServerApplication,
    isWebSocketServerApplicationSchema,
+   WebSocketServerApplicationSchema,
 } from './web-socket-server-application';
 import { LocalAuthStrategy } from './local-auth-strategy';
 import { JwtAuthStrategy } from './jwt-auth-strategy';
-import { Result, Success, isFailure } from '../common/result';
+import { isFailure, Result, Success } from '../common/result';
 import { ValidationError } from '../common/validation';
+import { buildExpressRestServerApplication } from '../express/express';
 
-export type Application =
-   | RestServerApplication
-   | WebSocketServerApplication;
+export type Application = {
+   run: () => void
+};
 
 export type ApplicationSchema =
    | RestServerApplicationSchema
    | WebSocketServerApplicationSchema;
 
-export type InitialiseApplication = (schema : ApplicationSchema) => Application;
+export type InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
 
 type ValidateApplicationSchema =
    (schema : ApplicationSchema) => Result<undefined, ValidationError>;
 
-type BuildApplication = (schema : ApplicationSchema) => Application;
+export type BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
 
 export type NodeEnvironmentOption =
    | "production"
@@ -41,13 +40,13 @@ export type AuthStrategy =
    | JwtAuthStrategy;
 
 
-export const hals : InitialiseApplication = (schema : ApplicationSchema) : Application => {
+export const hals : InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
    const validationResult : Result<undefined, ValidationError> = validateApplicationSchema(schema);
    if (isFailure(validationResult))
       throw new Error(validationResult.error.message);
 
    else
-      return buildApplication(schema);
+      return buildApplication(schema, environment);
 };
 
 const validateApplicationSchema : ValidateApplicationSchema =
@@ -57,7 +56,7 @@ const validateApplicationSchema : ValidateApplicationSchema =
       return stubResult;
    };
 
-export const buildApplication: BuildApplication = (schema : ApplicationSchema) : Application => {
+export const buildApplication: BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
    if (isWebSocketServerApplicationSchema(schema))
       // IMPLEMENT
       throw new Error(
@@ -65,7 +64,7 @@ export const buildApplication: BuildApplication = (schema : ApplicationSchema) :
       );
    if (isRestServerApplicationSchema(schema)) {
       switch (schema.serverOption) {
-         case "Express": return buildExpressRestServerApplication(schema);
+         case "Express": return buildExpressRestServerApplication(schema, environment);
          default: throw new Error(
             `"${schema.serverOption}" REST server application not supported. Please select a different option.`
          );
