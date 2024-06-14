@@ -1,13 +1,10 @@
 import { AuthStrategy } from './application';
 import { PasswordOptions } from '../password/password';
-import { GetUser, RegisterUser } from '../users/users';
 
 export type LocalAuthStrategy = {
    databaseOptions: LocalAuthDatabaseOptions,
    sessionSecret : string,
    passwordOptions: PasswordOptions,
-   registerUser: RegisterUser,
-   getUser: GetUser
 };
 
 export type IsLocalAuthStrategy = (authStrategy : AuthStrategy) => authStrategy is LocalAuthStrategy;
