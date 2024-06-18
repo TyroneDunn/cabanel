@@ -108,3 +108,15 @@ export const executeHttpRequestSideEffects : ExecuteHttpRequestSideEffects = (
    if (sideEffects !== undefined)
       sideEffects.forEach((sideEffect: HttpRequestSideEffect) => sideEffect(request));
 };
+
+export type MapHttpRequestToPage = (request : HttpRequest) => Page | undefined;
+
+export const mapHttpRequestToPage: MapHttpRequestToPage =
+   (request : HttpRequest): Page | undefined => {
+      if (request.queryParameters['index'] && request.queryParameters['limit'])
+         return {
+            index: parseInt(request.queryParameters['index']),
+            limit: parseInt(request.queryParameters['limit'])
+         };
+      else return undefined;
+   };
