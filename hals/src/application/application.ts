@@ -40,7 +40,7 @@ export type AuthStrategy =
    | JwtAuthStrategy;
 
 
-export const hals : InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
+export const cabanel : InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
    const validationResult : Result<undefined, ValidationError> = validateApplicationSchema(schema);
    if (isFailure(validationResult))
       throw new Error(validationResult.error.message);
