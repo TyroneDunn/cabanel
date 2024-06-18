@@ -1,6 +1,6 @@
 // Application
 export {
-   hals,
+   cabanel,
    InitialiseApplication,
    Application,
    ApplicationSchema,

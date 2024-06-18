@@ -1,5 +1,5 @@
 export { HalsEventEmitter, userLoggedInEvent, userLoggedOutEvent, userRegisteredEvent } from './application/events';
-export { hals } from './application/application';
+export { cabanel } from './application/application';
 
 
 // HTTP
