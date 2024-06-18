@@ -3,20 +3,33 @@ export { hals } from './application/application';
 
 
 // HTTP
-export { addPageDataToHttpResponse, isHttpRequestError } from './http/http';
-export { localHost } from './http/http';
+export {
+   addPageDataToHttpResponse,
+   isHttpRequestError,
+   mapHttpRequestToPage,
+   HttpRequestError,
+   localHost,
+   internalServerError,
+   ok,
+   unauthorized,
+   created,
+   conflict,
+   badRequest,
+   forbidden,
+   notFound,
+} from './http/http';
 
 
 // Common
 export { mapSuccessfulCommandResultToHttpSuccessResponse } from './common/command-result';
 export { isSuccess, isFailure } from './common/result';
 export { isEndOnlyDateRange, isStartAndEndDateRange, isStartOnlyDateRange } from './common/time';
-export { isValidationError } from './common/validation';
+export { isValidationError, ValidationError, } from './common/validation';
 
 
 // Password
 export {
    generateHash,
    validateHash,
-   generateSalt
+   generateSalt,
 } from './password/password';

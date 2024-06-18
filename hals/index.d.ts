@@ -12,18 +12,18 @@ export {
    HalsEventEmitter,
    userRegisteredEvent,
    userLoggedInEvent,
-   userLoggedOutEvent
+   userLoggedOutEvent,
 } from './src/application/events';
 export {
    LocalAuthStrategy,
    LocalAuthDatabaseProvider,
-   LocalAuthDatabaseOptions
+   LocalAuthDatabaseOptions,
 } from './src/application/local-auth-strategy';
 export {
    RestServerApplicationSchema,
    RestServerApplicationController,
    UnguardedRestServerApplicationController,
-   GuardedRestServerApplicationController
+   GuardedRestServerApplicationController,
 } from './src/application/rest-server-application';
 
 
@@ -42,6 +42,7 @@ export {
    HttpRequestReducer,
    HttpRequestError,
    HttpRequestErrorType,
+   MapHttpRequestToPage,
    internalServerError,
    ok,
    unauthorized,
@@ -51,6 +52,9 @@ export {
    forbidden,
    notFound,
    localHost,
+   mapHttpRequestToPage,
+   isHttpRequestError,
+   addPageDataToHttpResponse,
 } from './src/http/http';
 
 
@@ -79,7 +83,10 @@ export {
    UpdatedAtDateRange,
    EndOnlyDateRange,
    StartAndEndDateRange,
-   StartOnlyDateRange
+   StartOnlyDateRange,
+   isStartAndEndDateRange,
+   isStartOnlyDateRange,
+   isEndOnlyDateRange,
 } from './src/common/time';
 export { ValidationError, ValidationErrorType } from './src/common/validation';
 
@@ -90,7 +97,10 @@ export {
    HashAlgorithm,
    GenerateHash,
    ValidateHash,
-   GenerateSalt
+   GenerateSalt,
+   generateHash,
+   validateHash,
+   generateSalt,
 } from './src/password/password';
 
 
