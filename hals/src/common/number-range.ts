@@ -1,32 +1,32 @@
 export type NumberRange =
-   | StartOnly
-   | EndOnly
-   | StartAndEnd;
+   | StartOnlyNumberRange
+   | EndOnlyNumberRange
+   | StartAndEndNumberRange;
 
-export type StartOnly = { start : number };
+export type StartOnlyNumberRange = { start : number };
 
-export type EndOnly = { end: number };
+export type EndOnlyNumberRange = { end: number };
 
-export type StartAndEnd = {
+export type StartAndEndNumberRange = {
    start : number,
    end   : number,
 };
 
-export const isStartOnly = (range : NumberRange) : range is StartOnly => (
+export const isStartOnlyNumberRange = (range : NumberRange) : range is StartOnlyNumberRange => (
    range !== null
    && typeof range === 'object'
    && 'start'     in range
    && !('end'     in range)
 );
 
-export const isEndOnly = (range : NumberRange) : range is EndOnly => (
+export const isEndOnlyNumberRange = (range : NumberRange) : range is EndOnlyNumberRange => (
    range !== null
    && typeof range === 'object'
    && 'end'        in range
    && !('start'    in range)
 );
 
-export const isStartAndEnd = (range : NumberRange) : range is StartAndEnd => (
+export const isStartAndEndNumberRange = (range : NumberRange) : range is StartAndEndNumberRange => (
    range !== null
    && typeof range === 'object'
    && 'start'      in range
