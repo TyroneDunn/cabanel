@@ -1,5 +1,6 @@
 {
   "name": "cabanel",
+  "version": "0.0.14",
   "description": "",
   "main": "dist/index.js",
   "types": "./index.d.ts",
