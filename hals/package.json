@@ -1,6 +1,7 @@
 {
   "name": "hals",
   "version": "0.0.1",
+  "name": "cabanel",
   "description": "",
   "main": "dist/index.js",
   "types": "./index.d.ts",
