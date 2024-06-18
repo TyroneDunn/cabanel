@@ -4,6 +4,7 @@ export type Result<T, U> =
 
 export type Success<T> = { data: T };
 export type Failure<U> = { error: U };
+// TODO: create success and failure type constructors
 
 export const isSuccess = (result : Result<any,any>) : result is Success<any> => (
    typeof result === 'object'
