@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "ts-node node_modules/jasmine/bin/jasmine",
     "build": "tsc"
