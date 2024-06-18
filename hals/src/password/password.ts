@@ -30,7 +30,7 @@ export const validateHash : ValidateHash =
 
 export type GenerateSalt = (size : number) => string;
 
-export const GenerateSalt : GenerateSalt = (size : number) : string =>
+export const generateSalt : GenerateSalt = (size : number) : string =>
    randomBytes(size).toString('hex');
 
 
