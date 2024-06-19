@@ -121,20 +121,17 @@ const configureExpressAppRouters = (
 
 const mapEndpointSchemaToExpressRequestReducer = (
    path: string,
-   requestType: HttpRequestType,
-   httpRequestHandler: EndpointSchema,
+   endpointSchema: EndpointSchema,
 ): ExpressRequestHandler =>
    async (expressRequest: ExpressRequest, expressResponse: ExpressResponse) => {
       const respond: Respond = (status: number, data: any): void => {
          expressResponse.status(status).json(data);
       };
 
-      const httpRequest: HttpRequest = mapExpressRequestToHttpRequest(
+      const httpRequest: HttpRequest = buildHttpRequest(
          path,
-         requestType,
+         endpointSchema,
          expressRequest,
-         httpRequestHandler.parameterKeys,
-         httpRequestHandler.queryParameterKeys,
          respond
       );
 
@@ -197,24 +194,22 @@ const appendParamKeys = (paramKeys : string[] | undefined, path : string) : stri
    );
 };
 
-const mapExpressRequestToHttpRequest = (
-   path: string,
-   requestType: HttpRequestType,
-   expressRequest: ExpressRequest,
-   paramKeys: string[] | undefined,
-   queryParamKeys: string[] | undefined,
-   respond: Respond,
+const buildHttpRequest = (
+   path : string,
+   endpointSchema : EndpointSchema,
+   expressRequest : ExpressRequest,
+   respond : Respond,
 ): HttpRequest => ({
    path           : path,
-   requestType    : requestType,
+   requestType    : endpointSchema.requestType,
    sender         : expressRequest.user !== undefined
                        ? expressRequest.user as User
                        : undefined,
-   parameters     : paramKeys !== undefined
-                       ? mapExpressRequestParametersToParamMap(paramKeys, expressRequest)
+   parameters     : endpointSchema.parameterKeys !== undefined
+                       ? mapExpressRequestParametersToParamMap(endpointSchema.parameterKeys, expressRequest)
                        : {},
-   queryParameters: queryParamKeys !== undefined
-                       ? mapExpressRequestQueriesToParamMap(queryParamKeys, expressRequest)
+   queryParameters: endpointSchema.queryParameterKeys !== undefined
+                       ? mapExpressRequestQueriesToParamMap(endpointSchema.queryParameterKeys, expressRequest)
                        : {},
    payload        : expressRequest.body,
    respond        : respond,
