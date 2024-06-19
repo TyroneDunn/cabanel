@@ -82,9 +82,7 @@ const configureExpressAppRouters = (
                ? controller.guardedPath
                : controller.path;
 
-            const endpoint: string =
-               mapEndpointSchemaToExpressEndpoint(endpointSchema);
-
+            const endpoint: string = mapEndpointSchemaToExpressEndpoint(path, endpointSchema);
             const requestReducer: ExpressRequestHandler
                = mapEndpointSchemaToExpressRequestReducer(path, endpointSchema);
 
@@ -181,9 +179,12 @@ const mapHttpRequestHandlerSideEffectsToExpressMiddleware =
       }
    };
 
-const mapHttpRequestHandlerToExpressEndpoint = (httpRequestHandler: HttpRequestHandler): string => {
-   const path: string = httpRequestHandler.path ? '/' + httpRequestHandler.path + '/' : '/';
-   return appendParamKeys(httpRequestHandler.paramKeys, path);
+const mapEndpointSchemaToExpressEndpoint = (
+   path: string,
+   endpointSchema: EndpointSchema
+): string => {
+   const endpoint: string = path ? '/' + path + '/' : '/';
+   return appendParamKeys(endpointSchema.parameterKeys, endpoint);
 };
 
 const appendParamKeys = (paramKeys : string[] | undefined, path : string) : string => {
