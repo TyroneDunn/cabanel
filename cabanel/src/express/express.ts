@@ -77,35 +77,36 @@ const configureExpressAppRouters = (
 ): void => {
       for (const controller of controllers) {
          const expressRouter: ExpressRouter = ExpressRouter();
-         for (const httpRequestHandler of controller.requestHandlers) {
-            const endpoint: string =
-               mapHttpRequestHandlerToExpressEndpoint(httpRequestHandler);
-            const sideEffectMiddleware: ExpressRequestHandler =
-               mapHttpRequestHandlerSideEffectsToExpressMiddleware(httpRequestHandler);
-            const middlewares: ExpressRequestHandler[] =
-               mapHttpRequestHandlerMiddlewaresToExpressMiddleware(httpRequestHandler);
-            const requestHandler: ExpressRequestHandler =
-               mapHttpRequestHandlerToExpressRequestHandler(httpRequestHandler);
+         for (const endpointSchema of controller.endpointSchema) {
+            const path: string = isGuardedRestServerApplicationController(controller)
+               ? controller.guardedPath
+               : controller.path;
 
-            switch (httpRequestHandler.type) {
+            const endpoint: string =
+               mapEndpointSchemaToExpressEndpoint(endpointSchema);
+
+            const requestReducer: ExpressRequestHandler
+               = mapEndpointSchemaToExpressRequestReducer(path, endpointSchema);
+
+            switch (endpointSchema.requestType) {
                case "GET": {
-                  expressRouter.get(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  expressRouter.get(endpoint, requestReducer);
                   break;
                }
                case "POST": {
-                  expressRouter.post(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  expressRouter.post(endpoint, requestReducer);
                   break;
                }
                case "PATCH": {
-                  expressRouter.patch(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  expressRouter.patch(endpoint, requestReducer);
                   break;
                }
                case "PUT": {
-                  expressRouter.put(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  expressRouter.put(endpoint, requestReducer);
                   break;
                }
                case "DELETE": {
-                  expressRouter.delete(endpoint, sideEffectMiddleware, ...middlewares, requestHandler);
+                  expressRouter.delete(endpoint, requestReducer);
                   break;
                }
             }
