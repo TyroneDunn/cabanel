@@ -215,7 +215,11 @@ const loggedInRequestHandler : ExpressRequestHandler = (
    request  : ExpressRequest,
    response : ExpressResponse
 ) : void => {
-   response.json({ status: ok, message: 'Logged in successfully.' });
+   response.json({
+      status: ok,
+      message: 'Logged in successfully.',
+      username: (request.user as User).username
+   });
    HalsEventEmitter.emit(userLoggedInEvent, request.user as User);
 };
 
