@@ -1,4 +1,4 @@
-export { HalsEventEmitter, userLoggedInEvent, userLoggedOutEvent, userRegisteredEvent } from './application/events';
+export { CabanelEventEmitter, userLoggedInEvent, userLoggedOutEvent, userRegisteredEvent } from './application/events';
 export { cabanel } from './application/application';
 
 

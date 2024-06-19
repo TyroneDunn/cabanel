@@ -9,7 +9,7 @@ export {
    ServerFrameworkOption,
 } from './src/application/application';
 export {
-   HalsEventEmitter,
+   CabanelEventEmitter,
    userRegisteredEvent,
    userLoggedInEvent,
    userLoggedOutEvent,
