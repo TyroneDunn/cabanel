@@ -12,7 +12,7 @@ export type IsLocalAuthStrategy = (authStrategy : AuthStrategy) => authStrategy 
 export const isLocalAuthStrategy: IsLocalAuthStrategy =
    (authStrategy : AuthStrategy) : authStrategy is LocalAuthStrategy => (
       typeof authStrategy === 'object'
-      && 'usersDatabase' in authStrategy
+      && 'databaseOptions' in authStrategy
       && 'sessionSecret' in authStrategy
       && 'passwordOptions' in authStrategy
    );
