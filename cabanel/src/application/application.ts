@@ -8,7 +8,7 @@ import {
 } from './web-socket-server-application';
 import { LocalAuthStrategy } from './local-auth-strategy';
 import { JwtAuthStrategy } from './jwt-auth-strategy';
-import { isFailure, Result, Success } from '../common/result';
+import { isFailure, Result } from '../common/result';
 import { ValidationError } from '../common/validation';
 import { buildExpressRestServerApplication } from '../express/express';
 
@@ -49,11 +49,14 @@ export const cabanel : InitialiseApplication = (schema : ApplicationSchema, envi
       return buildApplication(schema, environment);
 };
 
-const validateApplicationSchema : ValidateApplicationSchema =
+export const validateApplicationSchema : ValidateApplicationSchema =
    (schema : ApplicationSchema): Result<undefined, ValidationError> => {
       // IMPLEMENT
-      const stubResult : Success<undefined> = { data: undefined };
-      return stubResult;
+      if (isRestServerApplicationSchema(schema)) {
+         if (schema.host === '')
+            return { error: { message: 'Host cannot be empty string', type: 'BadRequest' } };
+      }
+      return { data: undefined };
    };
 
 const buildApplication: BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
