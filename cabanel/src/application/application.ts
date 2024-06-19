@@ -113,11 +113,6 @@ export const serverMetadata : ServerMetadata = (
    port : number,
    version : string,
    environment : NodeEnvironmentOption,
-) : string =>
-   `Title: ${title}\n` +
-   `Port: ${port}\n` +
-   `Environment: ${environment}\n` +
-   `Version: ${version}\n`;
 )  => ({
    title      : title,
    port       : port,
