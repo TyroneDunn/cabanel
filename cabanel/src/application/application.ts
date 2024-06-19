@@ -11,6 +11,8 @@ import { JwtAuthStrategy } from './jwt-auth-strategy';
 import { isFailure, Result } from '../common/result';
 import { ValidationError } from '../common/validation';
 import { buildExpressRestServerApplication } from '../express/express';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpRequest } from '../http/http';
 
 export type Application = {
    run: () => void
@@ -122,3 +124,8 @@ export const serverMetadata : ServerMetadata = (
    environment: environment,
    version    : version,
 });
+
+export type HttpRequest$ = Observable<HttpRequest | undefined>;
+
+export const httpRequestSubject : BehaviorSubject<HttpRequest | undefined> =
+   new BehaviorSubject<HttpRequest | undefined>(undefined);
