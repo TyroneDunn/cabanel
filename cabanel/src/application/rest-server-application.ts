@@ -31,12 +31,12 @@ export type RestServerApplicationController =
 
 export type UnguardedRestServerApplicationController = {
    path    : string,
-   endpointSchema : EndpointSchema[],
+   endpointSchemas : EndpointSchema[],
 };
 
 export type GuardedRestServerApplicationController = {
    guardedPath    : string,
-   endpointSchema : EndpointSchema[],
+   endpointSchemas : EndpointSchema[],
 };
 
 export const isRestServerApplicationSchema = (object : any) : object is RestServerApplicationSchema => (
@@ -56,12 +56,12 @@ export const isGuardedRestServerApplicationController = (object : any) : object 
    object !== null
    && typeof object === 'object'
    && 'guardedPath' in object
-   && 'endpointSchema' in object
+   && 'endpointSchemas' in object
 );
 
 export const isUnguardedRestServerApplicationController = (object : any) : object is UnguardedRestServerApplicationController => (
    object !== null
    && typeof object === 'object'
    && 'path' in object
-   && 'endpointSchema' in object
+   && 'endpointSchemas' in object
 );

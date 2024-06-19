@@ -75,7 +75,7 @@ const configureExpressAppRouters = (
 ): void => {
       for (const controller of controllers) {
          const expressRouter: ExpressRouter = ExpressRouter();
-         for (const endpointSchema of controller.endpointSchema) {
+         for (const endpointSchema of controller.endpointSchemas) {
             const path: string = isGuardedRestServerApplicationController(controller)
                ? controller.guardedPath
                : controller.path;
