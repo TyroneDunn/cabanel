@@ -11,7 +11,6 @@ import express, {
    Request as ExpressRequest,
    RequestHandler as ExpressRequestHandler,
    Response as ExpressResponse,
-   NextFunction as ExpressNext,
    Router as ExpressRouter,
 } from 'express';
 import cors from 'cors';
@@ -29,7 +28,6 @@ import { ParamMap } from '../common/param-map';
 import {
    HttpRequest,
    EndpointSchema,
-   HttpRequestType,
    Respond,
 } from '../http/http';
 import { User } from '../users/users';
@@ -134,49 +132,6 @@ const mapEndpointSchemaToExpressRequestReducer = (
       );
 
       httpRequestSubject.next(httpRequest);
-   };
-
-const mapHttpRequestHandlerMiddlewaresToExpressMiddleware =
-   (httpRequestHandler: HttpRequestHandler): ExpressRequestHandler[] =>
-      httpRequestHandler.middleware === undefined
-         ? []
-         : httpRequestHandler.middleware.map((middleware : HttpRequestMiddleware) : ExpressRequestHandler =>
-            async (
-               expressRequest : ExpressRequest,
-               expressResponse : ExpressResponse,
-               next : ExpressNext
-            )  => {
-               const httpRequest : HttpRequest = mapExpressRequestToHttpRequest(
-                  expressRequest,
-                  httpRequestHandler.paramKeys,
-                  httpRequestHandler.queryParamKeys
-               );
-               const httpResponse : HttpResponse<undefined> = await middleware(httpRequest);
-               if (httpResponse.error)
-                  return expressResponse.status(httpResponse.status).json(httpResponse);
-               else {
-                  next();
-                  return;
-               }
-            });
-
-const mapHttpRequestHandlerSideEffectsToExpressMiddleware =
-   (httpRequestHandler: HttpRequestHandler): ExpressRequestHandler => (
-      expressRequest : ExpressRequest,
-      expressResponse : ExpressResponse,
-      next : ExpressNext
-   ) : void => {
-      if (httpRequestHandler.sideEffects === undefined || httpRequestHandler.sideEffects.length === 0)
-         next();
-      else {
-         const httpRequest : HttpRequest = mapExpressRequestToHttpRequest(
-            expressRequest,
-            httpRequestHandler.paramKeys,
-            httpRequestHandler.queryParamKeys,
-         );
-         executeHttpRequestSideEffects(httpRequest, httpRequestHandler.sideEffects);
-         next();
-      }
    };
 
 const mapEndpointSchemaToExpressEndpoint = (
