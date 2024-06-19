@@ -86,7 +86,7 @@ const configurePassportLocalStrategy = (
       }
 
       if (validateHash(password, getUserResult.data.hash)) {
-         done(null, getUserResult);
+         done(null, getUserResult.data);
          return;
       }
 
