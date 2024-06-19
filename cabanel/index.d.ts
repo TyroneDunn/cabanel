@@ -31,7 +31,7 @@ export {
 export {  } from './src/http';
 export { CorsOptions, CustomOrigin, StaticOrigin } from './src/http/cors';
 export {
-   HttpRequestHandler,
+   EndpointSchema,
    HttpRequestMiddleware,
    HttpResponse,
    HttpRequest,
@@ -106,3 +106,8 @@ export {
 
 // Users
 export { User } from './src/users/users';
+
+
+// Http Request Stream
+export { httpRequest$ } from './src/index';
+export { HttpRequest$ } from './src';

@@ -1,3 +1,5 @@
+import { HttpRequest$, httpRequestSubject } from './application/application';
+
 export { CabanelEventEmitter, userLoggedInEvent, userLoggedOutEvent, userRegisteredEvent } from './application/events';
 export { cabanel } from './application/application';
 
@@ -33,3 +35,8 @@ export {
    validateHash,
    generateSalt,
 } from './password/password';
+
+
+
+// Http Request Stream
+export const httpRequest$ : HttpRequest$ = httpRequestSubject.asObservable();
