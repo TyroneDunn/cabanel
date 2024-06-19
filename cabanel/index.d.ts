@@ -9,7 +9,8 @@ export {
    ServerFrameworkOption,
 } from './src/application/application';
 export {
-   CabanelEventEmitter,
+   CabanelEvent,
+   cabanelEvent$,
    userRegisteredEvent,
    userLoggedInEvent,
    userLoggedOutEvent,

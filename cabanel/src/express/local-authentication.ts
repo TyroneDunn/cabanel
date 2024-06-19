@@ -23,7 +23,7 @@ import {
 } from '../users/users';
 import { authGuard } from './authentication';
 import {
-   CabanelEventEmitter,
+   cabanelEventsSubject,
    userLoggedInEvent,
    userLoggedOutEvent,
    userRegisteredEvent,
@@ -179,7 +179,10 @@ const registerRequestHandler = (registerUser: RegisterUser) : ExpressRequestHand
          await registerUser(registerUserRequest);
 
       if (isSuccess(registerUserResult)) {
-         CabanelEventEmitter.emit(userRegisteredEvent, registerUserResult.data);
+         cabanelEventsSubject.next({
+            name: userRegisteredEvent,
+            payload: registerUserResult.data
+         });
          next();
          return;
       }
@@ -220,7 +223,10 @@ const loggedInRequestHandler : ExpressRequestHandler = (
       message: 'Logged in successfully.',
       username: (request.user as User).username
    });
-   CabanelEventEmitter.emit(userLoggedInEvent, request.user as User);
+   cabanelEventsSubject.next({
+      name: userLoggedInEvent,
+      payload: request.user as User
+   });
 };
 
 const logoutRequestHandler : ExpressRequestHandler =
@@ -238,7 +244,10 @@ const logoutRequestHandler : ExpressRequestHandler =
             status  : ok,
             message : 'Logged out successfully.',
          });
-         CabanelEventEmitter.emit(userLoggedOutEvent, request.user as User);
+         cabanelEventsSubject.next({
+            name: userLoggedOutEvent,
+            payload: request.user as User
+         });
       });
    };
 

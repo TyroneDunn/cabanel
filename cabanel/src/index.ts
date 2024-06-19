@@ -1,6 +1,6 @@
 import { HttpRequest$, httpRequestSubject } from './application/application';
 
-export { CabanelEventEmitter, userLoggedInEvent, userLoggedOutEvent, userRegisteredEvent } from './application/events';
+export { cabanelEvent$, userLoggedInEvent, userLoggedOutEvent, userRegisteredEvent } from './application/events';
 export { cabanel } from './application/application';
 
 
