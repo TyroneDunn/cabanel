@@ -2,7 +2,6 @@ import { ParamMap } from '../common/param-map';
 import { User } from '../users/users';
 import { Page } from '../common/page';
 
-// HTTP Request
 export type HttpRequestHandler = {
    path? : string,
    type : HttpRequestType,
@@ -13,23 +12,18 @@ export type HttpRequestHandler = {
    reducer : HttpRequestReducer,
 };
 
-// Endpoint Schema
-export type EndpointSchema = {
-   path? : string,
-   requestType : HttpRequestType,
-   parameterKeys? : string[],
-   queryParameterKeys? : string[],
-   payload? : any,
-   sender : User | undefined,
-   respond : (response : any) => void,
-};
-
 export type HttpRequestType =
    | "GET"
    | "POST"
    | "PUT"
    | "PATCH"
    | "DELETE";
+
+export type EndpointSchema = {
+   requestType : HttpRequestType,
+   parameterKeys? : string[],
+   queryParameterKeys? : string[],
+};
 
 export type HttpRequest = {
    parameters : ParamMap,
