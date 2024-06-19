@@ -104,7 +104,7 @@ export type ServerMetadata = (
    port : number,
    version : string,
    environment : NodeEnvironmentOption,
-) => string;
+) => object;
 
 export const serverMetadata : ServerMetadata = (
    title : string,
@@ -116,3 +116,9 @@ export const serverMetadata : ServerMetadata = (
    `Port: ${port}\n` +
    `Environment: ${environment}\n` +
    `Version: ${version}\n`;
+)  => ({
+   title      : title,
+   port       : port,
+   environment: environment,
+   version    : version,
+});
