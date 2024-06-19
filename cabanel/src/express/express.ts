@@ -16,6 +16,7 @@ import express, {
 } from 'express';
 import cors from 'cors';
 import {
+   httpRequestSubject,
    NodeEnvironmentOption,
    serverMetadata,
    serverStartupMessage,
@@ -26,10 +27,10 @@ import {
 } from './authentication';
 import { ParamMap } from '../common/param-map';
 import {
-   executeHttpRequestSideEffects,
    HttpRequest,
-   HttpRequestHandler,
-   HttpRequestMiddleware, HttpResponse,
+   EndpointSchema,
+   HttpRequestType,
+   Respond,
 } from '../http/http';
 import { User } from '../users/users';
 
@@ -117,15 +118,26 @@ const configureExpressAppRouters = (
       }
    };
 
-const mapHttpRequestHandlerToExpressRequestHandler = (httpRequestHandler: HttpRequestHandler): ExpressRequestHandler =>
+const mapEndpointSchemaToExpressRequestReducer = (
+   path: string,
+   requestType: HttpRequestType,
+   httpRequestHandler: EndpointSchema,
+): ExpressRequestHandler =>
    async (expressRequest: ExpressRequest, expressResponse: ExpressResponse) => {
+      const respond: Respond = (status: number, data: any): void => {
+         expressResponse.status(status).json(data);
+      };
+
       const httpRequest: HttpRequest = mapExpressRequestToHttpRequest(
+         path,
+         requestType,
          expressRequest,
-         httpRequestHandler.paramKeys,
-         httpRequestHandler.queryParamKeys
+         httpRequestHandler.parameterKeys,
+         httpRequestHandler.queryParameterKeys,
+         respond
       );
-      const httpResponse: HttpResponse<any> = await httpRequestHandler.reducer(httpRequest);
-      expressResponse.status(httpResponse.status).json(httpResponse);
+
+      httpRequestSubject.next(httpRequest);
    };
 
 const mapHttpRequestHandlerMiddlewaresToExpressMiddleware =
@@ -185,23 +197,26 @@ const appendParamKeys = (paramKeys : string[] | undefined, path : string) : stri
 };
 
 const mapExpressRequestToHttpRequest = (
+   path: string,
+   requestType: HttpRequestType,
    expressRequest: ExpressRequest,
    paramKeys: string[] | undefined,
-   queryParamKeys: string[] | undefined
+   queryParamKeys: string[] | undefined,
+   respond: Respond,
 ): HttpRequest => ({
-   user:
-      expressRequest.user !== undefined
-         ? expressRequest.user as User
-         : undefined,
-   parameters:
-      paramKeys !== undefined
-         ? mapExpressRequestParametersToParamMap(paramKeys, expressRequest)
-         : {},
-   queryParameters:
-      queryParamKeys !== undefined
-         ? mapExpressRequestQueriesToParamMap(queryParamKeys, expressRequest)
-         : {},
-   payload: expressRequest.body,
+   path           : path,
+   requestType    : requestType,
+   sender         : expressRequest.user !== undefined
+                       ? expressRequest.user as User
+                       : undefined,
+   parameters     : paramKeys !== undefined
+                       ? mapExpressRequestParametersToParamMap(paramKeys, expressRequest)
+                       : {},
+   queryParameters: queryParamKeys !== undefined
+                       ? mapExpressRequestQueriesToParamMap(queryParamKeys, expressRequest)
+                       : {},
+   payload        : expressRequest.body,
+   respond        : respond,
 });
 
 const mapExpressRequestParametersToParamMap = (
