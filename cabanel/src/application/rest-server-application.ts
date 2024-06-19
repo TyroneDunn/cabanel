@@ -1,6 +1,6 @@
 import { AuthStrategy, NodeEnvironmentOption, ServerFrameworkOption } from './application';
 import { CorsOptions } from '../http/cors';
-import { HostAddress, HttpRequestHandler } from '../http/http';
+import { HostAddress, EndpointSchema } from '../http/http';
 
 export type RestServerApplication = {
    run : () => void,
@@ -31,12 +31,12 @@ export type RestServerApplicationController =
 
 export type UnguardedRestServerApplicationController = {
    path    : string,
-   requestHandlers : HttpRequestHandler[],
+   endpointSchema : EndpointSchema[],
 };
 
 export type GuardedRestServerApplicationController = {
    guardedPath    : string,
-   requestHandlers : HttpRequestHandler[],
+   endpointSchema : EndpointSchema[],
 };
 
 export const isRestServerApplicationSchema = (object : any) : object is RestServerApplicationSchema => (
@@ -56,12 +56,12 @@ export const isGuardedRestServerApplicationController = (object : any) : object 
    object !== null
    && typeof object === 'object'
    && 'guardedPath' in object
-   && 'requestHandlers' in object
+   && 'endpointSchema' in object
 );
 
 export const isUnguardedRestServerApplicationController = (object : any) : object is UnguardedRestServerApplicationController => (
    object !== null
    && typeof object === 'object'
    && 'path' in object
-   && 'requestHandlers' in object
+   && 'endpointSchema' in object
 );

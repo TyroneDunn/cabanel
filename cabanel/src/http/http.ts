@@ -13,6 +13,17 @@ export type HttpRequestHandler = {
    reducer : HttpRequestReducer,
 };
 
+// Endpoint Schema
+export type EndpointSchema = {
+   path? : string,
+   requestType : HttpRequestType,
+   parameterKeys? : string[],
+   queryParameterKeys? : string[],
+   payload? : any,
+   sender : User | undefined,
+   respond : (response : any) => void,
+};
+
 export type HttpRequestType =
    | "GET"
    | "POST"
