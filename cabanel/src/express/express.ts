@@ -107,11 +107,12 @@ const configureExpressAppRouters = (
                }
             }
          }
+
          if (isUnguardedRestServerApplicationController(controller))
-            app.use('/' + controller.path, expressRouter);
+            app.use(expressRouter);
 
          if (isGuardedRestServerApplicationController(controller))
-            app.use('/' + controller.guardedPath, authGuard, expressRouter);
+            app.use(authGuard, expressRouter);
       }
    };
 
@@ -119,7 +120,7 @@ const mapEndpointSchemaToExpressRequestReducer = (
    path: string,
    endpointSchema: EndpointSchema,
 ): ExpressRequestHandler =>
-   async (expressRequest: ExpressRequest, expressResponse: ExpressResponse) => {
+   (expressRequest: ExpressRequest, expressResponse: ExpressResponse) => {
       const respond: Respond = (status: number, data: any): void => {
          expressResponse.status(status).json(data);
       };
