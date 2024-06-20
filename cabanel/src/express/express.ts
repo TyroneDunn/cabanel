@@ -57,6 +57,7 @@ export const buildExpressRestServerApplication: BuildRestServerApplication = (
    const application : RestServerApplication = {
       run() : void {
          expressApp.listen(applicationSchema.port, () =>
+            // TODO : update message rendering
             console.log(serverStartupMessage(
                applicationSchema.title,
                applicationSchema.host,
@@ -207,6 +208,5 @@ const metadataRequestHandler = (
    environment : NodeEnvironmentOption,
 ) : ExpressRequestHandler =>
    (request : ExpressRequest, response : ExpressResponse) : void => {
-      response.json(serverMetadata(title, port, version, environment));
       response.json(renderJsonServerMetadata(title, port, version, environment));
    };
