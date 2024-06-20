@@ -17,7 +17,7 @@ import cors from 'cors';
 import {
    httpRequestSubject,
    NodeEnvironmentOption,
-   serverMetadata,
+   renderJsonServerMetadata,
    serverStartupMessage,
 } from '../application/application';
 import {
@@ -208,4 +208,5 @@ const metadataRequestHandler = (
 ) : ExpressRequestHandler =>
    (request : ExpressRequest, response : ExpressResponse) : void => {
       response.json(serverMetadata(title, port, version, environment));
+      response.json(renderJsonServerMetadata(title, port, version, environment));
    };

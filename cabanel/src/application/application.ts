@@ -95,20 +95,20 @@ export const serverStartupMessage : ServerStartupMessage = (
    environment : NodeEnvironmentOption,
 ) : string => {
    const titleMessage : string = `'${title}' Server Started\n `;
-   const divider : string = '----------------------------------------\n';
+   const divider : string = '--------------------------------\n';
    const serverAddressLine : string = `Server application running at http://${host}:${port}\n`;
-   return titleMessage + divider + serverMetadata(title, port, version, environment) + '\n' +
+   return titleMessage + divider + renderStringServerMetadata(title, port, version, environment) + '\n' +
       serverAddressLine;
 };
 
-export type ServerMetadata = (
+export type RenderJsonServerMetadata = (
    title : string,
    port : number,
    version : string,
    environment : NodeEnvironmentOption,
 ) => object;
 
-export const serverMetadata : ServerMetadata = (
+export const renderJsonServerMetadata : RenderJsonServerMetadata = (
    title : string,
    port : number,
    version : string,
@@ -119,6 +119,24 @@ export const serverMetadata : ServerMetadata = (
    environment: environment,
    version    : version,
 });
+
+export type RenderStringServerMetadata = (
+   title : string,
+   port : number,
+   version : string,
+   environment : NodeEnvironmentOption,
+) => string;
+
+export const renderStringServerMetadata : RenderStringServerMetadata = (
+   title : string,
+   port : number,
+   version : string,
+   environment : NodeEnvironmentOption,
+)  =>
+   `Title: ${title}\n` +
+   `Port: ${port}\n` +
+   `Version: ${version}\n` +
+   `Environment: ${environment}\n`;
 
 export type HttpRequest$ = Observable<HttpRequest | undefined>;
 
