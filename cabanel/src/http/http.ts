@@ -2,7 +2,6 @@ import { ParamMap } from '../common/param-map';
 import { User } from '../users/users';
 import { Page } from '../common/page';
 
-// HTTP Request
 export type HttpRequestHandler = {
    path? : string,
    type : HttpRequestType,
@@ -20,12 +19,23 @@ export type HttpRequestType =
    | "PATCH"
    | "DELETE";
 
+export type EndpointSchema = {
+   requestType : HttpRequestType,
+   parameterKeys? : string[],
+   queryParameterKeys? : string[],
+};
+
 export type HttpRequest = {
+   path : string,
+   requestType : HttpRequestType,
    parameters : ParamMap,
    queryParameters : ParamMap,
    payload : any,
-   user : User | undefined,
+   sender : User | undefined,
+   respond : Respond,
 };
+
+export type Respond = (status : number, response : any) => void;
 
 export type HttpRequestSideEffect = (request : HttpRequest) => Promise<void>;
 
@@ -86,7 +96,6 @@ export const addPageDataToHttpResponse: AddPageDataToHttpResponse = <T>(
    limit: page.limit,
 });
 
-
 export type HostAddress = string;
 
 export const localHost : HostAddress = '127.0.0.1';
@@ -99,7 +108,6 @@ export const forbidden : number = 403;
 export const notFound : number = 404;
 export const conflict : number = 409;
 export const internalServerError : number = 500;
-
 
 export const executeHttpRequestSideEffects : ExecuteHttpRequestSideEffects = (
    request     : HttpRequest,

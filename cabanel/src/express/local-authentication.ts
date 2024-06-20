@@ -23,7 +23,7 @@ import {
 } from '../users/users';
 import { authGuard } from './authentication';
 import {
-   HalsEventEmitter,
+   cabanelEventsSubject,
    userLoggedInEvent,
    userLoggedOutEvent,
    userRegisteredEvent,
@@ -86,7 +86,7 @@ const configurePassportLocalStrategy = (
       }
 
       if (validateHash(password, getUserResult.data.hash)) {
-         done(null, getUserResult);
+         done(null, getUserResult.data);
          return;
       }
 
@@ -179,7 +179,10 @@ const registerRequestHandler = (registerUser: RegisterUser) : ExpressRequestHand
          await registerUser(registerUserRequest);
 
       if (isSuccess(registerUserResult)) {
-         HalsEventEmitter.emit(userRegisteredEvent, registerUserResult.data);
+         cabanelEventsSubject.next({
+            name: userRegisteredEvent,
+            payload: registerUserResult.data
+         });
          next();
          return;
       }
@@ -215,8 +218,15 @@ const loggedInRequestHandler : ExpressRequestHandler = (
    request  : ExpressRequest,
    response : ExpressResponse
 ) : void => {
-   response.json({ status: ok, message: 'Logged in successfully.' });
-   HalsEventEmitter.emit(userLoggedInEvent, request.user as User);
+   response.json({
+      status: ok,
+      message: 'Logged in successfully.',
+      username: (request.user as User).username
+   });
+   cabanelEventsSubject.next({
+      name: userLoggedInEvent,
+      payload: request.user as User
+   });
 };
 
 const logoutRequestHandler : ExpressRequestHandler =
@@ -234,7 +244,10 @@ const logoutRequestHandler : ExpressRequestHandler =
             status  : ok,
             message : 'Logged out successfully.',
          });
-         HalsEventEmitter.emit(userLoggedOutEvent, request.user as User);
+         cabanelEventsSubject.next({
+            name: userLoggedOutEvent,
+            payload: request.user as User
+         });
       });
    };
 
