@@ -3,7 +3,7 @@ import {
    isGuardedRestServerApplicationController,
    isUnguardedRestServerApplicationController,
    RestServerApplication,
-   RestServerApplicationController,
+   RestServerApplicationRouterSchema,
    RestServerApplicationSchema,
 } from '../application/rest-server-application';
 import express, {
@@ -46,7 +46,7 @@ export const buildExpressRestServerApplication: BuildRestServerApplication = (
          applicationSchema.authStrategy,
          environment,
       );
-   configureExpressAppRouters(expressApp, applicationSchema.controllers);
+   configureExpressAppRouters(expressApp, applicationSchema.routersSchemas);
 
    expressApp.get('/', metadataRequestHandler(
       applicationSchema.title,
@@ -72,14 +72,14 @@ export const buildExpressRestServerApplication: BuildRestServerApplication = (
 
 const configureExpressAppRouters = (
    app: ExpressApplication,
-   controllers: RestServerApplicationController[]
+   routersSchemas: RestServerApplicationRouterSchema[]
 ): void => {
-      for (const controller of controllers) {
+      for (const routerSchema of routersSchemas) {
          const expressRouter: ExpressRouter = ExpressRouter();
-         for (const endpointSchema of controller.endpointSchemas) {
-            const path: string = isGuardedRestServerApplicationController(controller)
-               ? controller.guardedPath
-               : controller.path;
+         for (const endpointSchema of routerSchema.endpointSchemas) {
+            const path: string = isGuardedRestServerApplicationController(routerSchema)
+               ? routerSchema.guardedPath
+               : routerSchema.path;
 
             const endpoint: string = mapEndpointSchemaToExpressEndpoint(path, endpointSchema);
             const requestReducer: ExpressRequestHandler
@@ -109,10 +109,10 @@ const configureExpressAppRouters = (
             }
          }
 
-         if (isUnguardedRestServerApplicationController(controller))
+         if (isUnguardedRestServerApplicationController(routerSchema))
             app.use(expressRouter);
 
-         if (isGuardedRestServerApplicationController(controller))
+         if (isGuardedRestServerApplicationController(routerSchema))
             app.use(authGuard, expressRouter);
       }
    };
