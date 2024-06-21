@@ -21,7 +21,7 @@ export type WebSocketServerApplicationSchema = {
    corsOptions : CorsOptions,
    authStrategy : AuthStrategy,
    socketEvents : SocketEvents,
-   routersSchemas : WebSocketServerApplicationRouterSchema[],
+   routerSchemas : WebSocketServerApplicationRouterSchema[],
 };
 
 export type WebSocketServerApplicationRouterSchema =
@@ -58,5 +58,5 @@ export const isWebSocketServerApplicationSchema =
       && 'corsOptions' in applicationSchema
       && 'authStrategy' in applicationSchema
       && 'socketEvents' in applicationSchema
-      && 'routersSchemas' in applicationSchema
+      && 'routerSchemas' in applicationSchema
    );

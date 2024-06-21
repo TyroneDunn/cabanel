@@ -46,7 +46,7 @@ export const buildExpressRestServerApplication: BuildRestServerApplication = (
          applicationSchema.authStrategy,
          environment,
       );
-   configureExpressAppRouters(expressApp, applicationSchema.routersSchemas);
+   configureExpressAppRouters(expressApp, applicationSchema.routerSchemas);
 
    expressApp.get('/', metadataRequestHandler(
       applicationSchema.title,

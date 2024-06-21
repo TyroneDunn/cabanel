@@ -23,7 +23,7 @@ export type RestServerApplicationSchema = {
    serverOption : ServerFrameworkOption,
    corsOptions : CorsOptions,
    authStrategy : AuthStrategy,
-   routersSchemas : RestServerApplicationRouterSchema[],
+   routerSchemas : RestServerApplicationRouterSchema[],
 };
 
 export type RestServerApplicationRouterSchema =
@@ -50,7 +50,7 @@ export const isRestServerApplicationSchema = (object : any) : object is RestServ
    && 'serverOption' in object
    && 'corsOptions' in object
    && 'authStrategy' in object
-   && 'routersSchemas' in object
+   && 'routerSchemas' in object
 );
 
 export const isGuardedRestServerApplicationController = (object : any) : object is GuardedRestServerApplicationRouterSchema => (
