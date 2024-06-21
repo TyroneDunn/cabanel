@@ -33,42 +33,40 @@ import {
 import { User } from '../users/users';
 
 
-export const buildExpressRestServerApplication: BuildRestServerApplication = (
-   applicationSchema: RestServerApplicationSchema,
-   environment: NodeEnvironmentOption,
-) : RestServerApplication => {
-   const expressApp : ExpressApplication = express();
-   expressApp.use(express.json());
-   expressApp.use(cors(applicationSchema.corsOptions));
-   if (applicationSchema.authStrategy !== 'None')
-      configureExpressRestServerApplicationAuthentication(
-         expressApp,
-         applicationSchema.authStrategy,
-         environment,
-      );
-   configureExpressAppRouters(expressApp, applicationSchema.routerSchemas);
+export const buildExpressRestServerApplication: BuildRestServerApplication =
+   (applicationSchema: RestServerApplicationSchema) : RestServerApplication => {
+      const expressApp : ExpressApplication = express();
+      expressApp.use(express.json());
+      expressApp.use(cors(applicationSchema.corsOptions));
+      if (applicationSchema.authStrategy !== 'None')
+         configureExpressRestServerApplicationAuthentication(
+            expressApp,
+            applicationSchema.authStrategy,
+            applicationSchema.nodeEnv,
+         );
+      configureExpressAppRouters(expressApp, applicationSchema.routerSchemas);
 
-   expressApp.get('/', metadataRequestHandler(
-      applicationSchema.title,
-      applicationSchema.port,
-      applicationSchema.version,
-      applicationSchema.nodeEnv));
+      expressApp.get('/', metadataRequestHandler(
+         applicationSchema.title,
+         applicationSchema.port,
+         applicationSchema.version,
+         applicationSchema.nodeEnv));
 
-   const application : RestServerApplication = {
-      run() : void {
-         expressApp.listen(applicationSchema.port, () =>
-            // TODO : update message rendering
-            console.log(serverStartupMessage(
-               applicationSchema.title,
-               applicationSchema.host,
-               applicationSchema.port,
-               applicationSchema.version,
-               applicationSchema.nodeEnv
-            )));
-      }
+      const application : RestServerApplication = {
+         run() : void {
+            expressApp.listen(applicationSchema.port, () =>
+               // TODO : update message rendering
+               console.log(serverStartupMessage(
+                  applicationSchema.title,
+                  applicationSchema.host,
+                  applicationSchema.port,
+                  applicationSchema.version,
+                  applicationSchema.nodeEnv
+               )));
+         }
+      };
+      return application;
    };
-   return application;
-};
 
 const configureExpressAppRouters = (
    app: ExpressApplication,

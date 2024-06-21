@@ -22,12 +22,12 @@ export type ApplicationSchema =
    | RestServerApplicationSchema
    | WebSocketServerApplicationSchema;
 
-export type InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
+export type InitialiseApplication = (schema : ApplicationSchema) => Application;
 
 type ValidateApplicationSchema =
    (schema : ApplicationSchema) => Result<undefined, ValidationError>;
 
-type BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
+type BuildApplication = (schema : ApplicationSchema) => Application;
 
 export type NodeEnvironmentOption =
    | "production"
@@ -42,13 +42,13 @@ export type AuthStrategy =
    | JwtAuthStrategy;
 
 
-export const cabanel : InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
+export const cabanel : InitialiseApplication = (schema : ApplicationSchema) : Application => {
    const validationResult : Result<undefined, ValidationError> = validateApplicationSchema(schema);
    if (isFailure(validationResult))
       throw new Error(validationResult.error.message);
 
    else
-      return buildApplication(schema, environment);
+      return buildApplication(schema);
 };
 
 export const validateApplicationSchema : ValidateApplicationSchema =
@@ -61,7 +61,7 @@ export const validateApplicationSchema : ValidateApplicationSchema =
       return { data: undefined };
    };
 
-const buildApplication: BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
+const buildApplication: BuildApplication = (schema : ApplicationSchema) : Application => {
    if (isWebSocketServerApplicationSchema(schema))
       // IMPLEMENT
       throw new Error(
@@ -69,7 +69,7 @@ const buildApplication: BuildApplication = (schema : ApplicationSchema, environm
       );
    if (isRestServerApplicationSchema(schema)) {
       switch (schema.serverOption) {
-         case "Express": return buildExpressRestServerApplication(schema, environment);
+         case "Express": return buildExpressRestServerApplication(schema);
          default: throw new Error(
             `"${schema.serverOption}" REST server application not supported. Please select a different option.`
          );

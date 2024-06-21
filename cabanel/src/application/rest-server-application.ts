@@ -9,10 +9,8 @@ export type RestServerApplication = {
 export type InitialiseRestServerApplication =
    (schema : RestServerApplication) => RestServerApplication;
 
-export type BuildRestServerApplication = (
-   applicationSchema: RestServerApplicationSchema,
-   environment: NodeEnvironmentOption,
-) => RestServerApplication;
+export type BuildRestServerApplication =
+   (applicationSchema: RestServerApplicationSchema) => RestServerApplication;
 
 export type RestServerApplicationSchema = {
    title : string,
