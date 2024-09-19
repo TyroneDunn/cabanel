@@ -95,7 +95,7 @@ export const serverStartupMessage : ServerStartupMessage = (
    environment : NodeEnvironmentOption,
 ) : string => {
    const headline: string = `'${title}' server started.\n`;
-   return headline + serverMetadata(title, port, environment, version);
+   return headline + serverMetadata(host, port, environment, version);
 };
 
 export type RenderJsonServerMetadata = (
@@ -123,9 +123,9 @@ export const serverMetadata = (
     environment: NodeEnvironmentOption,
     version: string,
 ) =>
-    `Url: http://${host}:${port}\n` +
-    `Environment: ${environment}\n` +
-    `Version: ${version}\n`;
+    `url: http://${host}:${port}\n` +
+    `environment: ${environment}\n` +
+    `version: ${version}\n`;
 
 export type HttpRequest$ = Observable<HttpRequest | undefined>;
 
