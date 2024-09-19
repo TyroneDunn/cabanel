@@ -18,10 +18,10 @@ readability and maintainability.
 ## Getting Started - In Progress
 
 ## Documentation - In Progress
-For more information on using Hals, check out the official documentation.
+For more information on using Cabanel, check out the official documentation.
 
 ## Contributing
 We welcome contributions from the community! If you have suggestions, bug reports, or would like to contribute code, please refer to our Contribution Guidelines.
 
 ## License
-Hals is licensed under the MIT License.
+Cabanel is licensed under the MIT License.
