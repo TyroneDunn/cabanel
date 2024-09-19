@@ -1,13 +1,12 @@
-# Hals
+# Cabanel
 
-Welcome to Hals, a high-level, declarative, opinionated Node.js framework for the rapid development 
+Cabanel, a high-level, declarative, opinionated Node.js framework for the rapid development 
 of server applications.
 
 ## Overview
-Hals is designed to streamline the development process of server-side applications by providing a 
-structured and opinionated approach. It aims to minimize boilerplate code and promote best 
-practices, allowing developers to focus on application logic & building features rather than 
-managing infrastructure.
+Cabanel is designed to streamline the development process of server-side applications by providing a 
+structured and declarative approach. It aims to minimize boilerplate code, allowing developers to 
+focus on application logic & deploying features.
 
 ## Features
  - Declarative Syntax: Write clean and concise code using a declarative syntax that emphasizes 
