@@ -32,7 +32,6 @@ import {
 } from '../http/http';
 import { User } from '../users/users';
 
-
 export const buildExpressRestServerApplication: BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema) : RestServerApplication => {
       const expressApp : ExpressApplication = express();
