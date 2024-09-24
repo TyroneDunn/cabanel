@@ -65,11 +65,10 @@ export const configureExpressRestServerApplicationAuthentication: ConfigureExpre
 };
 
 
-export type AuthGuard = ExpressRequestHandler;
-export const authGuard: AuthGuard =
+export const authGuard: ExpressRequestHandler =
    (request: ExpressRequest, response: ExpressResponse, next: NextFunction) => {
-      if (!request.isAuthenticated())
-         return response.status(unauthorized)
+      if (!request.user) return response
+         .status(unauthorized)
          .json({
             status: unauthorized,
             error : "Unauthorized user."

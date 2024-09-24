@@ -1,9 +1,8 @@
 import {
    BuildRestServerApplication,
-   isGuardedRestServerApplicationController,
-   isUnguardedRestServerApplicationController,
+   isGuardedRestServerApplicationRouterSchema,
    RestServerApplication,
-   RestServerApplicationController,
+   RestServerApplicationRouterSchema,
    RestServerApplicationSchema,
 } from '../application/rest-server-application';
 import express, {
@@ -32,90 +31,92 @@ import {
 } from '../http/http';
 import { User } from '../users/users';
 
+export const buildExpressRestServerApplication: BuildRestServerApplication =
+   (applicationSchema: RestServerApplicationSchema): RestServerApplication => {
+      const expressApp: ExpressApplication = express();
+      expressApp.use(express.json());
+      expressApp.use(cors(applicationSchema.corsOptions));
+      if (applicationSchema.authStrategy !== 'None')
+         configureExpressRestServerApplicationAuthentication(
+            expressApp,
+            applicationSchema.authStrategy,
+            applicationSchema.nodeEnv,
+         );
+      configureExpressAppRouters(expressApp, applicationSchema.routerSchemas);
 
-export const buildExpressRestServerApplication: BuildRestServerApplication = (
-   applicationSchema: RestServerApplicationSchema,
-   environment: NodeEnvironmentOption,
-) : RestServerApplication => {
-   const expressApp : ExpressApplication = express();
-   expressApp.use(express.json());
-   expressApp.use(cors(applicationSchema.corsOptions));
-   if (applicationSchema.authStrategy !== 'None')
-      configureExpressRestServerApplicationAuthentication(
-         expressApp,
-         applicationSchema.authStrategy,
-         environment,
-      );
-   configureExpressAppRouters(expressApp, applicationSchema.controllers);
+      expressApp.get('/', metadataRequestHandler(
+         applicationSchema.title,
+         applicationSchema.port,
+         applicationSchema.version,
+         applicationSchema.nodeEnv));
 
-   expressApp.get('/', metadataRequestHandler(
-      applicationSchema.title,
-      applicationSchema.port,
-      applicationSchema.version,
-      applicationSchema.nodeEnv));
-
-   const application : RestServerApplication = {
-      run() : void {
-         expressApp.listen(applicationSchema.port, () =>
-            // TODO : update message rendering
-            console.log(serverStartupMessage(
-               applicationSchema.title,
-               applicationSchema.host,
-               applicationSchema.port,
-               applicationSchema.version,
-               applicationSchema.nodeEnv
-            )));
-      }
+      const application : RestServerApplication = {
+         run() : void {
+            expressApp.listen(applicationSchema.port, () =>
+               // TODO : update message rendering
+               console.log(serverStartupMessage(
+                  applicationSchema.title,
+                  applicationSchema.host,
+                  applicationSchema.port,
+                  applicationSchema.version,
+                  applicationSchema.nodeEnv,
+                  applicationSchema.authStrategy
+               )));
+         }
+      };
+      return application;
    };
-   return application;
-};
 
 const configureExpressAppRouters = (
    app: ExpressApplication,
-   controllers: RestServerApplicationController[]
-): void => {
-      for (const controller of controllers) {
-         const expressRouter: ExpressRouter = ExpressRouter();
-         for (const endpointSchema of controller.endpointSchemas) {
-            const path: string = isGuardedRestServerApplicationController(controller)
-               ? controller.guardedPath
-               : controller.path;
+   routersSchemas: RestServerApplicationRouterSchema[]
+): void => routersSchemas.forEach(routerSchema => {
+   const expressRouter: ExpressRouter = ExpressRouter();
+   const path: string = isGuardedRestServerApplicationRouterSchema(routerSchema)
+      ? routerSchema.guardedPath
+      : routerSchema.path;
+   routerSchema.endpointSchemas.forEach(endpointSchema => {
+      const endpoint: string = mapEndpointSchemaToExpressEndpoint(path, endpointSchema);
+      const requestReducer: ExpressRequestHandler
+         = mapEndpointSchemaToExpressRequestReducer(path, endpointSchema);
+      const guarded = isGuardedRestServerApplicationRouterSchema(routerSchema);
 
-            const endpoint: string = mapEndpointSchemaToExpressEndpoint(path, endpointSchema);
-            const requestReducer: ExpressRequestHandler
-               = mapEndpointSchemaToExpressRequestReducer(path, endpointSchema);
-
-            switch (endpointSchema.requestType) {
-               case "GET": {
-                  expressRouter.get(endpoint, requestReducer);
-                  break;
-               }
-               case "POST": {
-                  expressRouter.post(endpoint, requestReducer);
-                  break;
-               }
-               case "PATCH": {
-                  expressRouter.patch(endpoint, requestReducer);
-                  break;
-               }
-               case "PUT": {
-                  expressRouter.put(endpoint, requestReducer);
-                  break;
-               }
-               case "DELETE": {
-                  expressRouter.delete(endpoint, requestReducer);
-                  break;
-               }
-            }
+      switch (endpointSchema.requestType) {
+         case "GET": {
+            guarded
+               ? expressRouter.get(endpoint, authGuard, requestReducer)
+               : expressRouter.get(endpoint, requestReducer);
+            break;
          }
-
-         if (isUnguardedRestServerApplicationController(controller))
-            app.use(expressRouter);
-
-         if (isGuardedRestServerApplicationController(controller))
-            app.use(authGuard, expressRouter);
+         case "POST": {
+            guarded
+               ? expressRouter.post(endpoint, authGuard, requestReducer)
+               : expressRouter.post(endpoint, requestReducer);
+            break;
+         }
+         case "PATCH": {
+            guarded
+               ? expressRouter.patch(endpoint, authGuard, requestReducer)
+               : expressRouter.patch(endpoint, requestReducer);
+            break;
+         }
+         case "PUT": {
+            guarded
+               ? expressRouter.put(endpoint, authGuard, requestReducer)
+               : expressRouter.put(endpoint, requestReducer);
+            break;
+         }
+         case "DELETE": {
+            guarded
+               ? expressRouter.delete(endpoint, authGuard, requestReducer)
+               : expressRouter.delete(endpoint, requestReducer);
+            break;
+         }
       }
-   };
+   });
+
+   app.use(expressRouter);
+});
 
 const mapEndpointSchemaToExpressRequestReducer = (
    path: string,
@@ -138,19 +139,16 @@ const mapEndpointSchemaToExpressRequestReducer = (
 
 const mapEndpointSchemaToExpressEndpoint = (
    path: string,
-   endpointSchema: EndpointSchema
+   endpointSchema?: EndpointSchema
 ): string => {
    const endpoint: string = path ? '/' + path + '/' : '/';
-   return appendParamKeys(endpointSchema.parameterKeys, endpoint);
+   return appendParamKeys(endpoint, endpointSchema?.parameterKeys);
 };
 
-const appendParamKeys = (paramKeys : string[] | undefined, path : string) : string => {
-   if (paramKeys === undefined || paramKeys.length === 0) return path;
-   else return appendParamKeys(
-      paramKeys.slice(1),
-      path.concat(':', paramKeys[0], '/')
-   );
-};
+const appendParamKeys = (path: string, paramKeys: string[] | undefined): string =>
+   paramKeys === undefined || paramKeys.length === 0
+      ? path
+      : appendParamKeys(path.concat(':', paramKeys[0], '/'), paramKeys.slice(1));
 
 const buildHttpRequest = (
    path : string,

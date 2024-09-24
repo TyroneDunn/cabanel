@@ -6,7 +6,7 @@ import {
    isWebSocketServerApplicationSchema,
    WebSocketServerApplicationSchema,
 } from './web-socket-server-application';
-import { LocalAuthStrategy } from './local-auth-strategy';
+import { isLocalAuthStrategy, LocalAuthStrategy } from './local-auth-strategy';
 import { JwtAuthStrategy } from './jwt-auth-strategy';
 import { isFailure, Result } from '../common/result';
 import { ValidationError } from '../common/validation';
@@ -22,12 +22,12 @@ export type ApplicationSchema =
    | RestServerApplicationSchema
    | WebSocketServerApplicationSchema;
 
-export type InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
+export type InitialiseApplication = (schema : ApplicationSchema) => Application;
 
 type ValidateApplicationSchema =
    (schema : ApplicationSchema) => Result<undefined, ValidationError>;
 
-type BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) => Application;
+type BuildApplication = (schema : ApplicationSchema) => Application;
 
 export type NodeEnvironmentOption =
    | "production"
@@ -42,13 +42,13 @@ export type AuthStrategy =
    | JwtAuthStrategy;
 
 
-export const cabanel : InitialiseApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
+export const cabanel : InitialiseApplication = (schema : ApplicationSchema) : Application => {
    const validationResult : Result<undefined, ValidationError> = validateApplicationSchema(schema);
    if (isFailure(validationResult))
       throw new Error(validationResult.error.message);
 
    else
-      return buildApplication(schema, environment);
+      return buildApplication(schema);
 };
 
 export const validateApplicationSchema : ValidateApplicationSchema =
@@ -61,7 +61,7 @@ export const validateApplicationSchema : ValidateApplicationSchema =
       return { data: undefined };
    };
 
-const buildApplication: BuildApplication = (schema : ApplicationSchema, environment: NodeEnvironmentOption) : Application => {
+const buildApplication: BuildApplication = (schema : ApplicationSchema) : Application => {
    if (isWebSocketServerApplicationSchema(schema))
       // IMPLEMENT
       throw new Error(
@@ -69,7 +69,7 @@ const buildApplication: BuildApplication = (schema : ApplicationSchema, environm
       );
    if (isRestServerApplicationSchema(schema)) {
       switch (schema.serverOption) {
-         case "Express": return buildExpressRestServerApplication(schema, environment);
+         case "Express": return buildExpressRestServerApplication(schema);
          default: throw new Error(
             `"${schema.serverOption}" REST server application not supported. Please select a different option.`
          );
@@ -78,27 +78,17 @@ const buildApplication: BuildApplication = (schema : ApplicationSchema, environm
    throw new Error("Invalid application schema definition.");
 };
 
-
-type ServerStartupMessage = (
-   title : string,
-   host : string,
-   port : number,
-   version : string,
-   environment : NodeEnvironmentOption,
-) => string;
-
-export const serverStartupMessage : ServerStartupMessage = (
-   title : string,
-   host : string,
-   port : number,
-   version : string,
-   environment : NodeEnvironmentOption,
-) : string => {
-   const titleMessage : string = `'${title}' Server Started\n `;
-   const divider : string = '--------------------------------\n';
-   const serverAddressLine : string = `Server application running at http://${host}:${port}\n`;
-   return titleMessage + divider + renderStringServerMetadata(title, port, version, environment) + '\n' +
-      serverAddressLine;
+export const serverStartupMessage = (
+   title: string,
+   host: string,
+   port: number,
+   version: string,
+   environment: NodeEnvironmentOption,
+   authStrategy: AuthStrategy,
+): string => {
+   const headline: string = `'${title}' server started.\n`;
+   const authStrategyString: string | undefined = isLocalAuthStrategy(authStrategy) ? 'local' : undefined;
+   return headline + serverMetadata(host, port, environment, version, authStrategyString);
 };
 
 export type RenderJsonServerMetadata = (
@@ -120,23 +110,17 @@ export const renderJsonServerMetadata : RenderJsonServerMetadata = (
    version    : version,
 });
 
-export type RenderStringServerMetadata = (
-   title : string,
-   port : number,
-   version : string,
-   environment : NodeEnvironmentOption,
-) => string;
-
-export const renderStringServerMetadata : RenderStringServerMetadata = (
-   title : string,
-   port : number,
-   version : string,
-   environment : NodeEnvironmentOption,
-)  =>
-   `Title: ${title}\n` +
-   `Port: ${port}\n` +
-   `Version: ${version}\n` +
-   `Environment: ${environment}\n`;
+export const serverMetadata = (
+   host: string,
+   port: number,
+   environment: NodeEnvironmentOption,
+   version: string,
+   authStrategy?: string,
+) =>
+    `url: http://${host}:${port}\n` +
+    `environment: ${environment}\n` +
+    `${!!authStrategy ? `auth strategy: ${authStrategy}\n`: ''}` +
+    `version: ${version}\n`;
 
 export type HttpRequest$ = Observable<HttpRequest | undefined>;
 

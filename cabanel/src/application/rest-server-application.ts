@@ -6,12 +6,11 @@ export type RestServerApplication = {
    run : () => void,
 };
 
-export type InitialiseRestServerApplication = (schema : RestServerApplication) => RestServerApplication;
+export type InitialiseRestServerApplication =
+   (schema : RestServerApplication) => RestServerApplication;
 
-export type BuildRestServerApplication = (
-   applicationSchema: RestServerApplicationSchema,
-   environment: NodeEnvironmentOption,
-) => RestServerApplication;
+export type BuildRestServerApplication =
+   (applicationSchema: RestServerApplicationSchema) => RestServerApplication;
 
 export type RestServerApplicationSchema = {
    title : string,
@@ -22,19 +21,19 @@ export type RestServerApplicationSchema = {
    serverOption : ServerFrameworkOption,
    corsOptions : CorsOptions,
    authStrategy : AuthStrategy,
-   controllers : RestServerApplicationController[],
+   routerSchemas : RestServerApplicationRouterSchema[],
 };
 
-export type RestServerApplicationController =
-   | UnguardedRestServerApplicationController
-   | GuardedRestServerApplicationController;
+export type RestServerApplicationRouterSchema =
+   | UnguardedRestServerApplicationRouterSchema
+   | GuardedRestServerApplicationRouterSchema;
 
-export type UnguardedRestServerApplicationController = {
+export type UnguardedRestServerApplicationRouterSchema = {
    path    : string,
    endpointSchemas : EndpointSchema[],
 };
 
-export type GuardedRestServerApplicationController = {
+export type GuardedRestServerApplicationRouterSchema = {
    guardedPath    : string,
    endpointSchemas : EndpointSchema[],
 };
@@ -49,17 +48,17 @@ export const isRestServerApplicationSchema = (object : any) : object is RestServ
    && 'serverOption' in object
    && 'corsOptions' in object
    && 'authStrategy' in object
-   && 'controllers' in object
+   && 'routerSchemas' in object
 );
 
-export const isGuardedRestServerApplicationController = (object : any) : object is GuardedRestServerApplicationController => (
+export const isGuardedRestServerApplicationRouterSchema = (object : any) : object is GuardedRestServerApplicationRouterSchema => (
    object !== null
    && typeof object === 'object'
    && 'guardedPath' in object
    && 'endpointSchemas' in object
 );
 
-export const isUnguardedRestServerApplicationController = (object : any) : object is UnguardedRestServerApplicationController => (
+export const isUnguardedRestServerApplicationRouterSchema = (object : any) : object is UnguardedRestServerApplicationRouterSchema => (
    object !== null
    && typeof object === 'object'
    && 'path' in object

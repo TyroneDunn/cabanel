@@ -56,7 +56,7 @@ export const configureLocalAuthentication : ConfigureLocalAuthentication = (
    app.use(localSessionMiddleware(sessionSecret, databaseProvider, databaseUrl, environment));
    app.use(passport.initialize());
    app.use(passport.session());
-   app.use('/auth/', configureAuthenticationRouter(registerUser));
+   app.use('/auth', configureAuthenticationRouter(registerUser));
 };
 
 
@@ -159,10 +159,10 @@ const configureMongoSessionStore = (url : string) : MongoStore =>
 // Router
 export const configureAuthenticationRouter = (registerUser : RegisterUser) : ExpressRouter => {
    const authRouter : ExpressRouter = ExpressRouter();
-   authRouter.post('/register/', registerRequestHandler(registerUser), authenticateRequestHandler, loggedInRequestHandler);
-   authRouter.post('/login/', authenticateRequestHandler, loggedInRequestHandler);
-   authRouter.post('/logout/', authGuard, logoutRequestHandler);
-   authRouter.get('/protected/', authGuard, authenticatedRequestHandler);
+   authRouter.post('/register', registerRequestHandler(registerUser), authenticateRequestHandler, loggedInRequestHandler);
+   authRouter.post('/login', authenticateRequestHandler, loggedInRequestHandler);
+   authRouter.post('/logout', authGuard, logoutRequestHandler);
+   authRouter.get('/protected', authGuard, authenticatedRequestHandler);
    return authRouter;
 };
 

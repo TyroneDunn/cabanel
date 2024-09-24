@@ -21,19 +21,19 @@ export type WebSocketServerApplicationSchema = {
    corsOptions : CorsOptions,
    authStrategy : AuthStrategy,
    socketEvents : SocketEvents,
-   controllers : WebSocketServerApplicationController[],
+   routerSchemas : WebSocketServerApplicationRouterSchema[],
 };
 
-export type WebSocketServerApplicationController =
-   | GuardedWebSocketServerApplicationController
-   | UnguardedWebSocketServerApplicationController;
+export type WebSocketServerApplicationRouterSchema =
+   | GuardedWebSocketServerApplicationRouterSchema
+   | UnguardedWebSocketServerApplicationRouterSchema;
 
-export type UnguardedWebSocketServerApplicationController = {
+export type UnguardedWebSocketServerApplicationRouterSchema = {
    path    : string,
    methods : WebSocketServerMethod[],
 };
 
-export type GuardedWebSocketServerApplicationController = {
+export type GuardedWebSocketServerApplicationRouterSchema = {
    path    : string,
    methods : WebSocketServerMethod[],
 };
@@ -58,5 +58,5 @@ export const isWebSocketServerApplicationSchema =
       && 'corsOptions' in applicationSchema
       && 'authStrategy' in applicationSchema
       && 'socketEvents' in applicationSchema
-      && 'controllers' in applicationSchema
+      && 'routerSchemas' in applicationSchema
    );

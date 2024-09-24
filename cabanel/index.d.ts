@@ -22,9 +22,9 @@ export {
 } from './src/application/local-auth-strategy';
 export {
    RestServerApplicationSchema,
-   RestServerApplicationController,
-   UnguardedRestServerApplicationController,
-   GuardedRestServerApplicationController,
+   RestServerApplicationRouterSchema,
+   UnguardedRestServerApplicationRouterSchema,
+   GuardedRestServerApplicationRouterSchema,
 } from './src/application/rest-server-application';
 
 

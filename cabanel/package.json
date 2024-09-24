@@ -1,11 +1,13 @@
 {
   "name": "cabanel",
-  "version": "1.3.0",
+  "version": "0.3.14",
   "description": "",
   "main": "dist/index.js",
   "types": "./index.d.ts",
   "scripts": {
     "test": "ts-node node_modules/jasmine/bin/jasmine",
+    "test:001": "ts-node spec/build/run-minimal-app.ts",
+    "test:002": "ts-node spec/build/run-minimal-app-w-guarded-route.ts",
     "build": "tsc"
   },
   "author": "Tyrone B. Dunn",
