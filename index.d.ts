@@ -110,5 +110,5 @@ export { User } from './src/users/users';
 
 
 // Http Request Stream
-export { httpRequest$ } from './src/index';
+export { httpRequest$ } from './src';
 export { HttpRequest$ } from './src';
