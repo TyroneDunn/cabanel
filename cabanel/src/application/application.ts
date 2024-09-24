@@ -6,7 +6,7 @@ import {
    isWebSocketServerApplicationSchema,
    WebSocketServerApplicationSchema,
 } from './web-socket-server-application';
-import { LocalAuthStrategy } from './local-auth-strategy';
+import { isLocalAuthStrategy, LocalAuthStrategy } from './local-auth-strategy';
 import { JwtAuthStrategy } from './jwt-auth-strategy';
 import { isFailure, Result } from '../common/result';
 import { ValidationError } from '../common/validation';
@@ -78,24 +78,17 @@ const buildApplication: BuildApplication = (schema : ApplicationSchema) : Applic
    throw new Error("Invalid application schema definition.");
 };
 
-
-type ServerStartupMessage = (
-   title : string,
-   host : string,
-   port : number,
-   version : string,
-   environment : NodeEnvironmentOption,
-) => string;
-
-export const serverStartupMessage : ServerStartupMessage = (
-   title : string,
-   host : string,
-   port : number,
-   version : string,
-   environment : NodeEnvironmentOption,
-) : string => {
+export const serverStartupMessage = (
+   title: string,
+   host: string,
+   port: number,
+   version: string,
+   environment: NodeEnvironmentOption,
+   authStrategy: AuthStrategy,
+): string => {
    const headline: string = `'${title}' server started.\n`;
-   return headline + serverMetadata(host, port, environment, version);
+   const authStrategyString: string | undefined = isLocalAuthStrategy(authStrategy) ? 'local' : undefined;
+   return headline + serverMetadata(host, port, environment, version, authStrategyString);
 };
 
 export type RenderJsonServerMetadata = (
@@ -118,13 +111,15 @@ export const renderJsonServerMetadata : RenderJsonServerMetadata = (
 });
 
 export const serverMetadata = (
-    host: string,
-    port: number,
-    environment: NodeEnvironmentOption,
-    version: string,
+   host: string,
+   port: number,
+   environment: NodeEnvironmentOption,
+   version: string,
+   authStrategy?: string,
 ) =>
     `url: http://${host}:${port}\n` +
     `environment: ${environment}\n` +
+    `${!!authStrategy ? `auth strategy: ${authStrategy}\n`: ''}` +
     `version: ${version}\n`;
 
 export type HttpRequest$ = Observable<HttpRequest | undefined>;

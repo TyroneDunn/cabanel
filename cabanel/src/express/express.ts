@@ -59,7 +59,8 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
                   applicationSchema.host,
                   applicationSchema.port,
                   applicationSchema.version,
-                  applicationSchema.nodeEnv
+                  applicationSchema.nodeEnv,
+                  applicationSchema.authStrategy
                )));
          }
       };
