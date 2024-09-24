@@ -138,16 +138,13 @@ const mapEndpointSchemaToExpressEndpoint = (
    endpointSchema: EndpointSchema
 ): string => {
    const endpoint: string = path ? '/' + path + '/' : '/';
-   return appendParamKeys(endpointSchema.parameterKeys, endpoint);
+   return appendParamKeys(endpoint, endpointSchema.parameterKeys);
 };
 
-const appendParamKeys = (paramKeys : string[] | undefined, path : string) : string => {
-   if (paramKeys === undefined || paramKeys.length === 0) return path;
-   else return appendParamKeys(
-      paramKeys.slice(1),
-      path.concat(':', paramKeys[0], '/')
-   );
-};
+const appendParamKeys = (path: string, paramKeys: string[] | undefined): string =>
+   paramKeys === undefined || paramKeys.length === 0
+      ? path
+      : appendParamKeys(path.concat(':', paramKeys[0], '/'), paramKeys.slice(1));
 
 const buildHttpRequest = (
    path : string,
