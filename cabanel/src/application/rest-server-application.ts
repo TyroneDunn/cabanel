@@ -51,14 +51,14 @@ export const isRestServerApplicationSchema = (object : any) : object is RestServ
    && 'routerSchemas' in object
 );
 
-export const isGuardedRestServerApplicationController = (object : any) : object is GuardedRestServerApplicationRouterSchema => (
+export const isGuardedRestServerApplicationRouterSchema = (object : any) : object is GuardedRestServerApplicationRouterSchema => (
    object !== null
    && typeof object === 'object'
    && 'guardedPath' in object
    && 'endpointSchemas' in object
 );
 
-export const isUnguardedRestServerApplicationController = (object : any) : object is UnguardedRestServerApplicationRouterSchema => (
+export const isUnguardedRestServerApplicationRouterSchema = (object : any) : object is UnguardedRestServerApplicationRouterSchema => (
    object !== null
    && typeof object === 'object'
    && 'path' in object
