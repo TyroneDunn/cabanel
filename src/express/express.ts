@@ -30,6 +30,7 @@ import {
    Respond,
 } from '../http/http';
 import { User } from '../users/users';
+import { logRequest } from "./local-authentication";
 
 export const buildExpressRestServerApplication: BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema): RestServerApplication => {
@@ -44,7 +45,7 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
          );
       configureExpressAppRouters(expressApp, applicationSchema.routerSchemas);
 
-      expressApp.get('/', metadataRequestHandler(
+      expressApp.get('/', logRequest("root"), metadataRequestHandler(
          applicationSchema.title,
          applicationSchema.port,
          applicationSchema.version,

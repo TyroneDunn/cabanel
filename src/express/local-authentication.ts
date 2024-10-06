@@ -168,12 +168,20 @@ export const configureAuthenticationRouter = (registerUser : RegisterUser) : Exp
    return authRouter;
 };
 
-const logRequest = (option: 'register' | 'login' | 'logout' | 'protected'): ExpressRequestHandler => (
+export const logRequest = (option: 'root' | 'register' | 'login' | 'logout' | 'protected'): ExpressRequestHandler => (
    request  : ExpressRequest,
    response : ExpressResponse,
    next     : ExpressNext
 ): void => {
    switch (option) {
+      case "root":
+         consoleLogHttpRequest(buildHttpRequest(
+            '',
+            { requestType: "GET" },
+            request,
+            (status: number, response: any): void => {},
+         ));
+         break;
       case "register":
          consoleLogHttpRequest(buildHttpRequest(
             'auth/register',
