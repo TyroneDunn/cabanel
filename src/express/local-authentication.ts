@@ -245,12 +245,12 @@ const registerRequestHandler = (registerUser: RegisterUser) : ExpressRequestHand
          switch (registerUserResult.error.type) {
             case "Conflict": {
                response.status(conflict)
-               .json({ error: registerUserResult.error.message });
+               .json({ status: conflict, error: registerUserResult.error.message });
                return;
             }
             case "Internal": {
                response.status(internalServerError)
-               .json({ error: registerUserResult.error.message });
+               .json({ status: internalServerError, error: registerUserResult.error.message });
                return;
             }
          }
