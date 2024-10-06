@@ -11,7 +11,6 @@ import {
 import session, { SessionOptions, Store } from "express-session";
 import MongoStore from "connect-mongo";
 import passport from 'passport';
-import LocalStrategy = require('passport-local');
 import { conflict, internalServerError, ok } from '../http/http';
 import {
    GetUser,
@@ -29,6 +28,9 @@ import {
    userRegisteredEvent,
 } from '../application/events';
 import { isFailure, isSuccess, Result } from '../common/result';
+import { buildHttpRequest } from "./express";
+import { consoleLogHttpRequest } from "../log/log";
+import LocalStrategy = require('passport-local');
 
 
 export type ConfigureLocalAuthentication = (
@@ -159,12 +161,64 @@ const configureMongoSessionStore = (url : string) : MongoStore =>
 // Router
 export const configureAuthenticationRouter = (registerUser : RegisterUser) : ExpressRouter => {
    const authRouter : ExpressRouter = ExpressRouter();
-   authRouter.post('/register', registerRequestHandler(registerUser), authenticateRequestHandler, loggedInRequestHandler);
-   authRouter.post('/login', authenticateRequestHandler, loggedInRequestHandler);
-   authRouter.post('/logout', authGuard, logoutRequestHandler);
-   authRouter.get('/protected', authGuard, authenticatedRequestHandler);
+   authRouter.post('/register', logRequest("register"), registerRequestHandler(registerUser), authenticateRequestHandler, loggedInRequestHandler);
+   authRouter.post('/login', logRequest("login"), authenticateRequestHandler, loggedInRequestHandler);
+   authRouter.post('/logout', logRequest("logout"), authGuard, logoutRequestHandler);
+   authRouter.get('/protected', logRequest("protected"), authGuard, authenticatedRequestHandler);
    return authRouter;
 };
+
+export const logRequest = (option: 'root' | 'register' | 'login' | 'logout' | 'protected'): ExpressRequestHandler => (
+   request  : ExpressRequest,
+   response : ExpressResponse,
+   next     : ExpressNext
+): void => {
+   switch (option) {
+      case "root":
+         consoleLogHttpRequest(buildHttpRequest(
+            '',
+            { requestType: "GET" },
+            request,
+            (status: number, response: any): void => {},
+         ));
+         break;
+      case "register":
+         consoleLogHttpRequest(buildHttpRequest(
+            'auth/register',
+            { requestType: "POST" },
+            request,
+            (status: number, response: any): void => {},
+         ));
+         break;
+      case "login":
+         consoleLogHttpRequest(buildHttpRequest(
+            'auth/login',
+            { requestType: "POST" },
+            request,
+            (status: number, response: any): void => {},
+         ));
+         break;
+      case "logout":
+         consoleLogHttpRequest(buildHttpRequest(
+            'auth/logout',
+            { requestType: "POST" },
+            request,
+            (status: number, response: any): void => {},
+         ));
+         break;
+      case "protected":
+         consoleLogHttpRequest(buildHttpRequest(
+            'auth/protected',
+            { requestType: "GET" },
+            request,
+            (status: number, response: any): void => {},
+         ));
+         break;
+   }
+
+   next();
+   return;
+}
 
 const registerRequestHandler = (registerUser: RegisterUser) : ExpressRequestHandler =>
    async (
@@ -191,12 +245,12 @@ const registerRequestHandler = (registerUser: RegisterUser) : ExpressRequestHand
          switch (registerUserResult.error.type) {
             case "Conflict": {
                response.status(conflict)
-               .json({ error: registerUserResult.error.message });
+               .json({ status: conflict, error: registerUserResult.error.message });
                return;
             }
             case "Internal": {
                response.status(internalServerError)
-               .json({ error: registerUserResult.error.message });
+               .json({ status: internalServerError, error: registerUserResult.error.message });
                return;
             }
          }

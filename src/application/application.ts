@@ -13,6 +13,7 @@ import { ValidationError } from '../common/validation';
 import { buildExpressRestServerApplication } from '../express/express';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpRequest } from '../http/http';
+import { httpRequestToStdOutLogger } from "../log/log";
 
 export type Application = {
    run: () => void
@@ -47,8 +48,10 @@ export const cabanel : InitialiseApplication = (schema : ApplicationSchema) : Ap
    if (isFailure(validationResult))
       throw new Error(validationResult.error.message);
 
-   else
+   else {
+      httpRequestToStdOutLogger(httpRequestSubject.asObservable());
       return buildApplication(schema);
+   }
 };
 
 export const validateApplicationSchema : ValidateApplicationSchema =

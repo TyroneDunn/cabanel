@@ -7,6 +7,7 @@ import {
 } from '../application/rest-server-application';
 import express, {
    Application as ExpressApplication,
+   ErrorRequestHandler as ExpressErrorRequestHandler,
    Request as ExpressRequest,
    RequestHandler as ExpressRequestHandler,
    Response as ExpressResponse,
@@ -28,8 +29,11 @@ import {
    HttpRequest,
    EndpointSchema,
    Respond,
+   notFound, HttpRequestType,
 } from '../http/http';
 import { User } from '../users/users';
+import { logRequest } from "./local-authentication";
+import { consoleLogHttpRequest } from "../log/log";
 
 export const buildExpressRestServerApplication: BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema): RestServerApplication => {
@@ -44,11 +48,23 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
          );
       configureExpressAppRouters(expressApp, applicationSchema.routerSchemas);
 
-      expressApp.get('/', metadataRequestHandler(
+      expressApp.get('/', logRequest("root"), metadataRequestHandler(
          applicationSchema.title,
          applicationSchema.port,
          applicationSchema.version,
          applicationSchema.nodeEnv));
+
+      const jsonErrorHandler: ExpressErrorRequestHandler = (err, req, res, next): void => {
+         res
+            .setHeader('Content-Type', 'application/json')
+            .status(err.status)
+            .json({ status: err.status, ...err });
+      };
+      expressApp.use(jsonErrorHandler);
+      expressApp.use((req, res, next) => {
+         logRequestToUndefinedRoute(req);
+         res.status(notFound).json({ status: notFound, error: "Resource not found." })
+      })
 
       const application : RestServerApplication = {
          run() : void {
@@ -150,7 +166,7 @@ const appendParamKeys = (path: string, paramKeys: string[] | undefined): string 
       ? path
       : appendParamKeys(path.concat(':', paramKeys[0], '/'), paramKeys.slice(1));
 
-const buildHttpRequest = (
+export const buildHttpRequest = (
    path : string,
    endpointSchema : EndpointSchema,
    expressRequest : ExpressRequest,
@@ -159,7 +175,11 @@ const buildHttpRequest = (
    path           : path,
    requestType    : endpointSchema.requestType,
    sender         : expressRequest.user !== undefined
-                       ? expressRequest.user as User
+      ? expressRequest.user as User
+      : undefined,
+   senderIp       : expressRequest.ip,
+   sessionId      : expressRequest.sessionID !== undefined
+                       ? expressRequest.sessionID
                        : undefined,
    parameters     : endpointSchema.parameterKeys !== undefined
                        ? mapExpressRequestParametersToParamMap(endpointSchema.parameterKeys, expressRequest)
@@ -171,7 +191,7 @@ const buildHttpRequest = (
    respond        : respond,
 });
 
-const mapExpressRequestParametersToParamMap = (
+export const mapExpressRequestParametersToParamMap = (
    paramKeys: string[],
    expressRequest: ExpressRequest
 ): ParamMap => {
@@ -185,7 +205,7 @@ const mapExpressRequestParametersToParamMap = (
    return paramMap;
 };
 
-const mapExpressRequestQueriesToParamMap = (
+export const mapExpressRequestQueriesToParamMap = (
    queryParamKeys: string[],
    expressRequest: ExpressRequest
 ): ParamMap => {
@@ -207,4 +227,14 @@ const metadataRequestHandler = (
 ) : ExpressRequestHandler =>
    (request : ExpressRequest, response : ExpressResponse) : void => {
       response.json(renderJsonServerMetadata(title, port, version, environment));
+   };
+
+const logRequestToUndefinedRoute =
+   (request: ExpressRequest): void => {
+      consoleLogHttpRequest(buildHttpRequest(
+         request.path,
+         { requestType: request.method as HttpRequestType },
+         request,
+         (status: number, response: any): void => {},
+      ));
    };
