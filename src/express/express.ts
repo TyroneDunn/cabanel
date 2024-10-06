@@ -7,6 +7,7 @@ import {
 } from '../application/rest-server-application';
 import express, {
    Application as ExpressApplication,
+   ErrorRequestHandler as ExpressErrorRequestHandler,
    Request as ExpressRequest,
    RequestHandler as ExpressRequestHandler,
    Response as ExpressResponse,
@@ -27,7 +28,7 @@ import { ParamMap } from '../common/param-map';
 import {
    HttpRequest,
    EndpointSchema,
-   Respond,
+   Respond, internalServerError, notFound,
 } from '../http/http';
 import { User } from '../users/users';
 import { logRequest } from "./local-authentication";
@@ -50,6 +51,17 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
          applicationSchema.port,
          applicationSchema.version,
          applicationSchema.nodeEnv));
+
+      const jsonErrorHandler: ExpressErrorRequestHandler = (err, req, res, next): void => {
+         res
+            .setHeader('Content-Type', 'application/json')
+            .status(err.status)
+            .json({ status: err.status, ...err });
+      };
+      expressApp.use(jsonErrorHandler);
+      expressApp.use((req, res, next) => {
+         res.status(notFound).json({ status: notFound, error: "Resource not found." })
+      })
 
       const application : RestServerApplication = {
          run() : void {
