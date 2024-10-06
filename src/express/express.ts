@@ -28,10 +28,12 @@ import { ParamMap } from '../common/param-map';
 import {
    HttpRequest,
    EndpointSchema,
-   Respond, internalServerError, notFound,
+   Respond,
+   notFound, HttpRequestType,
 } from '../http/http';
 import { User } from '../users/users';
 import { logRequest } from "./local-authentication";
+import { consoleLogHttpRequest } from "../log/log";
 
 export const buildExpressRestServerApplication: BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema): RestServerApplication => {
@@ -60,6 +62,7 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
       };
       expressApp.use(jsonErrorHandler);
       expressApp.use((req, res, next) => {
+         logRequestToUndefinedRoute(req);
          res.status(notFound).json({ status: notFound, error: "Resource not found." })
       })
 
@@ -224,4 +227,14 @@ const metadataRequestHandler = (
 ) : ExpressRequestHandler =>
    (request : ExpressRequest, response : ExpressResponse) : void => {
       response.json(renderJsonServerMetadata(title, port, version, environment));
+   };
+
+const logRequestToUndefinedRoute =
+   (request: ExpressRequest): void => {
+      consoleLogHttpRequest(buildHttpRequest(
+         request.path,
+         { requestType: request.method as HttpRequestType },
+         request,
+         (status: number, response: any): void => {},
+      ));
    };
