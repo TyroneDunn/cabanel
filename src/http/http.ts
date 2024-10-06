@@ -32,6 +32,8 @@ export type HttpRequest = {
    queryParameters : ParamMap,
    payload : any,
    sender : User | undefined,
+   senderIp : string | undefined,
+   sessionId : string | undefined,
    respond : Respond,
 };
 

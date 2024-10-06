@@ -23,7 +23,10 @@ export const consoleLogHttpRequest: LogHttpRequest = (request: HttpRequest): voi
       `${ timestamp(new Date()) } INFO - cabanel - ` +
       (request.sender
          ? `'${ request.sender?.username }' `
-         : '\'unauthorised\' ') +
+         : 'unauthorised user ') +
+      (request.senderIp
+         ? `${ request.senderIp } `
+         : '') +
       `${ request.requestType } ` +
       `'${ request.path }/' ` +
       (JSON.stringify(request.parameters) !== '{}'
@@ -34,5 +37,8 @@ export const consoleLogHttpRequest: LogHttpRequest = (request: HttpRequest): voi
          : '') +
       (JSON.stringify(request.payload) !== '{}'
          ? `payload: ${ JSON.stringify(request.payload) } `
+         : '') +
+      (request.sessionId
+         ? `'${ request.sessionId }' `
          : '')
    );

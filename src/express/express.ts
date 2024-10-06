@@ -150,7 +150,7 @@ const appendParamKeys = (path: string, paramKeys: string[] | undefined): string 
       ? path
       : appendParamKeys(path.concat(':', paramKeys[0], '/'), paramKeys.slice(1));
 
-const buildHttpRequest = (
+export const buildHttpRequest = (
    path : string,
    endpointSchema : EndpointSchema,
    expressRequest : ExpressRequest,
@@ -159,7 +159,11 @@ const buildHttpRequest = (
    path           : path,
    requestType    : endpointSchema.requestType,
    sender         : expressRequest.user !== undefined
-                       ? expressRequest.user as User
+      ? expressRequest.user as User
+      : undefined,
+   senderIp       : expressRequest.ip,
+   sessionId      : expressRequest.sessionID !== undefined
+                       ? expressRequest.sessionID
                        : undefined,
    parameters     : endpointSchema.parameterKeys !== undefined
                        ? mapExpressRequestParametersToParamMap(endpointSchema.parameterKeys, expressRequest)
@@ -171,7 +175,7 @@ const buildHttpRequest = (
    respond        : respond,
 });
 
-const mapExpressRequestParametersToParamMap = (
+export const mapExpressRequestParametersToParamMap = (
    paramKeys: string[],
    expressRequest: ExpressRequest
 ): ParamMap => {
@@ -185,7 +189,7 @@ const mapExpressRequestParametersToParamMap = (
    return paramMap;
 };
 
-const mapExpressRequestQueriesToParamMap = (
+export const mapExpressRequestQueriesToParamMap = (
    queryParamKeys: string[],
    expressRequest: ExpressRequest
 ): ParamMap => {
