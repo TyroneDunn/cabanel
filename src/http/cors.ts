@@ -1,5 +1,6 @@
 export type CorsOptions = {
-   origin? : StaticOrigin | CustomOrigin | undefined;
+   // origin? : StaticOrigin | CustomOrigin | string[] | undefined;
+   origin? : string[] | undefined;
    methods? : string | string[] | undefined;
    allowedHeaders? : string | string[] | undefined;
    exposedHeaders? : string | string[] | undefined;

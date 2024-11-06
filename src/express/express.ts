@@ -15,6 +15,7 @@ import express, {
 } from 'express';
 import cors from 'cors';
 import {
+   ApplicationSchema,
    httpRequestSubject,
    NodeEnvironmentOption,
    renderJsonServerMetadata,
@@ -29,7 +30,8 @@ import {
    HttpRequest,
    EndpointSchema,
    Respond,
-   notFound, HttpRequestType,
+   notFound,
+   HttpRequestType,
 } from '../http/http';
 import { User } from '../users/users';
 import { logRequest } from "./local-authentication";
@@ -39,6 +41,7 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema): RestServerApplication => {
       const expressApp: ExpressApplication = express();
       expressApp.use(express.json());
+
       expressApp.use(cors(applicationSchema.corsOptions));
       if (applicationSchema.authStrategy !== 'None')
          configureExpressRestServerApplicationAuthentication(
@@ -46,6 +49,8 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
             applicationSchema.authStrategy,
             applicationSchema.nodeEnv,
          );
+      expressApp.use(multipleOriginRequestHandler(applicationSchema));
+
       configureExpressAppRouters(expressApp, applicationSchema.routerSchemas);
 
       expressApp.get('/', logRequest("root"), metadataRequestHandler(
@@ -81,6 +86,16 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
          }
       };
       return application;
+   };
+
+const multipleOriginRequestHandler =
+   (applicationSchema: ApplicationSchema): ExpressRequestHandler =>
+   (req, res, next) => {
+      const origin: string | undefined = req.headers.origin;
+      if (!!origin && applicationSchema.corsOptions.origin?.includes(origin)) {
+         res.setHeader('Access-Control-Allow-Origin', origin);
+      }
+      return next();
    };
 
 const configureExpressAppRouters = (
