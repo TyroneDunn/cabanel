@@ -55,9 +55,7 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
 
       expressApp.get('/', logRequest("root"), metadataRequestHandler(
          applicationSchema.title,
-         applicationSchema.port,
-         applicationSchema.version,
-         applicationSchema.nodeEnv));
+         applicationSchema.port));
 
       const jsonErrorHandler: ExpressErrorRequestHandler = (err, req, res, next): void => {
          res
@@ -79,9 +77,6 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
                   applicationSchema.title,
                   applicationSchema.host,
                   applicationSchema.port,
-                  applicationSchema.version,
-                  applicationSchema.nodeEnv,
-                  applicationSchema.authStrategy
                )));
          }
       };
@@ -237,11 +232,9 @@ export const mapExpressRequestQueriesToParamMap = (
 const metadataRequestHandler = (
    title : string,
    port : number,
-   version : string,
-   environment : NodeEnvironmentOption,
 ) : ExpressRequestHandler =>
    (request : ExpressRequest, response : ExpressResponse) : void => {
-      response.json(renderJsonServerMetadata(title, port, version, environment));
+      response.json(renderJsonServerMetadata(title, port));
    };
 
 const logRequestToUndefinedRoute =
