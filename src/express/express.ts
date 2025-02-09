@@ -71,13 +71,13 @@ export const buildExpressRestServerApplication: BuildRestServerApplication =
 
       const application : RestServerApplication = {
          run() : void {
-            expressApp.listen(applicationSchema.port, () =>
+            expressApp.listen(applicationSchema.port, () => {})
                // TODO : update message rendering
-               console.log(serverStartupMessage(
-                  applicationSchema.title,
-                  applicationSchema.host,
-                  applicationSchema.port,
-               )));
+               // console.log(serverStartupMessage(
+               //    applicationSchema.title,
+               //    applicationSchema.host,
+               //    applicationSchema.port,
+               // )));
          }
       };
       return application;
