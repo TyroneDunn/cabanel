@@ -43,8 +43,8 @@ const runMinimalApp = () => {
         routerSchemas: [],
     };
 
-    const app = buildServer(schema);
-    app.run();
+    const server = buildServer(schema);
+    server.run();
 };
 
 runMinimalApp();
