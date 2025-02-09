@@ -1,6 +1,6 @@
 import {RestServerApplicationSchema} from "../../src/application/rest-server-application";
 import {localHost, ok} from "../../src";
-import {cabanel} from "../../src";
+import {buildServer} from "../../src";
 import {CorsOptions} from "../../src/http/cors";
 import {LocalAuthDatabaseProvider, LocalAuthStrategy} from "../../src/application/local-auth-strategy";
 import {HashAlgorithm} from "../../src/password/password";
@@ -33,9 +33,9 @@ const localAuthStrategy: LocalAuthStrategy = {
 const runMinimalApp = () => {
     const schema: RestServerApplicationSchema = {
         nodeEnv: "development",
-        serverOption: 'Express',
+        // serverOption: 'Express',
         title: "mock",
-        version: "0.0.1",
+        // version: "0.0.1",
         host: localHost,
         port: 6800,
         corsOptions: corsOptions,
@@ -43,7 +43,7 @@ const runMinimalApp = () => {
         routerSchemas: [],
     };
 
-    const app = cabanel(schema);
+    const app = buildServer(schema);
     app.run();
 };
 
