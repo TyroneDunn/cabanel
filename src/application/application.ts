@@ -68,16 +68,12 @@ const buildApplication: BuildApplication = (schema : ApplicationSchema) : Applic
    if (isWebSocketServerApplicationSchema(schema))
       // IMPLEMENT
       throw new Error(
-         'Web Socket Application not implemented. Please select a different option.',
-      );
-   if (isRestServerApplicationSchema(schema)) {
-      switch (schema.serverOption) {
-         case "Express": return buildExpressRestServerApplication(schema);
-         default: throw new Error(
-            `"${schema.serverOption}" REST server application not supported. Please select a different option.`
-         );
-      }
-   }
+         'Web Socket Application not yet implemented. Please select a' +
+        ' different option.' );
+
+   if (isRestServerApplicationSchema(schema))
+      return buildExpressRestServerApplication(schema);
+
    throw new Error("Invalid application schema definition.");
 };
 
