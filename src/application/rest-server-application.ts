@@ -1,4 +1,4 @@
-import { AuthStrategy, NodeEnvironmentOption, ServerFrameworkOption } from './application';
+import { AuthStrategy, NodeEnvironmentOption } from './application';
 import { CorsOptions } from '../http/cors';
 import { HostAddress, EndpointSchema } from '../http/http';
 
@@ -13,13 +13,13 @@ export type BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema) => RestServerApplication;
 
 export type RestServerApplicationSchema = {
-   title? : string,
-   host? : HostAddress,
-   port? : number,
-   nodeEnv? : NodeEnvironmentOption,
-   corsOptions? : CorsOptions,
-   authStrategy? : AuthStrategy,
-   routerSchemas : RestServerApplicationRouterSchema[],
+   title: string,
+   host: HostAddress,
+   port: number,
+   nodeEnv: NodeEnvironmentOption,
+   corsOptions: CorsOptions,
+   authStrategy: AuthStrategy,
+   routerSchemas: RestServerApplicationRouterSchema[],
 };
 
 export type RestServerApplicationRouterSchema =
