@@ -23,12 +23,10 @@ export type ApplicationSchema =
   | RestServerApplicationSchema
   | WebSocketServerApplicationSchema;
 
-export type InitialiseApplication = (schema : ApplicationSchema) => Application;
-
 type ValidateApplicationSchema =
   (schema : ApplicationSchema) => Result<undefined, ValidationError>;
 
-type BuildApplication = (schema : ApplicationSchema) => Application;
+export type BuildApplication = (schema: ApplicationSchema) => Application;
 
 export type NodeEnvironmentOption =
   | "production"
@@ -40,16 +38,29 @@ export type AuthStrategy =
   | JwtAuthStrategy;
 
 
-export const cabanel : InitialiseApplication = (schema : ApplicationSchema) : Application => {
-  const validationResult : Result<undefined, ValidationError> = validateApplicationSchema(schema);
-  if (isFailure(validationResult))
-    throw new Error(validationResult.error.message);
+export const buildServer: BuildApplication
+  = (schema: ApplicationSchema): Application =>
+  {
+    const validationResult : Result<undefined, ValidationError>
+      = validateApplicationSchema(schema);
 
-  else {
+    if (isFailure(validationResult))
+      throw new Error(validationResult.error.message);
+
+    // todo - improve http request logging strategy
     httpRequestToStdOutLogger(httpRequestSubject.asObservable());
-    return buildApplication(schema);
-  }
-};
+
+    if (isWebSocketServerApplicationSchema(schema))
+      // IMPLEMENT
+      throw new Error(
+        'Web Socket Application not yet implemented. Please select a' +
+        ' different option.' );
+
+    if (isRestServerApplicationSchema(schema))
+      return buildExpressRestServerApplication(schema);
+
+    throw new Error("Invalid application schema definition.");
+  };
 
 export const validateApplicationSchema : ValidateApplicationSchema =
   (schema : ApplicationSchema): Result<undefined, ValidationError> => {
@@ -60,19 +71,6 @@ export const validateApplicationSchema : ValidateApplicationSchema =
     }
     return { data: undefined };
   };
-
-const buildApplication: BuildApplication = (schema : ApplicationSchema) : Application => {
-  if (isWebSocketServerApplicationSchema(schema))
-    // IMPLEMENT
-    throw new Error(
-      'Web Socket Application not yet implemented. Please select a' +
-      ' different option.' );
-
-  if (isRestServerApplicationSchema(schema))
-    return buildExpressRestServerApplication(schema);
-
-  throw new Error("Invalid application schema definition.");
-};
 
 export const serverStartupMessage = (
   title: string,
@@ -92,8 +90,8 @@ export const renderJsonServerMetadata : RenderJsonServerMetadata = (
   title : string,
   port : number,
 )  => ({
-  title      : title,
-  port       : port,
+  title: title,
+  port : port,
 });
 
 // todo - update log format using @atelierdunn standardised log format
