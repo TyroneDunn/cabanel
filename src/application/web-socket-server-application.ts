@@ -13,11 +13,9 @@ export type WebSocketServerApplication = {
 
 export type WebSocketServerApplicationSchema = {
    title : string,
-   version : string;
    host : HostAddress,
    port : number,
    nodeEnv : NodeEnvironmentOption;
-   serverOption : ServerFrameworkOption,
    corsOptions : CorsOptions,
    authStrategy : AuthStrategy,
    socketEvents : SocketEvents,
