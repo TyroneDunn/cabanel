@@ -34,9 +34,6 @@ export type NodeEnvironmentOption =
   | "production"
   | "development";
 
-export type ServerFrameworkOption =
-  | "Express"
-
 export type AuthStrategy =
   | "None"
   | LocalAuthStrategy
@@ -99,6 +96,7 @@ export const renderJsonServerMetadata : RenderJsonServerMetadata = (
   port       : port,
 });
 
+// todo - update log format using @atelierdunn standardised log format
 export const serverMetadata = (
   host: string,
   port: number )

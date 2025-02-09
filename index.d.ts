@@ -6,7 +6,6 @@ export {
    ApplicationSchema,
    NodeEnvironmentOption,
    AuthStrategy,
-   ServerFrameworkOption,
 } from './src/application/application';
 export {
    CabanelEvent,
