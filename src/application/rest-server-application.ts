@@ -13,14 +13,12 @@ export type BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema) => RestServerApplication;
 
 export type RestServerApplicationSchema = {
-   title : string,
-   version : string;
-   host : HostAddress,
-   port : number,
-   nodeEnv : NodeEnvironmentOption;
-   serverOption : ServerFrameworkOption,
-   corsOptions : CorsOptions,
-   authStrategy : AuthStrategy,
+   title? : string,
+   host? : HostAddress,
+   port? : number,
+   nodeEnv? : NodeEnvironmentOption,
+   corsOptions? : CorsOptions,
+   authStrategy? : AuthStrategy,
    routerSchemas : RestServerApplicationRouterSchema[],
 };
 
