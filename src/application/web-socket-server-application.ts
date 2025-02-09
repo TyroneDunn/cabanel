@@ -2,22 +2,15 @@ import {
    ApplicationSchema,
    AuthStrategy,
    NodeEnvironmentOption,
-   ServerFrameworkOption,
 } from './application';
 import { CorsOptions } from '../http/cors';
 import { HostAddress } from '../http/http';
 
-export type WebSocketServerApplication = {
-   run : () => void,
-};
-
 export type WebSocketServerApplicationSchema = {
    title : string,
-   version : string;
    host : HostAddress,
    port : number,
    nodeEnv : NodeEnvironmentOption;
-   serverOption : ServerFrameworkOption,
    corsOptions : CorsOptions,
    authStrategy : AuthStrategy,
    socketEvents : SocketEvents,

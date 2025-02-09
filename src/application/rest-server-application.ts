@@ -1,4 +1,4 @@
-import { AuthStrategy, NodeEnvironmentOption, ServerFrameworkOption } from './application';
+import { AuthStrategy, NodeEnvironmentOption } from './application';
 import { CorsOptions } from '../http/cors';
 import { HostAddress, EndpointSchema } from '../http/http';
 
@@ -13,15 +13,13 @@ export type BuildRestServerApplication =
    (applicationSchema: RestServerApplicationSchema) => RestServerApplication;
 
 export type RestServerApplicationSchema = {
-   title : string,
-   version : string;
-   host : HostAddress,
-   port : number,
-   nodeEnv : NodeEnvironmentOption;
-   serverOption : ServerFrameworkOption,
-   corsOptions : CorsOptions,
-   authStrategy : AuthStrategy,
-   routerSchemas : RestServerApplicationRouterSchema[],
+   title: string,
+   host: HostAddress,
+   port: number,
+   nodeEnv: NodeEnvironmentOption,
+   corsOptions: CorsOptions,
+   authStrategy: AuthStrategy,
+   routerSchemas: RestServerApplicationRouterSchema[],
 };
 
 export type RestServerApplicationRouterSchema =
@@ -38,14 +36,14 @@ export type GuardedRestServerApplicationRouterSchema = {
    endpointSchemas : EndpointSchema[],
 };
 
-export const isRestServerApplicationSchema = (object : any) : object is RestServerApplicationSchema => (
+export const isRestServerApplicationSchema
+  = (object: any): object is RestServerApplicationSchema =>
+(
    object !== null
    && typeof object === 'object'
    && 'title' in object
-   && 'version' in object
    && 'port' in object
    && 'nodeEnv' in object
-   && 'serverOption' in object
    && 'corsOptions' in object
    && 'authStrategy' in object
    && 'routerSchemas' in object
