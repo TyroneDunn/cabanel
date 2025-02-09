@@ -36,14 +36,14 @@ export type GuardedRestServerApplicationRouterSchema = {
    endpointSchemas : EndpointSchema[],
 };
 
-export const isRestServerApplicationSchema = (object : any) : object is RestServerApplicationSchema => (
+export const isRestServerApplicationSchema
+  = (object: any): object is RestServerApplicationSchema =>
+(
    object !== null
    && typeof object === 'object'
    && 'title' in object
-   && 'version' in object
    && 'port' in object
    && 'nodeEnv' in object
-   && 'serverOption' in object
    && 'corsOptions' in object
    && 'authStrategy' in object
    && 'routerSchemas' in object
